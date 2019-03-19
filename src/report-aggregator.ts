@@ -2,41 +2,64 @@ import { CucumberReportSummary } from './models/cucumber-report-summary';
 import { ICucumberReport } from './models/cucumber-report';
 import { IStep } from './models/step';
 import { IElement } from './models/element';
+
+
+interface IFeatureSummary {
+  scenarios: CucumberReportSummary[],
+  featureSummary: CucumberReportSummary,
+  featureName: string
+}
+
+interface ISuiteSummary {
+  features: IFeatureSummary[],
+  suiteSummary: CucumberReportSummary,
+}
+
 export class ReportAggregator {
 
-  public getSummaryForSuite(suite: ICucumberReport[]): CucumberReportSummary {
+  public getSummaryForSuite(suite: ICucumberReport[]): ISuiteSummary {
     const suiteSummary = new CucumberReportSummary();
 
-    suite.forEach(report => {
-      const reportSummary = this.getSummaryForReport(report);
-      suiteSummary.aggregateChildSummary(reportSummary);
+    const response: ISuiteSummary = { features: [], suiteSummary: null }
+
+    suite.forEach(feature => {
+      const featureSummary = this.getSummaryForFeature(feature);
+      suiteSummary.aggregateChildSummary(featureSummary.featureSummary);
+      response.features.push(featureSummary);
     })
 
-    return suiteSummary;
+    response.suiteSummary = suiteSummary;
+    return response;
   }
 
 
-  public getSummaryForReport(report: ICucumberReport): CucumberReportSummary {
-    const reportSummary = new CucumberReportSummary();
+  public getSummaryForFeature(feature: ICucumberReport) : IFeatureSummary {
+    const featureSummary = new CucumberReportSummary();
 
-    report.elements.forEach(e => {
-      const elementSummary = this.getSummaryForElement(e);
-      reportSummary.aggregateChildSummary(elementSummary);
+    const response: IFeatureSummary = { scenarios: [], featureSummary: null, featureName: feature.name }
+
+    feature.elements.forEach(scenario => {
+      const scenarioSummary = this.getSummaryForScenario(scenario);
+      featureSummary.aggregateChildSummary(scenarioSummary);
+      response.scenarios.push(scenarioSummary);
     })
 
-    return reportSummary;
+    response.featureSummary = featureSummary
+    return response;
+
   }
 
-  public getSummaryForElement(element: IElement): CucumberReportSummary {
-    const elementSummary = new CucumberReportSummary();
+  public getSummaryForScenario(scenario: IElement): CucumberReportSummary {
+    const scenarioSummary = new CucumberReportSummary();
 
     // Aggregate steps
-    element.steps.forEach( s => {
+    scenario.steps.forEach( s => {
       const stepSummary = this.summariseStep(s);
-      elementSummary.aggregateChildSummary(stepSummary);
+      scenarioSummary.aggregateChildSummary(stepSummary);
     });
 
-    return elementSummary;
+    scenarioSummary.scenarioName = scenario.name;
+    return scenarioSummary;
   }
 
   private summariseStep(step: IStep): CucumberReportSummary {

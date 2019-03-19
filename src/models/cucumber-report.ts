@@ -14,6 +14,7 @@ export interface ICucumberReport {
     description: string
     tags: ITag[]
 
+    // I'm guessing elements are synonomous to scenarios
     elements: IElement[]
 
 }

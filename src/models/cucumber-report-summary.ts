@@ -20,6 +20,8 @@ export class CucumberReportSummary {
 
   totalDuration: number = 0
 
+  scenarioName: string
+
 
   get isFailed(): boolean { return this.failed > 0; }
   get isPassed(): boolean { return this.passed === this.total; }
