@@ -5,8 +5,12 @@ import * as fs from 'fs';
 export class CucumberJsonReportReader {
 
   public readReport(filePath: string): ICucumberReport[] {
-    const report = <ICucumberReport[]>JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    console.log(report[0].name);
+    const jsonString = fs.readFileSync(filePath, 'utf8');
+    return this.parseJsonString(jsonString);
+  }
+
+  public parseJsonString(jsonString: string) {
+    const report = <ICucumberReport[]>JSON.parse(jsonString);
     return report;
   }
 }
