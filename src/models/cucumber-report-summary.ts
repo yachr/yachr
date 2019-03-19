@@ -20,6 +20,10 @@ export class CucumberReportSummary {
 
   totalDuration: number = 0
 
+
+  get isFailed(): boolean { return this.failed > 0; }
+  get isPassed(): boolean { return this.passed === this.total; }
+
   aggregateChildSummary(child: CucumberReportSummary) {
     this.totalDuration += child.totalDuration;
 
@@ -33,7 +37,7 @@ export class CucumberReportSummary {
   }
 
   updateFromReportResult(result: IResult) {
-    this.totalDuration += result.duration;
+    this.totalDuration += <number>(result.duration | 0);
 
       // Switch case on status
       switch (result.status) {
@@ -42,7 +46,10 @@ export class CucumberReportSummary {
         case ResultStatus.undefined: this.undefined++; break;
         case ResultStatus.pending: this.pending++; break;
         case ResultStatus.ambiguous: this.ambiguous++; break;
-        default: this.unknown++;
+        default: {
+          this.unknown++;
+          console.log(`Unmapped result status for ${result.status}`)
+        }
       }
   }
 }
