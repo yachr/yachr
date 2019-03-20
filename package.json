@@ -1,15 +1,24 @@
 {
   "name": "yachr",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Yet another cucumber html reporter",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register test/**/*.spec.ts"
+    "build": "tsc",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {},
+  "keywords": [
+    "cucumberjs",
+    "reporter",
+    "gherkin",
+    "scenarios",
+    "features"
+  ],
+  "contributors": [
+    "Des Horsley",
+    "Tyler Haigh"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
@@ -18,5 +27,6 @@
     "mocha": "^6.0.2",
     "ts-node": "^8.0.3",
     "typescript": "^3.3.3333"
-  }
+  },
+  "dependencies": {}
 }
