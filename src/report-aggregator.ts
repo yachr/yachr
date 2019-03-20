@@ -1,30 +1,34 @@
 import { CucumberReportSummary } from './models/cucumber-report-summary';
-import { ICucumberReport } from './models/cucumber-report';
+import { ICucumberResult } from './models/cucumber-result';
 import { IStep } from './models/step';
 import { IElement } from './models/element';
 
 
 interface IFeatureSummary {
   scenarios: CucumberReportSummary[],
-  featureSummary: CucumberReportSummary,
+  featureSummary?: CucumberReportSummary,
   featureName: string
 }
 
 interface ISuiteSummary {
   features: IFeatureSummary[],
-  suiteSummary: CucumberReportSummary,
+  suiteSummary?: CucumberReportSummary
 }
 
 export class ReportAggregator {
 
-  public getSummaryForSuite(suite: ICucumberReport[]): ISuiteSummary {
+  public getSummaryForSuite(suite: ICucumberResult[]): ISuiteSummary {
     const suiteSummary = new CucumberReportSummary();
 
-    const response: ISuiteSummary = { features: [], suiteSummary: null }
+    const response: ISuiteSummary = { features: [], suiteSummary: undefined }
 
     suite.forEach(feature => {
       const featureSummary = this.getSummaryForFeature(feature);
-      suiteSummary.aggregateChildSummary(featureSummary.featureSummary);
+
+      if (featureSummary.featureSummary) {
+        suiteSummary.aggregateChildSummary(featureSummary.featureSummary);
+      }
+
       response.features.push(featureSummary);
     })
 
@@ -33,10 +37,10 @@ export class ReportAggregator {
   }
 
 
-  public getSummaryForFeature(feature: ICucumberReport) : IFeatureSummary {
+  public getSummaryForFeature(feature: ICucumberResult): IFeatureSummary {
     const featureSummary = new CucumberReportSummary();
 
-    const response: IFeatureSummary = { scenarios: [], featureSummary: null, featureName: feature.name }
+    const response: IFeatureSummary = { scenarios: [], featureSummary: undefined, featureName: feature.name }
 
     feature.elements.forEach(scenario => {
       const scenarioSummary = this.getSummaryForScenario(scenario);
@@ -53,7 +57,7 @@ export class ReportAggregator {
     const scenarioSummary = new CucumberReportSummary();
 
     // Aggregate steps
-    scenario.steps.forEach( s => {
+    scenario.steps.forEach(s => {
       const stepSummary = this.summariseStep(s);
       scenarioSummary.aggregateChildSummary(stepSummary);
     });
@@ -65,7 +69,7 @@ export class ReportAggregator {
   private summariseStep(step: IStep): CucumberReportSummary {
     const stepSummary = new CucumberReportSummary();
 
-    if(step.result) {
+    if (step.result) {
       stepSummary.updateFromReportResult(step.result);
     }
 
