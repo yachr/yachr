@@ -1,12 +1,10 @@
 import { IElement } from './element';
 import { ITag } from './tag';
 
-// Defines the data model for a Cucumber Report
+// Defines the data model for a Cucumber results
 
-export interface ICucumberReport {
-
+export interface ICucumberResult {
     uri: string
-
     keyword: string
     id: string
     name: string
@@ -14,7 +12,7 @@ export interface ICucumberReport {
     description: string
     tags: ITag[]
 
-    // I'm guessing elements are synonomous to scenarios
+    // Synonomous to scenarios
     elements: IElement[]
 
 }

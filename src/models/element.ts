@@ -1,11 +1,11 @@
 import { IStep } from './step';
 import { ITag } from './tag';
-export class IElement {
+export interface IElement {
   keyword: string
   id: string
   name: string
   line: number
-  description: string
+  description?: string // TODO: TH where did this come from?
   tags: ITag[]
 
   type: string

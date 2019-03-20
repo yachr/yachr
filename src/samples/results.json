@@ -1,0 +1,72 @@
+[
+    {
+      "description": "Sample Feature Description",
+      "keyword": "Ability",
+      "name": "Login",
+      "line": 1,
+      "id": "login",
+      "tags": [],
+      "uri": "e2e\\src\\features\\abilities\\user\\login.feature",
+      "elements": [
+        {
+          "id": "login;login-via-login-page",
+          "keyword": "Scenario",
+          "line": 11,
+          "name": "Login via login page",
+          "tags": [],
+          "type": "scenario",
+          "steps": [
+            {
+              "keyword": "Before",
+              "hidden": true,
+              "match": {
+                "location": "e2e\\src\\steps\\searchForUser.steps.ts:10"
+              },
+              "result": {
+                "status": "passed",
+                "duration": 1
+              }
+            },
+            {
+              "arguments": [],
+              "keyword": "Given ",
+              "line": 12,
+              "name": "Milton is not currently logged in",
+              "result": {
+                "status": "undefined"
+              }
+            },
+            {
+              "arguments": [],
+              "keyword": "When ",
+              "line": 13,
+              "name": "Milton navigates to the login page",
+              "result": {
+                "status": "undefined"
+              }
+            },
+            {
+              "arguments": [],
+              "keyword": "Then ",
+              "line": 14,
+              "name": "Milton should be directed to the AD Login",
+              "result": {
+                "status": "undefined"
+              }
+            },
+            {
+              "keyword": "After",
+              "hidden": true,
+              "match": {
+                "location": "node_modules\\protractor-cucumber-framework\\lib\\resultsCapturer.js:26"
+              },
+              "result": {
+                "status": "passed",
+                "duration": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+]
