@@ -19,6 +19,7 @@ export class CucumberReportSummary {
     this.scenarioName = '';
   }
 
+  /** All features */
   get total(): number {
     return this.passed + this.failed + this.undefined +
       this.pending + this.ambiguous + this.unknown;
