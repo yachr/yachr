@@ -12,33 +12,47 @@ describe('report-aggregator', () => {
   });
 
   it('should aggregate the features', () => {
-    let features: ICucumberResult = happyDayResult[0];
-    let summary = aggregator.getSummaryForFeature(features)
+    let features: ICucumberResult[] = happyDayResult;
+    let summary = aggregator.getSummaryForSuite(features)
 
     const expectedOutput = {
-      scenarios:
-        [          {
-            passed: 2,
-            failed: 0,
-            undefined: 3,
-            pending: 0,
-            ambiguous: 0,
-            unknown: 0,
-            totalDuration: 2,
-            scenarioName: 'Login via login page'
-          }],
-      featureSummary:
-      {
-        passed: 2,
-        failed: 0,
-        undefined: 3,
-        pending: 0,
-        ambiguous: 0,
-        unknown: 0,
-        totalDuration: 2,
-        scenarioName: ''
-      },
-      featureName: 'Login'
+        features: [
+          {
+            featureName: 'Login',
+            featureSummary: {
+              ambiguous: 0,
+              failed: 0,
+              passed: 2,
+              pending: 0,
+              scenarioName: "",
+              totalDuration: 2,
+              undefined: 3,
+              unknown: 0,
+            },
+            scenarios: [
+              {
+                ambiguous: 0,
+                failed: 0,
+                passed: 2,
+                pending: 0,
+                scenarioName: 'Login via login page',
+                totalDuration: 2,
+                undefined: 3,
+                unknown: 0
+              }
+            ]
+          }
+        ],
+        suiteSummary: {
+          ambiguous: 0,
+          failed: 0,
+          passed: 2,
+          pending: 0,
+          scenarioName: "",
+          totalDuration: 2,
+          undefined: 3,
+          unknown: 0,
+        }
     };
 
     console.log(summary);

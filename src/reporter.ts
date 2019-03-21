@@ -2,6 +2,10 @@ import { ReportOptions } from "./models/reportOptions";
 import * as fs from 'fs';
 import { ICucumberResult } from "./models/cucumber-result";
 import { ReportAggregator } from "./report-aggregator";
+import * as Handlebars from "handlebars";
+import { HtmlModel } from "./models/htmlModel";
+import { ReportTemplate } from "./templates/standard";
+import { CucumberReportSummary } from "./models/cucumber-report-summary";
 
 export class Reporter {
   generate(options: ReportOptions) {
@@ -9,7 +13,25 @@ export class Reporter {
 
     const aggregator = new ReportAggregator();
 
-    const features = aggregator.getSummaryForFeature(results[0]);
+    const data = <HtmlModel>{
+      cucumberReportSummary: aggregator.getSummaryForSuite(results),
+      cucumberResult: results
+    };
+
+    const template = Handlebars.compile(ReportTemplate);
+
+    // Gross work around because the template engine seems to reject
+    // the work undefined as a property.
+    Handlebars.registerHelper('undef', function(suiteSummary: CucumberReportSummary) {
+      return suiteSummary.undefined;
+    });
+    const htmlReport = template(data);
+
+    try {
+      fs.writeFileSync(options.output, htmlReport, 'utf8');
+    } catch(err) {
+      console.log(`Error writing report to file: ${err}`);
+    }
   }
 
   public parseJsonFile(resultsFile: string): ICucumberResult[] {

@@ -2,40 +2,44 @@ import { CucumberReportSummary } from './models/cucumber-report-summary';
 import { ICucumberResult } from './models/cucumber-result';
 import { IStep } from './models/step';
 import { IElement } from './models/element';
+import { ISuiteSummary } from './models/suiteSummary';
+import { IFeatureSummary } from './models/featureSummary';
 
 
-interface IFeatureSummary {
-  scenarios: CucumberReportSummary[],
-  featureSummary?: CucumberReportSummary,
-  featureName: string
-}
 
-interface ISuiteSummary {
-  features: IFeatureSummary[],
-  suiteSummary?: CucumberReportSummary
-}
-
+/**
+ * Aggregates up an array of CucumberResults.
+ * @example
+ * var results: ICucumberResult[] = // Read in Cucumber results json file(s)
+ * const reporter = new ReportAggregator();
+ * var suiteSummary = reporter.getSummaryForSuite(results);
+ */
 export class ReportAggregator {
 
+  /**
+   * Highest level aggregation, takes an array of ICucumberResults and returns
+   * an `ISuiteSummary`
+   * @param suite Array of cucumber results. Standard output from a cucumber test being run.
+   */
   public getSummaryForSuite(suite: ICucumberResult[]): ISuiteSummary {
-    const suiteSummary = new CucumberReportSummary();
-
-    const response: ISuiteSummary = { features: [], suiteSummary: undefined }
+    const response: ISuiteSummary = {
+      features: [],
+      suiteSummary: new CucumberReportSummary()
+    };
 
     suite.forEach(feature => {
       const featureSummary = this.getSummaryForFeature(feature);
 
       if (featureSummary.featureSummary) {
-        suiteSummary.aggregateChildSummary(featureSummary.featureSummary);
+        response.suiteSummary.aggregateChildSummary(featureSummary.featureSummary);
       }
 
       response.features.push(featureSummary);
     })
 
-    response.suiteSummary = suiteSummary;
+    response.suiteSummary = response.suiteSummary;
     return response;
   }
-
 
   public getSummaryForFeature(feature: ICucumberResult): IFeatureSummary {
     const featureSummary = new CucumberReportSummary();
