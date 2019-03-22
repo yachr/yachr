@@ -1,0 +1,73 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+      // TypeScript Specific Rules
+      "adjacent-overload-signatures": true,
+      "ban-ts-ignore": true,
+      "ban-types": [ true,
+        ["Object", "Use a strongly typed class instead"]
+      ],
+      "no-any": true,
+      "no-empty-interface": true,
+      "no-magic-numbers": [true],
+      "no-non-null-assertion": true,
+      "no-reference": true,
+      "no-unnecessary-type-assertion": true,
+      "no-var-requires": true,
+      "only-arrow-functions": true,
+      "prefer-for-of": true,
+      "typedef": [true,
+        "call-signature"
+      ],
+      "unified-signatures": true,
+
+      // Functionality Rules
+      "await-promise": true,
+      "ban-comma-operator": true,
+      "curly": [true, "ignore-same-line"],
+      "no-conditional-assignment": true,
+      "no-construct": true,
+      "no-duplicate-switch-case": true,
+      "no-empty": true,
+      "no-eval": true,
+      "no-floating-promises": true,
+      "no-implicit-dependencies": true,
+      "no-inferred-empty-object-type": true,
+      "no-invalid-template-strings": true,
+      "no-invalid-this": true,
+      "no-misused-new": true,
+      "no-return-await": true,
+      "no-shadowed-variable": true,
+      "no-string-throw": true,
+      "no-switch-case-fall-through": true,
+      "no-tautology-expression": true,
+      "no-this-assignment": true,
+      "no-unbound-method": true,
+      "no-unsafe-any": true,
+      "no-unused-variable": true,
+      "no-use-before-declare": true,
+      "no-var-keyword": true,
+      "no-void-expression": true,
+      "static-this": true,
+      "switch-default": true,
+      "triple-equals": true,
+
+      // Maintainability
+      "deprecation": true,
+      "max-classes-per-file": [true, 1],
+      "no-require-imports": true,
+      "prefer-const": true,
+      "prefer-readonly": true,
+
+      // Style
+
+
+
+
+    },
+    "rulesDirectory": []
+}
