@@ -1,24 +1,25 @@
 {
   "name": "yachr",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Yet another cucumber html reporter",
-  "main": "index.js",
   "scripts": {
     "build": "tsc",
     "postbuild": "copyfiles -f src/templates/*.html dist/src/templates",
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "ci": "npm run test"
   },
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/yachr/yachr",
+    "type": "git"
+  },
+  "homepage": "https://github.com/yachr/yachr",
   "keywords": [
     "cucumberjs",
     "reporter",
     "gherkin",
     "scenarios",
     "features"
-  ],
-  "contributors": [
-    "Des Horsley",
-    "Tyler Haigh"
   ],
   "license": "MIT",
   "devDependencies": {
@@ -31,6 +32,13 @@
     "mocha": "^6.0.2",
     "ts-node": "^8.0.3",
     "typescript": "^3.3.3333"
+  },
+  "contributors": [
+    { "name": "Des Horsley", "url": "https://github.com/DesHorsley"},
+    { "name": "Tyler Haigh", "url": "https://github.com/TylerHaigh"}
+  ],
+  "bugs": {
+    "url": "https://github.com/yachr/yachr/issues"
   },
   "dependencies": {
     "handlebars": "^4.1.1"
