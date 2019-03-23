@@ -47,4 +47,25 @@ describe("reporter", () => {
     // Clean up test
     fs.unlinkSync(options.output);
   });
+
+  it('should update options with required defaults if the user does not supply them', () => {
+    const options = <ReportOptions>{
+    };
+
+    const actual = reporter.populateDefaultOptionsIfMissing(options);
+
+    expect(actual.htmlTemplate).to.exist;
+  });
+
+  it('populateDefaultOptionsIfMissing should not overwrite existing values', () => {
+    const options = <ReportOptions>{
+      htmlTemplate: 'templatePath',
+      jsonFile: 'somepath'
+    };
+
+    const actual = reporter.populateDefaultOptionsIfMissing(options);
+
+    expect(actual.jsonFile, 'Error: Supplied value has been dropped').to.equal(options.jsonFile);
+    expect(actual.htmlTemplate, 'Error: supplied value overwritten by default').to.equal(options.htmlTemplate);
+  });
 });
