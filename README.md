@@ -1,5 +1,5 @@
 # YACHR
-[![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=develop)](travis)
+[![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=develop)](https://travis-ci.org/yachr/yachr/branches)
 
 Yet another cucumber html reporter is a simple html reporter than runs off the standard json file produced by cucumberjs.
 

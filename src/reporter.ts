@@ -25,6 +25,7 @@ export class Reporter {
     Handlebars.registerHelper('undef', function(suiteSummary: CucumberReportSummary) {
       return suiteSummary.undefined;
     });
+
     const htmlReport = template(data);
 
     try {
