@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "description": "Yet another cucumber html reporter",
   "scripts": {
-    "build": "tsc",
+    "prebuild": "rimraf dist",
+    "build": "tsc --declaration ",
     "postbuild": "copyfiles -f src/templates/*.html dist/src/templates",
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "ci": "npm run test"
   },
-  "main": "index.js",
+  "main": "./dist/src/index.js",
   "repository": {
     "url": "https://github.com/yachr/yachr",
     "type": "git"
@@ -17,6 +18,7 @@
   "keywords": [
     "cucumberjs",
     "reporter",
+    "html",
     "gherkin",
     "scenarios",
     "features"
@@ -30,12 +32,20 @@
     "chai": "^4.2.0",
     "copyfiles": "^2.1.0",
     "mocha": "^6.0.2",
+    "rimraf": "^2.6.3",
     "ts-node": "^8.0.3",
     "typescript": "^3.3.3333"
   },
+  "files": ["/dist"],
   "contributors": [
-    { "name": "Des Horsley", "url": "https://github.com/DesHorsley"},
-    { "name": "Tyler Haigh", "url": "https://github.com/TylerHaigh"}
+    {
+      "name": "Des Horsley",
+      "url": "https://github.com/DesHorsley"
+    },
+    {
+      "name": "Tyler Haigh",
+      "url": "https://github.com/TylerHaigh"
+    }
   ],
   "bugs": {
     "url": "https://github.com/yachr/yachr/issues"

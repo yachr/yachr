@@ -51,7 +51,7 @@ export class Reporter {
   /** Used by generate to add in any default options that need to overwrite empty parameters */
   populateDefaultOptionsIfMissing(options: ReportOptions) {
     const defaultOptions = <ReportOptions>{
-      htmlTemplate: './src/templates/standard.html'
+      htmlTemplate: __dirname + '/templates/standard.html'
     };
 
     return {...defaultOptions, ... options};
