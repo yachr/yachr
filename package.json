@@ -7,7 +7,8 @@
     "build": "tsc --declaration ",
     "postbuild": "copyfiles -f src/templates/*.html dist/src/templates",
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
-    "ci": "npm run test"
+    "ci": "npm run test",
+    "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'"
   },
   "main": "./dist/src/index.js",
   "repository": {
@@ -34,6 +35,7 @@
     "mocha": "^6.0.2",
     "rimraf": "^2.6.3",
     "ts-node": "^8.0.3",
+    "tslint": "^5.14.0",
     "typescript": "^3.3.3333"
   },
   "files": ["/dist"],

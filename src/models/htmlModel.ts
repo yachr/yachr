@@ -1,7 +1,11 @@
-import { ICucumberResult } from "./cucumber-result";
-import { ISuiteSummary } from "./suiteSummary";
+import { ICucumberResult } from './cucumberResult';
+import { ISuiteSummary } from './suiteSummary';
 
-export interface HtmlModel {
-  cucumberReportSummary: ISuiteSummary,
-  cucumberResult: ICucumberResult[]
+/**
+ * Defines the data model for what will be sent to the HTML
+ * report template for rendering
+ */
+export interface IHtmlModel {
+  cucumberReportSummary: ISuiteSummary;
+  cucumberResult: ICucumberResult[];
 }
