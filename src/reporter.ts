@@ -8,7 +8,7 @@ import { ReportOptions } from './models/reportOptions';
 import { ReportAggregator } from './reportAggregator';
 
 export class Reporter {
-  generate(options: ReportOptions) {
+  generate(options: ReportOptions): void {
     options = this.populateDefaultOptionsIfMissing(options);
 
     const results = this.parseJsonFile(options.jsonFile);
@@ -29,16 +29,15 @@ export class Reporter {
       reportTemplate = fs.readFileSync(options.htmlTemplate, 'utf8');
     } catch (err) {
       throw(`Error reading htmlTemplate: ${err}`);
-
     }
 
     const template = Handlebars.compile(reportTemplate);
 
     // Gross work around because the template engine seems to reject
     // the work undefined as a property.
-    Handlebars.registerHelper('undef', function(suiteSummary: CucumberReportSummary) {
-      return suiteSummary.undefined;
-    });
+    Handlebars.registerHelper('undef', (suiteSummary: CucumberReportSummary): number =>
+      suiteSummary.undefined
+    );
 
     const htmlReport = template(data);
 
@@ -50,7 +49,7 @@ export class Reporter {
   }
 
   /** Used by generate to add in any default options that need to overwrite empty parameters */
-  populateDefaultOptionsIfMissing(options: ReportOptions) {
+  populateDefaultOptionsIfMissing(options: ReportOptions): ReportOptions {
     const defaultOptions = <ReportOptions> {
       htmlTemplate: __dirname + '/templates/standard.html'
     };

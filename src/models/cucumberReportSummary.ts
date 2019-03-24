@@ -28,7 +28,7 @@ export class CucumberReportSummary {
   get isFailed(): boolean { return this.failed > 0; }
   get isPassed(): boolean { return this.passed === this.total; }
 
-  aggregateChildSummary(child: CucumberReportSummary) {
+  aggregateChildSummary(child: CucumberReportSummary): void {
     this.totalDuration += child.totalDuration;
 
     this.passed += child.passed;
@@ -40,7 +40,7 @@ export class CucumberReportSummary {
     this.unknown += child.unknown;
   }
 
-  updateFromReportResult(result: IResult) {
+  updateFromReportResult(result: IResult): void {
     this.totalDuration += <number> (result.duration | 0);
 
     // Switch case on status
