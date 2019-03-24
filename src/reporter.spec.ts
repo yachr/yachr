@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as fs from 'fs';
 import { } from 'mocha';
 
-import { ReportOptions } from './models/reportOptions';
+import { IReportOptions } from './models/reportOptions';
 import { Reporter } from './reporter';
 
 describe('reporter', () => {
@@ -32,7 +32,7 @@ describe('reporter', () => {
   });
 
   it('should generate a report', () => {
-    const options: ReportOptions = {
+    const options: IReportOptions = {
       jsonFile: './src/samples/results.json',
       output: './src/samples/sample.html'
     };
@@ -50,7 +50,7 @@ describe('reporter', () => {
   });
 
   it('should update options with required defaults if the user does not supply them', () => {
-    const options = <ReportOptions> {
+    const options = <IReportOptions> {
     };
 
     const actual = reporter.populateDefaultOptionsIfMissing(options);
@@ -59,7 +59,7 @@ describe('reporter', () => {
   });
 
   it('populateDefaultOptionsIfMissing should not overwrite existing values', () => {
-    const options = <ReportOptions> {
+    const options = <IReportOptions> {
       htmlTemplate: 'templatePath',
       jsonFile: 'somepath'
     };

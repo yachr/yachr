@@ -13,8 +13,8 @@ describe('report-aggregator', () => {
   });
 
   it('should aggregate the features', () => {
-    let features: ICucumberResult[] = happyDayResult;
-    let summary = aggregator.getSummaryForSuite(features);
+    const features: ICucumberResult[] = happyDayResult;
+    const summary = aggregator.getSummaryForSuite(features);
 
     const expectedOutput = {
         features: [

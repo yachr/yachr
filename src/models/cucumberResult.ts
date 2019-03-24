@@ -1,8 +1,10 @@
 import { IElement } from './element';
 import { ITag } from './tag';
 
-// Defines the data model for a Cucumber results
-// The output produced by cucumber will produce an array of ICucumberResult
+/**
+ * Defines the data model for the results of a running
+ * tests on a Cucumber Feature
+ */
 export interface ICucumberResult {
     uri: string;
     keyword: string;
@@ -14,5 +16,12 @@ export interface ICucumberResult {
 
     // Synonomous to scenarios
     elements: IElement[];
+}
 
+/**
+ * The Cucumber test reporter will produce `ICucumberResult`.
+ * for each Feature tested. As so this class acts to emulate this behaviour
+ */
+export interface ICucumberFeatureSuite {
+  features: ICucumberResult[];
 }

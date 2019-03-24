@@ -1,11 +1,7 @@
-export enum ResultStatus {
-  passed = 'passed',
-  failed = 'failed',
-  undefined = 'undefined',
-  pending = 'pending',
-  ambiguous = 'ambiguous',
-}
-
+/**
+ * Defines the result of a single Step
+ * (e.g. GIVEN, WHEN, THEN)
+ */
 export interface IResult {
   status: string;
   duration: number;
