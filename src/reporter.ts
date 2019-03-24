@@ -1,8 +1,9 @@
 import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
 
+import { ICucumberFeature } from './models/cucumberFeature';
+import { ICucumberFeatureSuite } from './models/cucumberFeatureSuite';
 import { CucumberReportSummary } from './models/cucumberReportSummary';
-import { ICucumberResult } from './models/cucumberResult';
 import { IHtmlModel } from './models/htmlModel';
 import { IReportOptions } from './models/reportOptions';
 import { ReportAggregator } from './reportAggregator';
@@ -65,13 +66,24 @@ export class Reporter {
    * when accessing components of the report
    * @param resultsFile The path to the Cucumber Test Results file
    */
-  public parseJsonFile(resultsFile: string): ICucumberResult[] {
+  public parseJsonFile(resultsFile: string): ICucumberFeatureSuite {
     try {
-      return <ICucumberResult[]> JSON.parse(fs.readFileSync(resultsFile, 'utf8'));
+      const results = fs.readFileSync(resultsFile, 'utf8');
+      return this.parseJsonString(results);
     } catch (err) {
       console.error('Error reading file: ' + resultsFile);
       throw (err);
     }
+  }
+
+  /**
+   * Parses a JSON String and returns a strongly typed data model
+   * reflecting the Cucumber Test Report data structure
+   * @param results An array of Cucumber Features from the Test Report
+   */
+  public parseJsonString(results: string): ICucumberFeatureSuite {
+    const features: ICucumberFeature[] = <ICucumberFeature[]> JSON.parse(results);
+    return { features };
   }
 
   /**

@@ -1,7 +1,8 @@
+import { ICucumberFeature } from './models/cucumberFeature';
+import { ICucumberFeatureSuite } from './models/cucumberFeatureSuite';
 import { CucumberReportSummary } from './models/cucumberReportSummary';
-import { ICucumberResult } from './models/cucumberResult';
-import { IElement } from './models/element';
 import { IFeatureSummary } from './models/featureSummary';
+import { IScenario } from './models/scenario';
 import { IStep } from './models/step';
 import { ISuiteSummary } from './models/suiteSummary';
 
@@ -19,7 +20,7 @@ export class ReportAggregator {
    * an `ISuiteSummary`
    * @param suite Array of cucumber results. Standard output from a cucumber test being run.
    */
-  public getSummaryForSuite(suite: ICucumberResult[]): ISuiteSummary {
+  public getSummaryForSuite(suite: ICucumberFeatureSuite): ISuiteSummary {
     // TODO: I've defined a datamodel for a FeatureSuite. Update code to reflect this
 
     const response: ISuiteSummary = {
@@ -27,7 +28,7 @@ export class ReportAggregator {
       suiteSummary: new CucumberReportSummary()
     };
 
-    suite.forEach(feature => {
+    suite.features.forEach(feature => {
       const featureSummary = this.getSummaryForFeature(feature);
 
       if (featureSummary.featureSummary) {
@@ -45,7 +46,7 @@ export class ReportAggregator {
    * Aggregates a single feature. Aggregates all scenarios in the feature to generate a summary.
    * @param feature The feature to aggregate
    */
-  public getSummaryForFeature(feature: ICucumberResult): IFeatureSummary {
+  public getSummaryForFeature(feature: ICucumberFeature): IFeatureSummary {
     const response: IFeatureSummary = {
       featureName: feature.name,
       featureSummary: new CucumberReportSummary(),
@@ -65,7 +66,7 @@ export class ReportAggregator {
    * Aggregates a single scenario. Aggregates the results of all steps in the Scenario to generate a summary.
    * @param scenario The scenario to aggregate
    */
-  public getSummaryForScenario(scenario: IElement): CucumberReportSummary {
+  public getSummaryForScenario(scenario: IScenario): CucumberReportSummary {
     const scenarioSummary = new CucumberReportSummary();
 
     // Aggregate steps

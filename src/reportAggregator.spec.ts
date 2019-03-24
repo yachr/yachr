@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { } from 'mocha';
 
-import { ICucumberResult } from './models/cucumberResult';
+import { ICucumberFeatureSuite } from './models/cucumberFeatureSuite';
 import { ReportAggregator } from './reportAggregator';
 import * as happyDayResult from './samples/results.json';
 
@@ -13,8 +13,8 @@ describe('report-aggregator', () => {
   });
 
   it('should aggregate the features', () => {
-    const features: ICucumberResult[] = happyDayResult;
-    const summary = aggregator.getSummaryForSuite(features);
+    const suite: ICucumberFeatureSuite = { features: happyDayResult };
+    const summary = aggregator.getSummaryForSuite(suite);
 
     const expectedOutput = {
         features: [

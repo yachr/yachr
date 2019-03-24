@@ -1,4 +1,4 @@
-import { ICucumberResult } from './cucumberResult';
+import { ICucumberFeatureSuite } from './cucumberFeatureSuite';
 import { ISuiteSummary } from './suiteSummary';
 
 /**
@@ -7,5 +7,5 @@ import { ISuiteSummary } from './suiteSummary';
  */
 export interface IHtmlModel {
   cucumberReportSummary: ISuiteSummary;
-  cucumberResult: ICucumberResult[];
+  cucumberResult: ICucumberFeatureSuite;
 }
