@@ -1,24 +1,28 @@
 {
   "name": "yachr",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Yet another cucumber html reporter",
-  "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "prebuild": "rimraf dist",
+    "build": "tsc --declaration ",
+    "postbuild": "copyfiles -f src/templates/*.html dist/src/templates",
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "ci": "npm run test",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
+  "main": "./dist/src/index.js",
+  "repository": {
+    "url": "https://github.com/yachr/yachr",
+    "type": "git"
+  },
+  "homepage": "https://github.com/yachr/yachr",
   "keywords": [
     "cucumberjs",
     "reporter",
+    "html",
     "gherkin",
     "scenarios",
     "features"
-  ],
-  "contributors": [
-    "Des Horsley",
-    "Tyler Haigh"
   ],
   "license": "MIT",
   "devDependencies": {
@@ -27,10 +31,26 @@
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.11.3",
     "chai": "^4.2.0",
+    "copyfiles": "^2.1.0",
     "mocha": "^6.0.2",
+    "rimraf": "^2.6.3",
     "ts-node": "^8.0.3",
     "tslint": "^5.14.0",
     "typescript": "^3.3.3333"
+  },
+  "files": ["/dist"],
+  "contributors": [
+    {
+      "name": "Des Horsley",
+      "url": "https://github.com/DesHorsley"
+    },
+    {
+      "name": "Tyler Haigh",
+      "url": "https://github.com/TylerHaigh"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/yachr/yachr/issues"
   },
   "dependencies": {
     "handlebars": "^4.1.1"

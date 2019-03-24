@@ -42,19 +42,15 @@ export class ReportAggregator {
   }
 
   public getSummaryForFeature(feature: ICucumberResult): IFeatureSummary {
-    const featureSummary = new CucumberReportSummary();
-
-    const response: IFeatureSummary = { scenarios: [], featureSummary: undefined, featureName: feature.name }
+    const response: IFeatureSummary = { scenarios: [], featureSummary: new CucumberReportSummary(), featureName: feature.name }
 
     feature.elements.forEach(scenario => {
       const scenarioSummary = this.getSummaryForScenario(scenario);
-      featureSummary.aggregateChildSummary(scenarioSummary);
+      response.featureSummary.aggregateChildSummary(scenarioSummary);
       response.scenarios.push(scenarioSummary);
     })
 
-    response.featureSummary = featureSummary
     return response;
-
   }
 
   public getSummaryForScenario(scenario: IElement): CucumberReportSummary {
