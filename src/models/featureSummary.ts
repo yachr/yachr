@@ -1,4 +1,4 @@
-import { CucumberReportSummary } from "./cucumber-report-summary";
+import { CucumberReportSummary } from "./cucumberReportSummary";
 
 export interface IFeatureSummary {
   scenarios: CucumberReportSummary[],

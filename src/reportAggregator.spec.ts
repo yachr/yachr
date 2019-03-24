@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { } from 'mocha';
-import { ReportAggregator } from './report-aggregator';
+import { ReportAggregator } from './reportAggregator';
 import * as happyDayResult from './samples/results.json';
-import { ICucumberResult } from './models/cucumber-result';
+import { ICucumberResult } from './models/cucumberResult';
 
 describe('report-aggregator', () => {
   let aggregator: ReportAggregator;

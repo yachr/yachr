@@ -1,5 +1,5 @@
 import { IFeatureSummary } from "./featureSummary";
-import { CucumberReportSummary } from "./cucumber-report-summary";
+import { CucumberReportSummary } from "./cucumberReportSummary";
 
 export interface ISuiteSummary {
   features: IFeatureSummary[],

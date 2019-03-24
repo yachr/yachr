@@ -1,10 +1,10 @@
 import { ReportOptions } from "./models/reportOptions";
 import * as fs from 'fs';
-import { ICucumberResult } from "./models/cucumber-result";
-import { ReportAggregator } from "./report-aggregator";
+import { ICucumberResult } from "./models/cucumberResult";
+import { ReportAggregator } from "./reportAggregator";
 import * as Handlebars from "handlebars";
 import { HtmlModel } from "./models/htmlModel";
-import { CucumberReportSummary } from "./models/cucumber-report-summary";
+import { CucumberReportSummary } from "./models/cucumberReportSummary";
 
 export class Reporter {
   generate(options: ReportOptions) {

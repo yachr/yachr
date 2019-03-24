@@ -1,5 +1,5 @@
-import { CucumberReportSummary } from './models/cucumber-report-summary';
-import { ICucumberResult } from './models/cucumber-result';
+import { CucumberReportSummary } from './models/cucumberReportSummary';
+import { ICucumberResult } from './models/cucumberResult';
 import { IStep } from './models/step';
 import { IElement } from './models/element';
 import { ISuiteSummary } from './models/suiteSummary';

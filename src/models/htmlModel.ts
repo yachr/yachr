@@ -1,4 +1,4 @@
-import { ICucumberResult } from "./cucumber-result";
+import { ICucumberResult } from "./cucumberResult";
 import { ISuiteSummary } from "./suiteSummary";
 
 export interface HtmlModel {
