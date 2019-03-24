@@ -1,10 +1,10 @@
 import { IResult } from './result';
 export interface IStep {
-  keyword: string
-  name: string
-  line: number
+  keyword: string;
+  name: string;
+  line: number;
   match: {
-    location: string
-  }
-  result: IResult
+    location: string;
+  };
+  result: IResult;
 }

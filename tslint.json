@@ -93,7 +93,14 @@
       "return-undefined": true,
       "space-before-function-paren": [true, "always"],
       "space-within-parens": true,
-      "switch-final-break": true
+      "switch-final-break": true,
+
+      // Formatting
+      "eofline": true,
+      "indent": [true, "spaces", 2],
+      "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+      "semicolon": [true, "always"],
+      "trailing-comma": false
     },
     "rulesDirectory": []
 }

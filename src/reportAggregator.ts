@@ -48,7 +48,7 @@ export class ReportAggregator {
       const scenarioSummary = this.getSummaryForScenario(scenario);
       response.featureSummary.aggregateChildSummary(scenarioSummary);
       response.scenarios.push(scenarioSummary);
-    })
+    });
 
     return response;
   }

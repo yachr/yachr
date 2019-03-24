@@ -3,11 +3,11 @@ export enum ResultStatus {
   failed = 'failed',
   undefined = 'undefined',
   pending = 'pending',
-  ambiguous = 'ambiguous'
+  ambiguous = 'ambiguous',
 }
 
 export interface IResult {
-  status: string
-  duration: number
-  error_message: string
+  status: string;
+  duration: number;
+  error_message: string;
 }

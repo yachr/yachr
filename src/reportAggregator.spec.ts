@@ -13,7 +13,7 @@ describe('report-aggregator', () => {
 
   it('should aggregate the features', () => {
     let features: ICucumberResult[] = happyDayResult;
-    let summary = aggregator.getSummaryForSuite(features)
+    let summary = aggregator.getSummaryForSuite(features);
 
     const expectedOutput = {
         features: [
@@ -48,7 +48,7 @@ describe('report-aggregator', () => {
           failed: 0,
           passed: 2,
           pending: 0,
-          scenarioName: "",
+          scenarioName: '',
           totalDuration: 2,
           undefined: 3,
           unknown: 0,

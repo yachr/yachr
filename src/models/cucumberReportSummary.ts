@@ -3,14 +3,14 @@ import { ResultStatus, IResult } from "./result";
 // Can be aggregated at the Feature level, and then aggregated at the report level
 
 export class CucumberReportSummary {
-  passed: number = 0
-  failed: number = 0
-  undefined: number = 0
-  pending: number = 0
-  ambiguous: number = 0
+  passed: number = 0;
+  failed: number = 0;
+  undefined: number = 0;
+  pending: number = 0;
+  ambiguous: number = 0;
 
   // Catch all for if we haven't mapped a cucumber report status
-  unknown: number = 0
+  unknown: number = 0;
   totalDuration: number = 0;
 
   scenarioName: string;
@@ -53,7 +53,7 @@ export class CucumberReportSummary {
       case ResultStatus.ambiguous: this.ambiguous++; break;
       default: {
         this.unknown++;
-        console.log(`Unmapped result status for ${result.status}`)
+        console.log(`Unmapped result status for ${result.status}`);
       }
     }
   }
