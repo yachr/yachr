@@ -27,7 +27,7 @@ describe('reporter', () => {
   it('should reject malformed json', () => {
     expect(
       () => { reporter.parseJsonFile('src/samples/results-malformed.json'); }
-      , `parseJsonFile should throw an exception if the json is malformed`
+      , 'parseJsonFile should throw an exception if the json is malformed'
     ).to.throw();
   });
 
@@ -38,11 +38,13 @@ describe('reporter', () => {
     };
 
     // File should not be there before the test is run
+    // tslint:disable-next-line:no-unused-expression - This is just how Chai works
     expect(fs.existsSync(options.output), `Error: '${options.output}' existed before test ran`).to.be.false;
 
     reporter.generate(options);
 
     // Confirm the report has been created
+    // tslint:disable-next-line:no-unused-expression - This is just how Chai works
     expect(fs.existsSync(options.output), `Error: test did not produce ${options.output}`).to.be.true;
 
     // Clean up test
@@ -50,11 +52,11 @@ describe('reporter', () => {
   });
 
   it('should update options with required defaults if the user does not supply them', () => {
-    const options = <IReportOptions> {
-    };
+    const options = <IReportOptions> { };
 
     const actual = reporter.populateDefaultOptionsIfMissing(options);
 
+    // tslint:disable-next-line:no-unused-expression - This is just how Chai works
     expect(actual.htmlTemplate).to.exist;
   });
 

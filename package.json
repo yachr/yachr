@@ -8,7 +8,7 @@
     "postbuild": "copyfiles -f src/templates/*.html dist/src/templates",
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "ci": "npm run test",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'"
   },
   "main": "./dist/src/index.js",
   "repository": {

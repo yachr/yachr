@@ -32,14 +32,14 @@ export class Reporter {
     };
 
     if (!options.htmlTemplate) {
-      throw('htmlTemplate not supplied in ReportOptions');
+      throw new Error('htmlTemplate not supplied in ReportOptions');
     }
 
     let reportTemplate: string;
     try {
       reportTemplate = fs.readFileSync(options.htmlTemplate, 'utf8');
     } catch (err) {
-      throw(`Error reading htmlTemplate: ${err}`);
+      throw new Error(`Error reading htmlTemplate: ${err}`);
     }
 
     const template = Handlebars.compile(reportTemplate);
@@ -67,7 +67,7 @@ export class Reporter {
    */
   public parseJsonFile(resultsFile: string): ICucumberResult[] {
     try {
-      return JSON.parse(fs.readFileSync(resultsFile, 'utf8'));
+      return <ICucumberResult[]> JSON.parse(fs.readFileSync(resultsFile, 'utf8'));
     } catch (err) {
       console.error('Error reading file: ' + resultsFile);
       throw (err);
@@ -78,7 +78,7 @@ export class Reporter {
    * Used by generate to add in any default options that need to overwrite empty parameters
    * @param options The options as passed in by the user
    */
-  private populateDefaultOptionsIfMissing(options: IReportOptions): IReportOptions {
+  public populateDefaultOptionsIfMissing(options: IReportOptions): IReportOptions {
     const defaultOptions = <IReportOptions> {
       htmlTemplate: __dirname + '/templates/standard.html'
     };

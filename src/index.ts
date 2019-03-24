@@ -1,2 +1,2 @@
-export { IReportOptions as ReportOptions } from './models/reportOptions';
+export { IReportOptions } from './models/reportOptions';
 export { Reporter } from './reporter';

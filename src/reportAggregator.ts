@@ -46,7 +46,11 @@ export class ReportAggregator {
    * @param feature The feature to aggregate
    */
   public getSummaryForFeature(feature: ICucumberResult): IFeatureSummary {
-    const response: IFeatureSummary = { scenarios: [], featureSummary: new CucumberReportSummary(), featureName: feature.name };
+    const response: IFeatureSummary = {
+      featureName: feature.name,
+      featureSummary: new CucumberReportSummary(),
+      scenarios: []
+    };
 
     feature.elements.forEach(scenario => {
       const scenarioSummary = this.getSummaryForScenario(scenario);

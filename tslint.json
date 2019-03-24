@@ -35,7 +35,7 @@
       "no-empty": true,
       "no-eval": true,
       "no-floating-promises": true,
-      "no-implicit-dependencies": true,
+      "no-implicit-dependencies": [true, "dev"],
       "no-inferred-empty-object-type": true,
       "no-invalid-template-strings": true,
       "no-invalid-this": true,
@@ -48,7 +48,6 @@
       "no-this-assignment": true,
       "no-unbound-method": true,
       "no-unsafe-any": true,
-      "no-unused-variable": true,
       "no-use-before-declare": true,
       "no-var-keyword": true,
       "no-void-expression": true,
@@ -98,9 +97,10 @@
       // Formatting
       "eofline": true,
       "indent": [true, "spaces", 2],
-      "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+      "quotemark": [true, "single", "avoid-escape"],
       "semicolon": [true, "always"],
       "no-bitwise": true,
+      "arrow-parens": [true, "ban-single-arg-parens"],
 
       // Rules turned off
       // Make sure to give a reason for why
@@ -112,7 +112,10 @@
       "no-angle-bracket-type-assertion": false,
 
       // Chai testing library uses chained calls to simplify reading
-      "newline-per-chained-call": false
+      "newline-per-chained-call": false,
+
+      // Deprecated since TypeScript 2.9. Use the built-in compiler checks instead.
+      "no-unused-variable": false
 
     },
     "rulesDirectory": []

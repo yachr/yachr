@@ -62,7 +62,7 @@ export class CucumberReportSummary {
    * @param result The Step result from the raw Cucumber report
    */
   public updateFromReportResult(result: IResult): void {
-    this.totalDuration += <number> (result.duration | 0);
+    this.totalDuration += (isNaN(result.duration) ? 0 : result.duration);
 
     // Switch case on status
     switch (result.status) {
