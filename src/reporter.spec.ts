@@ -1,16 +1,17 @@
-import { Reporter } from './reporter';
 import { expect } from 'chai';
-import { } from 'mocha';
-import { ReportOptions } from './models/reportOptions';
 import * as fs from 'fs';
+import { } from 'mocha';
 
-describe("reporter", () => {
+import { IReportOptions } from './models/reportOptions';
+import { Reporter } from './reporter';
+
+describe('reporter', () => {
   let reporter: Reporter;
   beforeEach(() => {
     reporter = new Reporter();
   });
 
-  it("should parse a well formed json file", () => {
+  it('should parse a well formed json file', () => {
     const results = reporter.parseJsonFile('src/samples/results-empty.json');
 
     expect(results).to.deep.equal([]);
@@ -18,30 +19,32 @@ describe("reporter", () => {
 
   it('should handle bad file paths', () => {
     expect(
-      () => { reporter.parseJsonFile('') }
+      () => { reporter.parseJsonFile(''); }
       , `Didn't throw exception with broken file path.`
     ).to.throw('ENOENT: no such file or directory, open');
   });
 
   it('should reject malformed json', () => {
     expect(
-      () => { reporter.parseJsonFile('src/samples/results-malformed.json') }
-      , `parseJsonFile should throw an exception if the json is malformed`
+      () => { reporter.parseJsonFile('src/samples/results-malformed.json'); }
+      , 'parseJsonFile should throw an exception if the json is malformed'
     ).to.throw();
   });
 
   it('should generate a report', () => {
-    const options:ReportOptions = {
+    const options: IReportOptions = {
       jsonFile: './src/samples/results.json',
       output: './src/samples/sample.html'
     };
 
     // File should not be there before the test is run
+    // tslint:disable-next-line:no-unused-expression - This is just how Chai works
     expect(fs.existsSync(options.output), `Error: '${options.output}' existed before test ran`).to.be.false;
 
     reporter.generate(options);
 
     // Confirm the report has been created
+    // tslint:disable-next-line:no-unused-expression - This is just how Chai works
     expect(fs.existsSync(options.output), `Error: test did not produce ${options.output}`).to.be.true;
 
     // Clean up test
@@ -49,16 +52,16 @@ describe("reporter", () => {
   });
 
   it('should update options with required defaults if the user does not supply them', () => {
-    const options = <ReportOptions>{
-    };
+    const options = <IReportOptions> { };
 
     const actual = reporter.populateDefaultOptionsIfMissing(options);
 
+    // tslint:disable-next-line:no-unused-expression - This is just how Chai works
     expect(actual.htmlTemplate).to.exist;
   });
 
   it('populateDefaultOptionsIfMissing should not overwrite existing values', () => {
-    const options = <ReportOptions>{
+    const options = <IReportOptions> {
       htmlTemplate: 'templatePath',
       jsonFile: 'somepath'
     };

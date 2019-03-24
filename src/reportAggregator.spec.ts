@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 import { } from 'mocha';
-import { ReportAggregator } from './report-aggregator';
+
+import { ICucumberResult } from './models/cucumberResult';
+import { ReportAggregator } from './reportAggregator';
 import * as happyDayResult from './samples/results.json';
 import * as skippedStep from './samples/skipped-step.json';
-import { ICucumberResult } from './models/cucumber-result';
 
 describe('report-aggregator', () => {
   let aggregator: ReportAggregator;
@@ -13,8 +14,8 @@ describe('report-aggregator', () => {
   });
 
   it('should aggregate the features', () => {
-    let features: ICucumberResult[] = happyDayResult;
-    let summary = aggregator.getSummaryForSuite(features)
+    const features: ICucumberResult[] = happyDayResult;
+    const summary = aggregator.getSummaryForSuite(features);
 
     const expectedOutput = {
         features: [
@@ -25,7 +26,7 @@ describe('report-aggregator', () => {
               failed: 0,
               passed: 2,
               pending: 0,
-              scenarioName: "",
+              scenarioName: '',
               skipped: 0,
               totalDuration: 2,
               undefined: 3,
@@ -51,7 +52,7 @@ describe('report-aggregator', () => {
           failed: 0,
           passed: 2,
           pending: 0,
-          scenarioName: "",
+          scenarioName: '',
           skipped: 0,
           totalDuration: 2,
           undefined: 3,
@@ -59,7 +60,7 @@ describe('report-aggregator', () => {
         }
     };
 
-    console.log(summary);
+    console.info(summary);
 
     // Had to do the JSON dance here to loose the _proto property
     // from summary before doing the compare
@@ -75,14 +76,13 @@ describe('report-aggregator', () => {
       failed: 0,
       passed: 1,
       pending: 1,
+      scenarioName: 'Login via login page',
       skipped: 1,
-      scenarioName: "Login via login page",
       totalDuration: 30,
       undefined: 0,
       unknown: 0,
     };
 
     expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(expectedSuiteSummary);
-  })
+  });
 });
-
