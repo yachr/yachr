@@ -8,7 +8,7 @@ import { ReportOptions } from './models/reportOptions';
 import { ReportAggregator } from './reportAggregator';
 
 export class Reporter {
-  generate(options: ReportOptions): void {
+  public generate(options: ReportOptions): void {
     options = this.populateDefaultOptionsIfMissing(options);
 
     const results = this.parseJsonFile(options.jsonFile);
@@ -49,7 +49,7 @@ export class Reporter {
   }
 
   /** Used by generate to add in any default options that need to overwrite empty parameters */
-  populateDefaultOptionsIfMissing(options: ReportOptions): ReportOptions {
+  private populateDefaultOptionsIfMissing(options: ReportOptions): ReportOptions {
     const defaultOptions = <ReportOptions> {
       htmlTemplate: __dirname + '/templates/standard.html'
     };
