@@ -1,4 +1,4 @@
-import { ResultStatus, IResult } from "./result";
+import { IResult, ResultStatus } from './result';
 
 // Can be aggregated at the Feature level, and then aggregated at the report level
 

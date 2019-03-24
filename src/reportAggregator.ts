@@ -1,11 +1,9 @@
 import { CucumberReportSummary } from './models/cucumberReportSummary';
 import { ICucumberResult } from './models/cucumberResult';
-import { IStep } from './models/step';
 import { IElement } from './models/element';
-import { ISuiteSummary } from './models/suiteSummary';
 import { IFeatureSummary } from './models/featureSummary';
-
-
+import { IStep } from './models/step';
+import { ISuiteSummary } from './models/suiteSummary';
 
 /**
  * Aggregates up an array of CucumberResults.
@@ -35,14 +33,14 @@ export class ReportAggregator {
       }
 
       response.features.push(featureSummary);
-    })
+    });
 
     response.suiteSummary = response.suiteSummary;
     return response;
   }
 
   public getSummaryForFeature(feature: ICucumberResult): IFeatureSummary {
-    const response: IFeatureSummary = { scenarios: [], featureSummary: new CucumberReportSummary(), featureName: feature.name }
+    const response: IFeatureSummary = { scenarios: [], featureSummary: new CucumberReportSummary(), featureName: feature.name };
 
     feature.elements.forEach(scenario => {
       const scenarioSummary = this.getSummaryForScenario(scenario);

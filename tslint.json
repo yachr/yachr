@@ -75,7 +75,6 @@
       "interface-name": [true, "always-prefix"],
       "interface-over-type-literal": true,
       "match-default-export-name": true,
-      "newline-per-chained-call": true,
       "no-boolean-literal-compare": true,
       "no-redundant-jsdoc": true,
       "no-reference-import": true,
@@ -100,7 +99,19 @@
       "indent": [true, "spaces", 2],
       "quotemark": [true, "single", "avoid-escape", "avoid-template"],
       "semicolon": [true, "always"],
-      "trailing-comma": false
+
+      // Rules turned off
+      // Make sure to give a reason for why
+
+      // Seems to be triggering for last element in a list. Annoying...
+      "trailing-comma": false,
+
+      // I'm okay with this
+      "no-angle-bracket-type-assertion": false,
+
+      // Chai testing library uses chained calls to simplify reading
+      "newline-per-chained-call": false
+
     },
     "rulesDirectory": []
 }
