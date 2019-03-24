@@ -3,7 +3,13 @@ export enum ResultStatus {
   failed = 'failed',
   undefined = 'undefined',
   pending = 'pending',
-  ambiguous = 'ambiguous'
+  ambiguous = 'ambiguous',
+
+  /**
+   * Skipped can occur in a Cucumber Test Report
+   * when a preceeding step fails
+   */
+  skipped = 'skipped'
 }
 
 export interface IResult {
