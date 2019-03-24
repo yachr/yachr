@@ -64,10 +64,36 @@
       "prefer-readonly": true,
 
       // Style
-
-
-
-
+      "array-type": [true, "array"],
+      "arrow-return-shorthand": [true, "multiline"],
+      "binary-expression-operand-order": true,
+      "callable-types": true,
+      "class-name": true,
+      "comment-format": [true, "check-space"],
+      "completed-docs": [true, "classes", "interfaces", "enums", "functions", "methods"],
+      "file-name-casing": [true, {".ts": "camel-case"}],
+      "interface-name": [true, "always-prefix"],
+      "interface-over-type-literal": true,
+      "match-default-export-name": true,
+      "newline-per-chained-call": true,
+      "no-boolean-literal-compare": true,
+      "no-redundant-jsdoc": true,
+      "no-reference-import": true,
+      "one-variable-per-declaration": [true, "ignore-for-loop"],
+      "ordered-imports": [
+        true,
+        {
+          "import-sources-order": "lowercase-first",
+          "named-imports-order": "lowercase-first",
+          "module-source-path": "full"
+        }
+      ],
+      "prefer-method-signature": true,
+      "prefer-template": [true, "allow-single-concat"],
+      "return-undefined": true,
+      "space-before-function-paren": [true, "always"],
+      "space-within-parens": true,
+      "switch-final-break": true
     },
     "rulesDirectory": []
 }
