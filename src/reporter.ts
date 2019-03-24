@@ -15,19 +15,19 @@ export class Reporter {
 
     const aggregator = new ReportAggregator();
 
-    const data = <HtmlModel>{
+    const data = <HtmlModel> {
       cucumberReportSummary: aggregator.getSummaryForSuite(results),
       cucumberResult: results
     };
 
-    if(!options.htmlTemplate) {
+    if (!options.htmlTemplate) {
       throw('htmlTemplate not supplied in ReportOptions');
     }
 
     let reportTemplate: string;
     try {
       reportTemplate = fs.readFileSync(options.htmlTemplate, 'utf8');
-    } catch(err) {
+    } catch (err) {
       throw(`Error reading htmlTemplate: ${err}`);
 
     }
@@ -44,14 +44,14 @@ export class Reporter {
 
     try {
       fs.writeFileSync(options.output, htmlReport, 'utf8');
-    } catch(err) {
+    } catch (err) {
       console.log(`Error writing report to file: ${err}`);
     }
   }
 
   /** Used by generate to add in any default options that need to overwrite empty parameters */
   populateDefaultOptionsIfMissing(options: ReportOptions) {
-    const defaultOptions = <ReportOptions>{
+    const defaultOptions = <ReportOptions> {
       htmlTemplate: __dirname + '/templates/standard.html'
     };
 

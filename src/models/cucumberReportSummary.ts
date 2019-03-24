@@ -42,7 +42,7 @@ export class CucumberReportSummary {
   }
 
   updateFromReportResult(result: IResult) {
-    this.totalDuration += <number>(result.duration | 0);
+    this.totalDuration += <number> (result.duration | 0);
 
     // Switch case on status
     switch (result.status) {

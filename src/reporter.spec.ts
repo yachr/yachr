@@ -32,7 +32,7 @@ describe('reporter', () => {
   });
 
   it('should generate a report', () => {
-    const options:ReportOptions = {
+    const options: ReportOptions = {
       jsonFile: './src/samples/results.json',
       output: './src/samples/sample.html'
     };
@@ -50,7 +50,7 @@ describe('reporter', () => {
   });
 
   it('should update options with required defaults if the user does not supply them', () => {
-    const options = <ReportOptions>{
+    const options = <ReportOptions> {
     };
 
     const actual = reporter.populateDefaultOptionsIfMissing(options);
@@ -59,7 +59,7 @@ describe('reporter', () => {
   });
 
   it('populateDefaultOptionsIfMissing should not overwrite existing values', () => {
-    const options = <ReportOptions>{
+    const options = <ReportOptions> {
       htmlTemplate: 'templatePath',
       jsonFile: 'somepath'
     };
