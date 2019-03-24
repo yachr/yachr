@@ -56,11 +56,10 @@ describe('report-aggregator', () => {
         }
     };
 
-    console.log(summary);
+    console.info(summary);
 
     // Had to do the JSON dance here to loose the _proto property
     // from summary before doing the compare
     expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(expectedOutput);
   });
 });
-

@@ -45,7 +45,7 @@ export class Reporter {
     try {
       fs.writeFileSync(options.output, htmlReport, 'utf8');
     } catch (err) {
-      console.log(`Error writing report to file: ${err}`);
+      console.error(`Error writing report to file: ${err}`);
     }
   }
 
@@ -58,14 +58,13 @@ export class Reporter {
     return {...defaultOptions, ... options};
   }
 
-
   public parseJsonFile(resultsFile: string): ICucumberResult[] {
     let results: ICucumberResult[];
     let input: string;
     try {
       return JSON.parse(fs.readFileSync(resultsFile, 'utf8'));
     } catch (err) {
-      console.log('Error reading file: ' + resultsFile);
+      console.error('Error reading file: ' + resultsFile);
       throw (err);
     }
   }

@@ -25,7 +25,6 @@ export class CucumberReportSummary {
       this.pending + this.ambiguous + this.unknown;
   }
 
-
   get isFailed(): boolean { return this.failed > 0; }
   get isPassed(): boolean { return this.passed === this.total; }
 
@@ -53,7 +52,7 @@ export class CucumberReportSummary {
       case ResultStatus.ambiguous: this.ambiguous++; break;
       default: {
         this.unknown++;
-        console.log(`Unmapped result status for ${result.status}`);
+        console.warn(`Unmapped result status for ${result.status}`);
       }
     }
   }
