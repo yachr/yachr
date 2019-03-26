@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { } from 'mocha';
 
-import { ICucumberFeatureSuite } from './models/cucumberFeatureSuite';
+import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
 import { ReportAggregator } from './reportAggregator';
 import * as happyDayResult from './samples/results.json';
 

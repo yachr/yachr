@@ -115,7 +115,10 @@
       "newline-per-chained-call": false,
 
       // Deprecated since TypeScript 2.9. Use the built-in compiler checks instead.
-      "no-unused-variable": false
+      "no-unused-variable": false,
+
+      // Puts else statements on same line as if statements...
+      "one-line": false
 
     },
     "rulesDirectory": []

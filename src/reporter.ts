@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
 
-import { ICucumberFeature } from './models/cucumberFeature';
-import { ICucumberFeatureSuite } from './models/cucumberFeatureSuite';
-import { CucumberReportSummary } from './models/cucumberReportSummary';
+import { ScenarioSummary } from './models/aggregator/scenarioSummary';
 import { IHtmlModel } from './models/htmlModel';
+import { ICucumberFeature } from './models/reporter/cucumberFeature';
+import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
 import { IReportOptions } from './models/reportOptions';
 import { ReportAggregator } from './reportAggregator';
 
@@ -47,7 +47,7 @@ export class Reporter {
 
     // Gross work around because the template engine seems to reject
     // the work undefined as a property.
-    Handlebars.registerHelper('undef', (suiteSummary: CucumberReportSummary): number =>
+    Handlebars.registerHelper('undef', (suiteSummary: ScenarioSummary): number =>
       suiteSummary.undefined
     );
 

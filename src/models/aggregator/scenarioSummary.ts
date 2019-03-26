@@ -1,21 +1,27 @@
-import { IResult } from './result';
-import { ResultStatus } from './resultStatus';
+import { IResult } from '../reporter/result';
+import { ResultStatus } from '../reporter/resultStatus';
 
 /**
- * The Cucumber Report Summary maintains a summary of all child
- * elements in a cucumber report.
- * - For a suite of features, this summary is the number of passing/failing
- * features that belong to the suite.
- * - For a single Feature, this summary is the number of passing/failing
- * scenarios that belong to the feature.
- * - For a single Scenario, this summary is the number of passing/failing
- * steps that belong to the scenario
+ * A summary of all steps in a Gherkin Scenario as reported by the Cucumber Test Report.
+ * Summarises all steps into a single aggregated summary
  */
-export class CucumberReportSummary {
+export class ScenarioSummary {
+
+  // Reports the total number of steps in the Scenario that have passed, failed, etc.
+
+  /** The total number of steps that have passed for this Scenario */
   public passed: number = 0;
+
+  /** The total number of steps that have failed for this Scenario */
   public failed: number = 0;
+
+  /** The total number of steps that are not implemented (and thus marked as undefined) */
   public undefined: number = 0;
+
+  /** ??? */
   public pending: number = 0;
+
+  /** ??? */
   public ambiguous: number = 0;
 
   // Catch all for if we haven't mapped a cucumber report status
@@ -28,32 +34,20 @@ export class CucumberReportSummary {
     this.scenarioName = '';
   }
 
-  /** All features */
+  /** All steps in the scenario */
   get total(): number {
     return this.passed + this.failed + this.undefined +
       this.pending + this.ambiguous + this.unknown;
   }
 
+  /** Whether the Scenario has failed due to a failed step */
   get isFailed(): boolean { return this.failed > 0; }
+
+  /** Whether the Scenario has passed due to all steps passing */
   get isPassed(): boolean { return this.passed === this.total; }
 
-  /**
-   * Updates this summary to include the results of the child summary.
-   * The child summary is rolled up into this parent summary
-   * @param child The Cucumber Report summary for the sub-element
-   *  (Feature in a Suite, Scenario in a single Feature, Step in a single Scenario)
-   */
-  public aggregateChildSummary(child: CucumberReportSummary): void {
-    this.totalDuration += child.totalDuration;
-
-    this.passed += child.passed;
-    this.failed += child.failed;
-    this.undefined += child.undefined;
-    this.pending += child.pending;
-    this.ambiguous += child.ambiguous;
-
-    this.unknown += child.unknown;
-  }
+  /** Whether the entire scenario is undefined */
+  get isUndefined(): boolean { return this.undefined === this.total; }
 
   /**
    * Updates the summary based on the raw cucumber report step status.
@@ -61,7 +55,7 @@ export class CucumberReportSummary {
    * of the report tree (the Step)
    * @param result The Step result from the raw Cucumber report
    */
-  public updateFromReportResult(result: IResult): void {
+  public aggregateStep(result: IResult): void {
     this.totalDuration += (isNaN(result.duration) ? 0 : result.duration);
 
     // Switch case on status
