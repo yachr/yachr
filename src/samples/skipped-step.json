@@ -1,0 +1,59 @@
+[
+  {
+    "description": "Sample Feature Description",
+    "keyword": "Ability",
+    "name": "Login",
+    "line": 1,
+    "id": "login",
+    "tags": [],
+    "uri": "e2e\\src\\features\\abilities\\user\\login.feature",
+    "elements": [
+      {
+        "id": "login;login-via-login-page",
+        "keyword": "Scenario",
+        "line": 11,
+        "name": "Login via login page",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "e2e\\src\\steps\\search.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 58,
+            "name": "User has searched",
+            "match": {
+              "location": "e2e\\src\\steps\\search.steps.ts:87"
+            },
+            "result": {
+              "status": "pending",
+              "duration": 20
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 59,
+            "name": "multiple items have been returned",
+            "match": {
+              "location": "e2e\\src\\steps\\search.steps.ts:91"
+            },
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

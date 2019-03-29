@@ -38,7 +38,9 @@
     "tslint": "^5.14.0",
     "typescript": "^3.3.3333"
   },
-  "files": ["/dist"],
+  "files": [
+    "/dist"
+  ],
   "contributors": [
     {
       "name": "Des Horsley",
