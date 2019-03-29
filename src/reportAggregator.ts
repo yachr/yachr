@@ -1,3 +1,4 @@
+import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
 import { FeatureSummary } from './models/aggregator/featureSummary';
 import { ScenarioSummary } from './models/aggregator/scenarioSummary';
@@ -22,10 +23,11 @@ export class ReportAggregator {
    */
   public getSummaryForSuite(suite: ICucumberFeatureSuite): SuiteSummary {
 
-    const suiteSummary = new SuiteSummary();
-
     // Used to aggregates total passing/failing features
     const featureSuiteSummary = new FeatureSuiteSummary();
+
+    // Used to aggregate total passing/failing scenarios
+    const scenarioSuiteSummary = new ScenarioSuiteSummary()
 
     suite.features.forEach(feature => {
 
@@ -34,10 +36,12 @@ export class ReportAggregator {
       const featureSummary = this.getSummaryForFeature(feature);
 
       featureSuiteSummary.aggregateFeature(featureSummary);
-      suiteSummary.scenarioSummary.push(featureSummary);
+      scenarioSuiteSummary.aggregateFeature(featureSummary);
     });
 
+    const suiteSummary = new SuiteSummary();
     suiteSummary.featureSummary = featureSuiteSummary;
+    suiteSummary.scenarioSummary = scenarioSuiteSummary;
     return suiteSummary;
   }
 

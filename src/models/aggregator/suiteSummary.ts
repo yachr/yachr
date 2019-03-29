@@ -1,5 +1,5 @@
 import { FeatureSuiteSummary } from './featureSuiteSummary';
-import { FeatureSummary } from './featureSummary';
+import { ScenarioSuiteSummary } from './scenarioSuiteSummary';
 
 /**
  * An aggregation summary of all Features, and all Scenarios
@@ -19,5 +19,5 @@ export class SuiteSummary {
    * multiple features). Identifies the total number of
    * scenarios passing, failing, etc.
    */
-  public scenarioSummary: FeatureSummary[] = [];
+  public scenarioSummary: ScenarioSuiteSummary = new ScenarioSuiteSummary();
 }

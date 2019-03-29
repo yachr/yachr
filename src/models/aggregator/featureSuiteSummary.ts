@@ -1,6 +1,9 @@
 import { FeatureSummary } from './featureSummary';
+
 /**
- * A high level summary of used for dashboard reporting
+ * A high level summary of used for dashboard reporting.
+ * Represents the total number of passing/failing features
+ * in the entire Cucumber Test Report
  */
 export class FeatureSuiteSummary {
 
@@ -19,7 +22,7 @@ export class FeatureSuiteSummary {
 
   /** All features in this group  */
   get total(): number {
-    return this.passed + this.failed + this.undefined;
+    return this.passed + this.failed + this.undefined + this.other;
   }
 
   /** Whether the Suite or Feature has failed due to a failed Feature or Scenario */

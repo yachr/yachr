@@ -9,23 +9,31 @@
           <td>Passed</td>
           <td>Failed</td>
           <td>Undefined</td>
-          <td>Pending</td>
-          <td>Ambiguous</td>
-          <td>Unknown</td>
+          <td>Other</td>
           <td>Total</td>
         </thead>
     </header>
+
     <tr>
-      <td>Steps</td>
-      <td>{{ cucumberReportSummary.suiteSummary.passed }}</td>
-      <td>{{ cucumberReportSummary.suiteSummary.failed }}</td>
-      {{! undef helper is required becuase undefined is a reserved work in javascript and breaks the template. }}
-      <td>{{ undef cucumberReportSummary.suiteSummary }} </td>
-      <td>{{ cucumberReportSummary.suiteSummary.pending }}</td>
-      <td>{{ cucumberReportSummary.suiteSummary.ambiguous }}</td>
-      <td>{{ cucumberReportSummary.suiteSummary.unknown }}</td>
-      <td>{{ cucumberReportSummary.suiteSummary.total }}</td>
+      <td>Features</td>
+      <td>{{ cucumberReportSummary.featureSummary.passed }}</td>
+      <td>{{ cucumberReportSummary.featureSummary.failed }}</td>
+      {{! featureUndef helper is required becuase undefined is a reserved work in javascript and breaks the template. }}
+      <td>{{ featureUndef cucumberReportSummary.featureSummary }} </td>
+      <td>{{ cucumberReportSummary.featureSummary.other }}</td>
+      <td>{{ cucumberReportSummary.featureSummary.total }}</td>
     </tr>
+
+    <tr>
+      <td>Scenarios</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.passed }}</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.failed }}</td>
+      {{! scenarioUndef helper is required becuase undefined is a reserved work in javascript and breaks the template. }}
+      <td>{{ scenarioUndef cucumberReportSummary.scenarioSummary }} </td>
+      <td>{{ cucumberReportSummary.scenarioSummary.other }}</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.total }}</td>
+    </tr>
+
   </table>
 </body>
 </html>

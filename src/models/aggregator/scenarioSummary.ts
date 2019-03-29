@@ -23,6 +23,8 @@ export class ScenarioSummary {
 
   /** ??? */
   public ambiguous: number = 0;
+
+  /** The total number of steps that were skipped */
   public skipped: number = 0;
 
   // Catch all for if we haven't mapped a cucumber report status

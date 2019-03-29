@@ -1,6 +1,8 @@
 import { ScenarioSummary } from './scenarioSummary';
 /**
- * A summary of all scenarios in a Feature
+ * A summary of all scenarios in a Feature.
+ * Aggregates all scenarios in the feature to report the total number
+ * of passing/failing scenarios within the feature
  */
 export class FeatureSummary {
 
@@ -19,19 +21,19 @@ export class FeatureSummary {
 
   /** All features in this group  */
   get total(): number {
-    return this.passed + this.failed + this.undefined;
+    return this.passed + this.failed + this.undefined + this.other;
   }
 
-  /** Whether the Suite or Feature has failed due to a failed Feature or Scenario */
+  /** Whether the Feature has failed due to a failed Scenario */
   get isFailed(): boolean { return this.failed > 0; }
 
-  /** Whether the Suite or Feature has passed due to all steps passing */
+  /** Whether the Feature has passed due to all Scenarios passing */
   get isPassed(): boolean { return this.passed === this.total; }
 
-  /** Whether the entire Suite or Feature is undefined */
+  /** Whether the entire Feature is entirely undefined */
   get isUndefined(): boolean { return this.undefined === this.total; }
 
-  /** Updates the aggregated summary using information gathered in the Element Summary */
+  /** Updates the Feature summary using information gathered in the Scenario Summary */
   public aggregateScenario(scenario: ScenarioSummary): void {
     if (scenario.isFailed) { this.failed++; }
     else if (scenario.isPassed) { this.passed++; }

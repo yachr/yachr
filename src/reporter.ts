@@ -1,3 +1,4 @@
+import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
 import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
 
@@ -7,6 +8,7 @@ import { ICucumberFeature } from './models/reporter/cucumberFeature';
 import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
 import { IReportOptions } from './models/reportOptions';
 import { ReportAggregator } from './reportAggregator';
+import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 
 /**
  * The main YACHR Cucumber HTML Report generator.
@@ -47,7 +49,11 @@ export class Reporter {
 
     // Gross work around because the template engine seems to reject
     // the work undefined as a property.
-    Handlebars.registerHelper('undef', (suiteSummary: ScenarioSummary): number =>
+    Handlebars.registerHelper('featureUndef', (featureSummary: FeatureSuiteSummary): number =>
+      featureSummary.undefined
+    );
+
+    Handlebars.registerHelper('scenarioUndef', (suiteSummary: ScenarioSuiteSummary): number =>
       suiteSummary.undefined
     );
 
