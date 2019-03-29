@@ -17,6 +17,7 @@ export class CucumberReportSummary {
   public undefined: number = 0;
   public pending: number = 0;
   public ambiguous: number = 0;
+  public skipped: number = 0;
 
   // Catch all for if we haven't mapped a cucumber report status
   public unknown: number = 0;
@@ -51,6 +52,7 @@ export class CucumberReportSummary {
     this.undefined += child.undefined;
     this.pending += child.pending;
     this.ambiguous += child.ambiguous;
+    this.skipped += child.skipped;
 
     this.unknown += child.unknown;
   }
@@ -71,6 +73,7 @@ export class CucumberReportSummary {
       case ResultStatus.undefined: this.undefined++; break;
       case ResultStatus.pending: this.pending++; break;
       case ResultStatus.ambiguous: this.ambiguous++; break;
+      case ResultStatus.skipped: this.skipped++; break;
       default: {
         this.unknown++;
         console.warn(`Unmapped result status for ${result.status}`);
