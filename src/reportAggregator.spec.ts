@@ -38,11 +38,24 @@ describe('report-aggregator', () => {
   it ('should aggregate a feature', () => {
     const summary = aggregator.getSummaryForFeature(suite.features[0]);
 
-    const expectedOutput = {
+    const scenarioSummary = {
+      ambiguous: 0,
       failed: 0,
-      other: 1,
-      passed: 0,
-      undefined: 0
+      passed: 2,
+      pending: 0,
+      scenarioName: 'Login via login page',
+      skipped: 0,
+      totalDuration: 2,
+      undefined: 3,
+      unknown: 0
+    };
+
+    const expectedOutput = {
+      failingScenarios: [],
+      featureName: 'Login',
+      partialScenarios: [ scenarioSummary ],
+      passingScenarios: [],
+      undefinedScenarios: []
     };
 
     // Had to do the JSON dance here to loose the _proto property
@@ -53,18 +66,38 @@ describe('report-aggregator', () => {
   it('should aggregate a feature suite', () => {
     const summary = aggregator.getSummaryForSuite(suite);
 
+    const scenarioSummary = {
+      ambiguous: 0,
+      failed: 0,
+      passed: 2,
+      pending: 0,
+      scenarioName: 'Login via login page',
+      skipped: 0,
+      totalDuration: 2,
+      undefined: 3,
+      unknown: 0
+    };
+
+    const featureSummary = {
+      failingScenarios: [],
+      featureName: 'Login',
+      partialScenarios: [ scenarioSummary ],
+      passingScenarios: [],
+      undefinedScenarios: []
+    };
+
     const expectedOutput = {
       featureSummary: {
-        failed: 0,
-        other: 1,
-        passed: 0,
-        undefined: 0
+        failingFeatures: [],
+        partialFeatures: [ featureSummary ],
+        passingFeatures: [],
+        undefinedFeatures: []
       },
       scenarioSummary: {
-        failed: 0,
-        other: 1,
-        passed: 0,
-        undefined: 0
+        failingScenarios: [],
+        partialScenarios: [ scenarioSummary ],
+        passingScenarios: [],
+        undefinedScenarios: []
       }
     };
 
