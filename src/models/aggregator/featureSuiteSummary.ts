@@ -7,18 +7,23 @@ import { FeatureSummary } from './featureSummary';
  */
 export class FeatureSuiteSummary {
 
+  public passingFeatures: FeatureSummary[] = [];
+  public failingFeatures: FeatureSummary[] = [];
+  public undefinedFeatures: FeatureSummary[] = [];
+  public otherFeatures: FeatureSummary[] = [];
+
   /** The total number of features that have passed */
-  public passed: number = 0;
+  public get passed(): number { return this.passingFeatures.length; }
 
   /** The total number of features that have failed */
-  public failed: number = 0;
+  public get failed(): number { return this.failingFeatures.length; }
 
   /** The total number of features that are not implemented (and thus marked as undefined) */
-  public undefined: number = 0;
+  public get undefined(): number { return this.undefinedFeatures.length; }
 
   // TODO: Remove this if not required. Only used for initial testing
   /** Keeps track of other non-mapped statuses */
-  public other: number = 0;
+  public get other(): number { return this.otherFeatures.length; }
 
   /** All features in this group  */
   get total(): number {
@@ -36,12 +41,12 @@ export class FeatureSuiteSummary {
 
   /** Updates the aggregated summary using information gathered in the Element Summary */
   public aggregateFeature(feature: FeatureSummary): void {
-    if (feature.isFailed) { this.failed++; }
-    else if (feature.isPassed) { this.passed++; }
-    else if (feature.isUndefined) { this.undefined++; }
+    if (feature.isFailed) { this.failingFeatures.push(feature); }
+    else if (feature.isPassed) { this.passingFeatures.push(feature); }
+    else if (feature.isUndefined) { this.undefinedFeatures.push(feature); }
     else {
       console.warn('Unmapped value for feature ', feature);
-      this.other++;
+      this.otherFeatures.push(feature);
     }
 
   }

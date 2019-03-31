@@ -48,7 +48,7 @@ describe('reporter', () => {
     expect(fs.existsSync(options.output), `Error: test did not produce ${options.output}`).to.be.true;
 
     // Clean up test
-    fs.unlinkSync(options.output);
+    //fs.unlinkSync(options.output);
   });
 
   it('should update options with required defaults if the user does not supply them', () => {

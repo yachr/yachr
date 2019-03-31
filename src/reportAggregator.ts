@@ -63,6 +63,7 @@ export class ReportAggregator {
       summary.aggregateScenario(scenarioSummary);
     });
 
+    summary.featureName = feature.name;
     return summary;
   }
 

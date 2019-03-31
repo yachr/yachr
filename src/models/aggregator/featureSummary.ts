@@ -1,4 +1,5 @@
 import { ScenarioSummary } from './scenarioSummary';
+
 /**
  * A summary of all scenarios in a Feature.
  * Aggregates all scenarios in the feature to report the total number
@@ -6,20 +7,27 @@ import { ScenarioSummary } from './scenarioSummary';
  */
 export class FeatureSummary {
 
-  /** The total number of features that have passed */
-  public passed: number = 0;
+  public featureName: string = '';
 
-  /** The total number of features that have failed */
-  public failed: number = 0;
+  public passingScenarios: ScenarioSummary[] = [];
+  public failingScenarios: ScenarioSummary[] = [];
+  public undefinedScenarios: ScenarioSummary[] = [];
+  public otherScenarios: ScenarioSummary[] = [];
 
-  /** The total number of features that are not implemented (and thus marked as undefined) */
-  public undefined: number = 0;
+  /** The total number of Scenarios that have passed in this Feature */
+  public get passed(): number { return this.passingScenarios.length; }
+
+  /** The total number of Scenarios that have failed in this Feature */
+  public get failed(): number { return this.failingScenarios.length; }
+
+  /** The total number of Scenarios that are not implemented (and thus marked as undefined) */
+  public get undefined(): number { return this.undefinedScenarios.length; }
 
   // TODO: Remove this if not required. Only used for initial testing
   /** Keeps track of other non-mapped statuses */
-  public other: number = 0;
+  public get other(): number { return this.otherScenarios.length; }
 
-  /** All features in this group  */
+  /** All Scenarios in this Feature  */
   get total(): number {
     return this.passed + this.failed + this.undefined + this.other;
   }
@@ -35,12 +43,12 @@ export class FeatureSummary {
 
   /** Updates the Feature summary using information gathered in the Scenario Summary */
   public aggregateScenario(scenario: ScenarioSummary): void {
-    if (scenario.isFailed) { this.failed++; }
-    else if (scenario.isPassed) { this.passed++; }
-    else if (scenario.isUndefined) { this.undefined++; }
+    if (scenario.isFailed) { this.failingScenarios.push(scenario); }
+    else if (scenario.isPassed) { this.passingScenarios.push(scenario); }
+    else if (scenario.isUndefined) { this.undefinedScenarios.push(scenario); }
     else {
       console.warn('Unmapped value for scenario ', scenario);
-      this.other++;
+      this.otherScenarios.push(scenario);
     }
 
   }
