@@ -41,10 +41,12 @@ BRANCH=subprocess.check_output(["git",
 # (https://travis-ci.org/yachr/yachr.svg?branch=develop)]
 # (https://travis-ci.org/yachr/yachr/branches)
 
+# The \n character at the end is important
+
 # Output String with Variable substitution
 travis="[![Build Status]" \
       "(https://travis-ci.org/{GITHUB_USER}/{REPO}.svg?branch={BRANCH})]" \
-      "(https://travis-ci.org/{GITHUB_USER}/{REPO}/branches)".format(
+      "(https://travis-ci.org/{GITHUB_USER}/{REPO}/branches)\n".format(
            BRANCH=BRANCH.decode("utf-8"), #Decode the bytes to a string to avoid b being inserted before the branch
            GITHUB_USER=GITHUB_USER,
            REPO=REPO)
@@ -59,13 +61,13 @@ replace_status_in_readme("[![Build Status]", travis)
 
 coveralls = "[![Coverage Status]" \
             "(https://coveralls.io/repos/github/{GITHUB_USER}/{REPO}/badge.svg?branch={BRANCH})]" \
-            "(https://coveralls.io/github/{GITHUB_USER}/{REPO}?branch={BRANCH})".format(
+            "(https://coveralls.io/github/{GITHUB_USER}/{REPO}?branch={BRANCH})\n".format(
               BRANCH=BRANCH.decode("utf-8"),
               GITHUB_USER=GITHUB_USER,
               REPO=REPO
             )
 
-replace_status_in_readme("[![Coverage Status]", travis)
+replace_status_in_readme("[![Coverage Status]", coveralls)
 
 subprocess.check_output(["git", "add", "README.md" ])
 

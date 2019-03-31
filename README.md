@@ -1,5 +1,7 @@
 # YACHR
 [![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=CommitHooks)](https://travis-ci.org/yachr/yachr/branches)
+[![Coverage Status](https://coveralls.io/repos/github/yachr/yachr/badge.svg?branch=CommitHooks)](https://coveralls.io/github/yachr/yachr?branch=CommitHooks)
+
 Yet another cucumber html reporter is a simple html reporter that runs off the standard json file produced by cucumberjs.
 
 This reporter targets cucumberjs 3.
@@ -97,4 +99,11 @@ To keep the build tags aligned to each branch, we're using this pre-commit setup
 https://gist.github.com/DesHorsley/6b258970c14bffa5cd423762b66c8355
 
 When the readme is committed, the tag will be updated to reflect the current branch.
+
+For developers on a linux based system, make sure that the `pre-commit` hook has execute permissions - otherwise, git will not be able to execute the hook script
+
+```
+chmod 755 .git/hooks/pre-commit
+chmod 755 .git/hooks/pre-commit.py
+```
 <details>
