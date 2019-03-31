@@ -7,9 +7,10 @@
     "build": "tsc --declaration ",
     "postbuild": "copyfiles -f src/templates/*.html dist/src/templates",
     "test": "mocha -r ts-node/register --r source-map-support/register --recursive src/**/*.spec.ts",
-    "ci": "npm run test",
+    "ci": "npm run coverage && npm run coveralls",
     "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc npm run test",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "nyc": {
     "extension": [
@@ -23,7 +24,8 @@
       "playground/*"
     ],
     "reporter": [
-      "html"
+      "html",
+      "lcov"
     ],
     "all": true
   },
@@ -49,7 +51,9 @@
     "@types/node": "^11.11.3",
     "chai": "^4.2.0",
     "copyfiles": "^2.1.0",
+    "coveralls": "^3.0.3",
     "mocha": "^6.0.2",
+    "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^13.3.0",
     "rimraf": "^2.6.3",
     "source-map-support": "^0.5.11",
