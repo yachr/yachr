@@ -6,9 +6,26 @@
     "prebuild": "rimraf dist",
     "build": "tsc --declaration ",
     "postbuild": "copyfiles -f src/templates/*.html dist/src/templates",
-    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+    "test": "mocha -r ts-node/register --r source-map-support/register --recursive src/**/*.spec.ts",
     "ci": "npm run test",
-    "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
+    "coverage": "nyc npm run test"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "**/*.spec.ts",
+      "dist/*",
+      "coverage/*",
+      "playground/*"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
   },
   "main": "./dist/src/index.js",
   "repository": {
@@ -33,7 +50,9 @@
     "chai": "^4.2.0",
     "copyfiles": "^2.1.0",
     "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
     "rimraf": "^2.6.3",
+    "source-map-support": "^0.5.11",
     "ts-node": "^8.0.3",
     "tslint": "^5.14.0",
     "typescript": "^3.3.3333"
