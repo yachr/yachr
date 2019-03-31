@@ -1,6 +1,6 @@
-import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
 import { FeatureSummary } from './models/aggregator/featureSummary';
+import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 import { ScenarioSummary } from './models/aggregator/scenarioSummary';
 import { SuiteSummary } from './models/aggregator/suiteSummary';
 import { ICucumberFeature } from './models/reporter/cucumberFeature';
@@ -27,7 +27,7 @@ export class ReportAggregator {
     const featureSuiteSummary = new FeatureSuiteSummary();
 
     // Used to aggregate total passing/failing scenarios
-    const scenarioSuiteSummary = new ScenarioSuiteSummary()
+    const scenarioSuiteSummary = new ScenarioSuiteSummary();
 
     suite.features.forEach(feature => {
 

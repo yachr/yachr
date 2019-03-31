@@ -49,7 +49,6 @@ export class ScenarioSummary {
   /** Whether the Scenario has passed due to all steps passing */
   get isPassed(): boolean { return this.passed === this.total; }
 
-
   /** Whether the entire scenario is undefined */
   get isUndefined(): boolean { return this.undefined === this.total; }
 

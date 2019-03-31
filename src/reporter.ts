@@ -1,14 +1,13 @@
-import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
 import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
 
-import { ScenarioSummary } from './models/aggregator/scenarioSummary';
+import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
+import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 import { IHtmlModel } from './models/htmlModel';
 import { ICucumberFeature } from './models/reporter/cucumberFeature';
 import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
 import { IReportOptions } from './models/reportOptions';
 import { ReportAggregator } from './reportAggregator';
-import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 
 /**
  * The main YACHR Cucumber HTML Report generator.
