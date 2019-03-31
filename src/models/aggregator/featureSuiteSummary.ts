@@ -10,7 +10,7 @@ export class FeatureSuiteSummary {
   public passingFeatures: FeatureSummary[] = [];
   public failingFeatures: FeatureSummary[] = [];
   public undefinedFeatures: FeatureSummary[] = [];
-  public otherFeatures: FeatureSummary[] = [];
+  public partialFeatures: FeatureSummary[] = [];
 
   /** The total number of features that have passed */
   public get passed(): number { return this.passingFeatures.length; }
@@ -21,13 +21,12 @@ export class FeatureSuiteSummary {
   /** The total number of features that are not implemented (and thus marked as undefined) */
   public get undefined(): number { return this.undefinedFeatures.length; }
 
-  // TODO: Remove this if not required. Only used for initial testing
-  /** Keeps track of other non-mapped statuses */
-  public get other(): number { return this.otherFeatures.length; }
+  /** Keeps track of partially passing features */
+  public get partial(): number { return this.partialFeatures.length; }
 
   /** All features in this group  */
   get total(): number {
-    return this.passed + this.failed + this.undefined + this.other;
+    return this.passed + this.failed + this.undefined + this.partial;
   }
 
   /** Whether the Suite or Feature has failed due to a failed Feature or Scenario */
@@ -44,11 +43,7 @@ export class FeatureSuiteSummary {
     if (feature.isFailed) { this.failingFeatures.push(feature); }
     else if (feature.isPassed) { this.passingFeatures.push(feature); }
     else if (feature.isUndefined) { this.undefinedFeatures.push(feature); }
-    else {
-      console.warn('Unmapped value for feature ', feature);
-      this.otherFeatures.push(feature);
-    }
-
+    else { this.partialFeatures.push(feature); }
   }
 
 }

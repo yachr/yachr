@@ -12,7 +12,7 @@ export class FeatureSummary {
   public passingScenarios: ScenarioSummary[] = [];
   public failingScenarios: ScenarioSummary[] = [];
   public undefinedScenarios: ScenarioSummary[] = [];
-  public otherScenarios: ScenarioSummary[] = [];
+  public partialScenarios: ScenarioSummary[] = [];
 
   /** The total number of Scenarios that have passed in this Feature */
   public get passed(): number { return this.passingScenarios.length; }
@@ -23,13 +23,12 @@ export class FeatureSummary {
   /** The total number of Scenarios that are not implemented (and thus marked as undefined) */
   public get undefined(): number { return this.undefinedScenarios.length; }
 
-  // TODO: Remove this if not required. Only used for initial testing
-  /** Keeps track of other non-mapped statuses */
-  public get other(): number { return this.otherScenarios.length; }
+  /** Keeps track of partially passing statuses */
+  public get partial(): number { return this.partialScenarios.length; }
 
   /** All Scenarios in this Feature  */
   get total(): number {
-    return this.passed + this.failed + this.undefined + this.other;
+    return this.passed + this.failed + this.undefined + this.partial;
   }
 
   /** Whether the Feature has failed due to a failed Scenario */
@@ -46,11 +45,7 @@ export class FeatureSummary {
     if (scenario.isFailed) { this.failingScenarios.push(scenario); }
     else if (scenario.isPassed) { this.passingScenarios.push(scenario); }
     else if (scenario.isUndefined) { this.undefinedScenarios.push(scenario); }
-    else {
-      console.warn('Unmapped value for scenario ', scenario);
-      this.otherScenarios.push(scenario);
-    }
-
+    else { this.partialScenarios.push(scenario); }
   }
 
 }

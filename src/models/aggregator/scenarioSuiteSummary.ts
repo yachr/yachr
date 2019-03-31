@@ -11,7 +11,7 @@ export class ScenarioSuiteSummary {
   public passingScenarios: ScenarioSummary[] = [];
   public failingScenarios: ScenarioSummary[] = [];
   public undefinedScenarios: ScenarioSummary[] = [];
-  public otherScenarios: ScenarioSummary[] = [];
+  public partialScenarios: ScenarioSummary[] = [];
 
   /** The total number of scenarios that have passed from all Features */
   public get passed(): number { return this.passingScenarios.length; }
@@ -22,13 +22,12 @@ export class ScenarioSuiteSummary {
   /** The total number of scenarios that are not implemented from all Features (and thus marked as undefined) */
   public get undefined(): number { return this.undefinedScenarios.length; }
 
-  // TODO: Remove this if not required. Only used for initial testing
-  /** Keeps track of other non-mapped statuses */
-  public get other(): number { return this.otherScenarios.length; }
+  /** Keeps track of partially passing Scenarios */
+  public get partial(): number { return this.partialScenarios.length; }
 
   /** All scenarios in this the entire Cucumber Test Suite  */
   get total(): number {
-    return this.passed + this.failed + this.undefined + this.other;
+    return this.passed + this.failed + this.undefined + this.partial;
   }
 
   /** Updates the Scenario Suite Summary using information gathered in the Feature Summary */
@@ -36,7 +35,7 @@ export class ScenarioSuiteSummary {
     this.passingScenarios = this.passingScenarios.concat(feature.passingScenarios);
     this.failingScenarios = this.failingScenarios.concat(feature.failingScenarios);
     this.undefinedScenarios = this.undefinedScenarios.concat(feature.undefinedScenarios);
-    this.otherScenarios = this.otherScenarios.concat(feature.otherScenarios);
+    this.partialScenarios = this.partialScenarios.concat(feature.partialScenarios);
   }
 
 }
