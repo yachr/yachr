@@ -8,7 +8,9 @@
     "postbuild": "copyfiles -f src/templates/*.html dist/src/templates",
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "ci": "npm run test",
-    "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
+    "e2e": "tsc -p features/tsconfig.json && cucumber-js --no-strict",
+    "poste2e": "rimraf features/**/*.js"
   },
   "main": "./dist/src/index.js",
   "repository": {
@@ -27,11 +29,13 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.1.7",
+    "@types/cucumber": "^4.0.5",
     "@types/handlebars": "^4.1.0",
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.11.3",
     "chai": "^4.2.0",
     "copyfiles": "^2.1.0",
+    "cucumber": "^5.1.0",
     "mocha": "^6.0.2",
     "rimraf": "^2.6.3",
     "ts-node": "^8.0.3",
@@ -55,6 +59,7 @@
     "url": "https://github.com/yachr/yachr/issues"
   },
   "dependencies": {
+    "chart.js": "^2.8.0",
     "handlebars": "^4.1.1"
   }
 }

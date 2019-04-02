@@ -3,3 +3,8 @@ playground/
 coverage/
 dist/
 /src/samples/sample.html
+
+# Cucumber
+features/**/*.steps.js
+reports/**/*.json
+reports/**/*.html

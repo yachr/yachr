@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "moduleResolution": "node",
+    "strict": true,
+    "typeRoots": [
+      "/node_modules/@types"
+    ],
+    "resolveJsonModule": true,
+  },
+  "include": [
+    "step_definitions/**/*.steps.ts"
+  ],
+}
