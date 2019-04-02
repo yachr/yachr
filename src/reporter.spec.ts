@@ -13,8 +13,8 @@ describe('reporter', () => {
 
   it('should parse a well formed json file', () => {
     const results = reporter.parseJsonFile('src/samples/results-empty.json');
-
-    expect(results).to.deep.equal([]);
+    const expected = { features: [] };
+    expect(results).to.deep.equal(expected);
   });
 
   it('should handle bad file paths', () => {

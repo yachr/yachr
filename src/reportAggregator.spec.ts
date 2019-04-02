@@ -1,66 +1,105 @@
 import { expect } from 'chai';
 import { } from 'mocha';
 
-import { ICucumberResult } from './models/cucumberResult';
+import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
 import { ReportAggregator } from './reportAggregator';
 import * as happyDayResult from './samples/results.json';
 import * as skippedStep from './samples/skipped-step.json';
 
 describe('report-aggregator', () => {
   let aggregator: ReportAggregator;
+  let suite: ICucumberFeatureSuite;
 
   beforeEach(() => {
     aggregator = new ReportAggregator();
+    suite = { features: happyDayResult };
   });
 
-  it('should aggregate the features', () => {
-    const features: ICucumberResult[] = happyDayResult;
-    const summary = aggregator.getSummaryForSuite(features);
+  it ('should aggregate a scenario', () => {
+    const summary = aggregator.getSummaryForScenario(suite.features[0].elements[0]);
 
     const expectedOutput = {
-        features: [
-          {
-            featureName: 'Login',
-            featureSummary: {
-              ambiguous: 0,
-              failed: 0,
-              passed: 2,
-              pending: 0,
-              scenarioName: '',
-              skipped: 0,
-              totalDuration: 2,
-              undefined: 3,
-              unknown: 0,
-            },
-            scenarios: [
-              {
-                ambiguous: 0,
-                failed: 0,
-                passed: 2,
-                pending: 0,
-                scenarioName: 'Login via login page',
-                skipped: 0,
-                totalDuration: 2,
-                undefined: 3,
-                unknown: 0
-              }
-            ]
-          }
-        ],
-        suiteSummary: {
-          ambiguous: 0,
-          failed: 0,
-          passed: 2,
-          pending: 0,
-          scenarioName: '',
-          skipped: 0,
-          totalDuration: 2,
-          undefined: 3,
-          unknown: 0,
-        }
+      ambiguous: 0,
+      failed: 0,
+      passed: 2,
+      pending: 0,
+      scenarioName: 'Login via login page',
+      skipped: 0,
+      totalDuration: 2,
+      undefined: 3,
+      unknown: 0
     };
 
-    console.info(summary);
+    // Had to do the JSON dance here to loose the _proto property
+    // from summary before doing the compare
+    expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(expectedOutput);
+  });
+
+  it ('should aggregate a feature', () => {
+    const summary = aggregator.getSummaryForFeature(suite.features[0]);
+
+    const scenarioSummary = {
+      ambiguous: 0,
+      failed: 0,
+      passed: 2,
+      pending: 0,
+      scenarioName: 'Login via login page',
+      skipped: 0,
+      totalDuration: 2,
+      undefined: 3,
+      unknown: 0
+    };
+
+    const expectedOutput = {
+      failingScenarios: [],
+      featureName: 'Login',
+      partialScenarios: [ scenarioSummary ],
+      passingScenarios: [],
+      undefinedScenarios: []
+    };
+
+    // Had to do the JSON dance here to loose the _proto property
+    // from summary before doing the compare
+    expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(expectedOutput);
+  });
+
+  it('should aggregate a feature suite', () => {
+    const summary = aggregator.getSummaryForSuite(suite);
+
+    const scenarioSummary = {
+      ambiguous: 0,
+      failed: 0,
+      passed: 2,
+      pending: 0,
+      scenarioName: 'Login via login page',
+      skipped: 0,
+      totalDuration: 2,
+      undefined: 3,
+      unknown: 0
+    };
+
+    const featureSummary = {
+      failingScenarios: [],
+      featureName: 'Login',
+      partialScenarios: [ scenarioSummary ],
+      passingScenarios: [],
+      undefinedScenarios: []
+    };
+
+    const expectedOutput = {
+      featureSummary: {
+        failingFeatures: [],
+        partialFeatures: [ featureSummary ],
+        passingFeatures: [],
+        undefinedFeatures: []
+      },
+      scenarioSummary: {
+        failingScenarios: [],
+        partialScenarios: [ scenarioSummary ],
+        passingScenarios: [],
+        undefinedScenarios: []
+      }
+    };
 
     // Had to do the JSON dance here to loose the _proto property
     // from summary before doing the compare
@@ -68,8 +107,8 @@ describe('report-aggregator', () => {
   });
 
   it('should aggregate skipped steps', () => {
-    const features: ICucumberResult[] = skippedStep;
-    const summary = aggregator.getSummaryForScenario(features[0].elements[0]);
+    const skippedSuite: ICucumberFeatureSuite = { features: skippedStep };
+    const summary = aggregator.getSummaryForScenario(skippedSuite.features[0].elements[0]);
 
     const expectedSuiteSummary = {
       ambiguous: 0,
