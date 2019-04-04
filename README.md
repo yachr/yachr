@@ -109,4 +109,4 @@ The `pre-commit` hook is configured to auto-load the current version of the `pre
 python script. This will ensure that any changes made to the pre-commit script
 are synchronised with the developer's environment
 
-<details>
+</details>
