@@ -95,15 +95,18 @@ Should produced `dist/samples/report.html`
 yachr is monitored by Travis-ci. when a change is detected Travis-ci will pull the repo and execute `npm run ci`. Travis will run `ci` before accepting a pull request.
 
 # Pre-commit hooks
-To keep the build tags aligned to each branch, we're using this pre-commit setup in git:
-https://gist.github.com/DesHorsley/6b258970c14bffa5cd423762b66c8355
-
+To keep the build tags aligned to each branch, we're using this pre-commit setup in git.
 When the readme is committed, the tag will be updated to reflect the current branch.
 
-For developers on a linux based system, make sure that the `pre-commit` hook has execute permissions - otherwise, git will not be able to execute the hook script
+The commit hooks for this repo can be found under the `.githooks` folder. A
+`setup.sh` script is provided for ease of setting up local developer environments
+to use these commit hooks.
 
-```
-chmod 755 .git/hooks/pre-commit
-chmod 755 .git/hooks/pre-commit.py
-```
+As new commit hooks are added, the `setup.sh` script should be maintained to ensure
+that all hooks can be loaded as part of the onboarding process.
+
+The `pre-commit` hook is configured to auto-load the current version of the `pre-commit.py`
+python script. This will ensure that any changes made to the pre-commit script
+are synchronised with the developer's environment
+
 <details>
