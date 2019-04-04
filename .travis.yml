@@ -3,3 +3,4 @@ node_js:
   - "8.12"
 script:
  - "npm ci"
+after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
