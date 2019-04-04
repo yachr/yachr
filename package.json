@@ -6,11 +6,11 @@
     "prebuild": "rimraf dist",
     "build": "tsc --declaration ",
     "postbuild": "copyfiles -f src/templates/*.html dist/src/templates",
-    "test": "_mocha -r ts-node/register --r source-map-support/register --recursive src/**/*.spec.ts",
-    "ci": "NODE_ENV=test npm run coverage && npm run coveralls",
+    "test": "mocha --config .mocharc.json src/**/*.spec.ts",
+    "ci": "npm run test",
     "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
-    "coverage": "nyc npm run test",
-    "coveralls": "shx cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "cover": "NODE_ENV=test nyc --report lcovonly _mocha --config .mocharc.json src/**/*.spec.ts",
+    "coveralls": "npm run cover && shx cat ./coverage/lcov.info | coveralls"
   },
   "nyc": {
     "extension": [
