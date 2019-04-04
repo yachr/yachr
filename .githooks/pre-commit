@@ -1,3 +1,9 @@
 #!/bin/sh
 #https://stackoverflow.com/questions/9308119/git-cannot-execute-python-script-as-hook
+
+echo "Copying latest pre-commit.py"
+cp  .githooks/pre-commit.py .git/hooks/pre-commit.py
+chmod 755 .git/hooks/pre-commit.py
+
+echo "Running pre-commit.py"
 python .git/hooks/pre-commit.py
