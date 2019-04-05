@@ -1,5 +1,6 @@
 # YACHR
-[![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=#7-npm)](https://travis-ci.org/yachr/yachr/branches)
+[![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=GH-13-CodeCoverage)](https://travis-ci.org/yachr/yachr/branches)
+[![Coverage Status](https://coveralls.io/repos/github/yachr/yachr/badge.svg?branch=GH-13-CodeCoverage)](https://coveralls.io/github/yachr/yachr?branch=GH-13-CodeCoverage)
 
 Yet another cucumber html reporter is a simple html reporter that runs off the standard json file produced by cucumberjs.
 
@@ -94,8 +95,20 @@ Should produced `dist/samples/report.html`
 yachr is monitored by Travis-ci. when a change is detected Travis-ci will pull the repo and execute `npm run ci`. Travis will run `ci` before accepting a pull request.
 
 # Pre-commit hooks
-To keep the build tags aligned to each branch, we're using this pre-commit setup in git:
-https://gist.github.com/DesHorsley/6b258970c14bffa5cd423762b66c8355
-
+To keep the build tags aligned to each branch, we're using this pre-commit setup in git.
 When the readme is committed, the tag will be updated to reflect the current branch.
-<details>
+
+The commit hooks for this repo can be found under the `.githooks` folder. A
+`setup.sh` script is provided for ease of setting up local developer environments
+to use these commit hooks.
+
+As new commit hooks are added, the `setup.sh` script should be maintained to ensure
+that all hooks can be loaded as part of the onboarding process.
+
+The `pre-commit` hook is configured to auto-load the current version of the `pre-commit.py`
+python script. This will ensure that any changes made to the pre-commit script
+are synchronised with the developer's environment.
+
+It should be noted that because the pre-commit hook uses a python script, [python](https://www.python.org/downloads/) needs to be installed and accessible from the developer's PATH environment variable.
+
+</details>
