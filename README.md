@@ -107,6 +107,8 @@ that all hooks can be loaded as part of the onboarding process.
 
 The `pre-commit` hook is configured to auto-load the current version of the `pre-commit.py`
 python script. This will ensure that any changes made to the pre-commit script
-are synchronised with the developer's environment
+are synchronised with the developer's environment.
+
+It should be noted that because the pre-commit hook uses a python script, [python](https://www.python.org/downloads/) needs to be installed and accessible from the developer's PATH environment variable.
 
 </details>
