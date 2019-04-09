@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./dist/src",
 
     "target": "es5",
     "moduleResolution": "node",
@@ -8,11 +8,11 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
-    "allowJs": true,
     "resolveJsonModule": true,
     "types": [
       "node", // Added to allow the use of nodes fs
-    ]
+    ],
+    "sourceMap": true
   },
   "include": [
     "./src/**/*"

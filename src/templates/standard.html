@@ -1,0 +1,108 @@
+<html>
+<body>
+  <h1>Specification Execution Results </h1>
+
+  <table border="1">
+    <header>
+        <thead>
+          <td></td>
+          <td>Passed</td>
+          <td>Failed</td>
+          <td>Undefined</td>
+          <td>Partial</td>
+          <td>Total</td>
+        </thead>
+    </header>
+
+    <tr>
+      <td>Features</td>
+      <td>{{ cucumberReportSummary.featureSummary.passed }}</td>
+      <td>{{ cucumberReportSummary.featureSummary.failed }}</td>
+      {{! featureUndef helper is required becuase undefined is a reserved work in javascript and breaks the template. }}
+      <td>{{ featureUndef cucumberReportSummary.featureSummary }} </td>
+      <td>{{ cucumberReportSummary.featureSummary.partial }}</td>
+      <td>{{ cucumberReportSummary.featureSummary.total }}</td>
+    </tr>
+
+    <tr>
+      <td>Scenarios</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.passed }}</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.failed }}</td>
+      {{! scenarioUndef helper is required becuase undefined is a reserved work in javascript and breaks the template. }}
+      <td>{{ scenarioUndef cucumberReportSummary.scenarioSummary }} </td>
+      <td>{{ cucumberReportSummary.scenarioSummary.partial }}</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.total }}</td>
+    </tr>
+
+  </table>
+
+  <hr />
+
+  <div>
+    <h2>Feature Summary Breakdown</h2>
+
+    <h3>Passing Features</h3>
+    <ul>
+      {{#each cucumberReportSummary.featureSummary.passingFeatures}}
+      <li>{{this.featureName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Failing Features</h3>
+    <ul>
+      {{#each cucumberReportSummary.featureSummary.failingFeatures}}
+      <li>{{this.featureName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Undefined Features</h3>
+    <ul>
+      {{#each cucumberReportSummary.featureSummary.undefinedFeatures}}
+      <li>{{this.featureName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Partial Features</h3>
+    <ul>
+      {{#each cucumberReportSummary.featureSummary.partialFeatures}}
+      <li>{{this.featureName}}</li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <hr />
+
+  <div>
+    <h2>Scenario Summary Breakdown</h2>
+
+    <h3>Passing Scenarios</h3>
+    <ul>
+      {{#each cucumberReportSummary.scenarioSummary.passingScenarios}}
+      <li>{{this.scenarioName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Failing Scenarios</h3>
+    <ul>
+      {{#each cucumberReportSummary.scenarioSummary.failingScenarios}}
+      <li>{{this.scenarioName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Undefined Scenarios</h3>
+    <ul>
+      {{#each cucumberReportSummary.scenarioSummary.undefinedScenarios}}
+      <li>{{this.scenarioName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Partial Scenarios</h3>
+    <ul>
+      {{#each cucumberReportSummary.scenarioSummary.partialScenarios}}
+      <li>{{this.scenarioName}}</li>
+      {{/each}}
+    </ul>
+  </div>
+
+</body>
+</html>

@@ -2,3 +2,7 @@ node_modules/
 playground/
 coverage/
 dist/
+/src/samples/sample.html
+.nyc_output/
+.coveralls.yml
+*.tgz
