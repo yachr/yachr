@@ -61,7 +61,7 @@
     "typescript": "^3.3.3333"
   },
   "files": [
-    "/dist"
+    "dist/"
   ],
   "contributors": [
     {
