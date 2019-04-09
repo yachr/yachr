@@ -7,7 +7,7 @@
     "build": "tsc --declaration ",
     "postbuild": "shx mkdir dist/src/templates && shx cp -rf src/templates/*.html dist/src/templates",
     "test": "mocha --config .mocharc.json src/**/*.spec.ts",
-    "ci": "npm run test",
+    "ci": "npm run test && npm run build && npm pack",
     "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
     "cover": "NODE_ENV=test nyc --report lcovonly _mocha --config .mocharc.json src/**/*.spec.ts",
     "coveralls": "npm run cover && shx cat ./coverage/lcov.info | coveralls"

@@ -5,3 +5,4 @@ dist/
 /src/samples/sample.html
 .nyc_output/
 .coveralls.yml
+*.tgz
