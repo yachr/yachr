@@ -1,5 +1,50 @@
 language: node_js
+
+env:
+  secure: prCTKeIm9vNbRaxftpwyJD7qmpl7Qc3jHUweLyulshQSYq8Pq9NtVbq4VN3CTuEcaKo9CtY7s7Yu2I10ROBO+bHIX6oki8egs3/DwDFrIU8Wu6eBBqVOLifU+eX9evs6z002McdTKxdSUQVEaoHI4KAAbHt9OkvLaM4wIxVb7oBT4UKmy/3ijsIH4ivkQInYh8Yfx0GoKnF9jLgvOG7foNdQrNXbbxMxqJU+tWps/A1yAbhnDeCbMX2MTcA9onAs1h3b8VP87sXI5X/L2WekTa5jQZ9Lun8bUDG0YcODQ9ryxTR/30K0qSvCPCfBygdgkM/PrLprfzoLsbQ7T9Yq00Qtq10hKWfJ0nQGrU1FXGhYvrjo0m0VUL1h9i8uqutrxL2hmyWytT2m8x0UHnlbuHF6JwaKoCuFnZlFWxY2GgYETITQXU42EP3StzYZib1SecjDtfL3Bc25OtswAw9Syy9LsIOnBc52jIyCzUcsjLFBzikLJGcs6QZHyB0BItcyAM05tJCpuPMIDSlLiop6KKVsYzBWeU9al+5nNx9HFjRsOnf7J+N7tFzSNxSCClkKDS3BcvWnWH8t5v6bsPtoCb5rt2CT+Caucoo122rf/wgm7FVlMFDtwVwMBmo7/RNqcGYPVNQm4RvBZd0PT4erd1HGjjAlkUM4ZJr2B0kn5FQ=
+
 node_js:
-  - "8.12"
+  - '8.12'
 script:
- - "npm ci"
+  - npm ci
+
+branches:
+  except:
+    - /build-.*-.*/ # build-develop-23
+    - /v\d\.\d\.\d/ # v1.2.3
+
+after_success:
+  - npm run coveralls
+  - git config --global user.email "builds@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - export GIT_TAG=build-$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
+  - git push https://$GH_TOKEN@github.com/yachr/yachr $GIT_TAG > /dev/null
+
+
+
+# before_deploy:
+#   - git config --global user.email "builds@travis-ci.com"
+#   - git config --global user.name "Travis CI"
+#   - export GIT_TAG=v$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
+#   - git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
+#   - git push origin $GIT_TAG
+
+
+
+deploy:
+  - provider: releases
+    api_key:
+      secure: fER5LWgftZtQU7bPXn8CauS8z6sLDcds/v4ZlxacZXml3TEbc7COmruSyMy+pb+Ii2JDmQSfVvJ2QYCf/fdbQsklGmtAQcfWo90K5FQsS43WNBzLMkJ0zQLg7atsvdDnRQmpiClM7M4FF0iEQLg/D+SOQXszoInNbsJ8p7UeMuRUUYxM1WoB2Rf6yfdBfmXBkKXvIWEX4JZj2PlyW3+S5tKd7VyAKInpVlnhSD7FlISwuwtmsvhtzxQJG0Bb1ehNLcSuacY6+/JN3H/pA1HdfpoN617Fq3j8g6HpcN7Es6K1jz7kD/mKcZLAjvEFztcG/chHNfSkU2jsTIIfVWz8Y+bPvAedP0HZ/tHZ0QT1hM+C7/gcINZ+6g33KvPrzROy+IxUicg407whlf0wOIpTUnlI1GDZb97Vrn0LkzoMWuCqDnFrTJbLou20sonsv8e7fp9sk//Cem2HMpqnq/MEsitwX22wbp7iqBk0ohqx9dSlWe5Bv9Ca08E4z/EmdZ/YMUCWk/z1Zbv0csCA31iKhfq7vPUHMRguUbHmQXYA6PQPC8W9cwJz1CRfHTKcEqfwEvzSn35ttmmR1TOUJwkkhvqbu4kwBdZnL/5trkW65qmCrQ6cx5quOM+gzINFBzjW9H3Y8EpYgy5mx1PtAufgbZetP1n2vRwWbenHTdijDsA=
+    file: "yachr-*.*.*.tgz"
+    on:
+      repo: yachr/yachr
+      branch: master
+
+  - provider: npm
+    email: tylerhaigh1994@me.com
+    api_key:
+      secure: bo4wKieaNfXuxukGmlAl18EoPtjzNfbja5NqqK7jcy8B0u/51TamyeumLB6e7W64LCgnOjeJTds1PrFFSJIN/LQpmOeGfM7BwiJtpT0uPC2wShLUB8imJ5xCgFsz5AMuLpkv0DoSBZtDILfEpDyu58Th+9caLEr3B7/6nk/wis2nuI7M6XMKQk6uQbCYo4/7MopGahwOaZn1P/+UVaoO7pw+VWkef7YWC91CfiwVPGnhwjC6SVem6Xx0EAkn8j0ANqAm0g4X8+14vKH/+V5nhMIKYL/4WBvvmV3ccf8FoDMfo+OWITY331+qpleSHsXMuISlnzflAQK6rQ1H+h75AaR9EFEh65X/Rc+9utRd7+JsYF6ehNAtzIzulCB0S6S5M9+ko52/+jxhMxB0qUi7wFBJxLbOXbFvNdchGHYhsVysj+cj3wuYI0xAKw1WxBbjkRBa77EAKH8aCIlJsM21n+anAW8xxraQA7LokFqQYT1eMsB4bXStU3X6dKmo7FtZJv21eC8rzqfwoQ7SCsEmj3FMxii1T+/etm0L3rzJStQ1h+vEiPfZx3cGWaSY0WTLOqZPzMzpDnLlQMjh8+43374udqpngu++7AxXuYX4UL+SuOh5K20qnctKKF5kGDUUq/v8yNC5JfT3Yy/xZ7hbG9lhUtQCulLHLhHURqBHUSA=
+    on:
+      repo: yachr/yachr
+      branch: master
