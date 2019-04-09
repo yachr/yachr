@@ -40,6 +40,7 @@ deploy:
     on:
       repo: yachr/yachr
       branch: master
+    skip_cleanup: true
 
   - provider: npm
     email: tylerhaigh1994@me.com
@@ -48,3 +49,4 @@ deploy:
     on:
       repo: yachr/yachr
       branch: master
+    skip_cleanup: true
