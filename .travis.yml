@@ -20,13 +20,11 @@ after_success:
 
 before_deploy:
   - npm run build
-  - npm version patch
+  - npm version patch -m "[skip travis] Travis Release Build"
   - npm pack
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
-  - git add -A
-  - git commit -m "[skip travis] Travis Release Build"
-  - git push https://$GH_TOKEN@github.com/yachr/yachr > /dev/null
+  - git push https://$GH_TOKEN@github.com/yachr/yachr master > /dev/null
 
 
 
@@ -39,6 +37,7 @@ deploy:
     on:
       repo: yachr/yachr
       branch: master
+      tags: false
 
   - provider: npm
     skip_cleanup: true
@@ -48,3 +47,4 @@ deploy:
     on:
       repo: yachr/yachr
       branch: master
+      tags: false
