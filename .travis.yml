@@ -8,17 +8,12 @@ node_js:
 script:
   - npm ci
 
-branches:
-  except:
-    - /build-.*-.*/ # build-develop-23
-    - /v\d\.\d\.\d/ # v1.2.3
-
 after_success:
+  - export GIT_TAG=build-$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
   - npm run coveralls
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
-  - export GIT_TAG=build-$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
-  - git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
+  - git tag $GIT_TAG -a -m "[skip travis] Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
   - git push https://$GH_TOKEN@github.com/yachr/yachr $GIT_TAG > /dev/null
 
 
@@ -27,6 +22,10 @@ before_deploy:
   - npm run build
   - npm version patch
   - npm pack
+  - git config --global user.email "builds@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - git add -A
+  - git commit -m "[skip travis] Travis Release Build"
   - git push https://$GH_TOKEN@github.com/yachr/yachr > /dev/null
 
 
