@@ -8,3 +8,6 @@ dist/
 features/**/*.steps.js
 reports/**/*.json
 reports/**/*.html
+.nyc_output/
+.coveralls.yml
+*.tgz
