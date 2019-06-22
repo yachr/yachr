@@ -5,5 +5,14 @@
         "titleBar.activeForeground": "#e7e7e7",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "cucumberautocomplete.steps": [
+      "e2e/step_definitions/**/*.ts"
+  ],
+  "cucumberautocomplete.syncfeatures": "e2e/features/**/*.feature",
+  "cucumberautocomplete.strictGherkinCompletion": true,
+  "cucumberautocomplete.smartSnippets": true,
+  "cucumberautocomplete.stepsInvariants": true,
+  "cucumberautocomplete.onTypeFormat": true,
+  "cucumberautocomplete.gherkinDefinitionPart": "(Given|When|Then)\\("
 }
