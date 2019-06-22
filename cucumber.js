@@ -1,5 +1,5 @@
 var common = [
-  '--require ./features/**/*.steps.js',
+  '--require ./e2e/step_definitions/**/*.steps.js',
   '--format json:./reports/cucumber-report.json',
 ].join(' ');
 

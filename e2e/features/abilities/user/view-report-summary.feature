@@ -5,8 +5,10 @@
   So that I can gauge my project's health and progress.
 
   Scenario: Feature summary
-    Given a passing step
+    Given a passing scenario
       | Feature     | Scenario     | Step   | Step Status |
       | Feature One | Scenario One | Step 1 | passed      |
-    When I run yachr agaist it
+      | Feature One | Scenario One | Step 2 | passed      |
+      | Feature One | Scenario One | Step 3 | passed      |
+    When I run yachr against it
     Then a summary showing one passing feature and one passing scenario
