@@ -7,10 +7,10 @@
     "build": "tsc --declaration ",
     "postbuild": "shx mkdir dist/src/templates && shx cp -rf src/templates/*.html dist/src/templates",
     "test": "mocha --config .mocharc.json src/**/*.spec.ts",
-    "ci": "npm run test && npm run build && npm pack",
+    "ci": "npm run test && npm run build && npm run e2e && npm pack",
     "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
     "cover": "NODE_ENV=test nyc --report lcovonly _mocha --config .mocharc.json src/**/*.spec.ts",
-    "pree2e": "npm run build",
+    "e2eWithBuild": "npm run build && npm run e2e",
     "e2e": "tsc -p e2e/tsconfig.json && cucumber-js ./e2e/features --no-strict",
     "poste2e": "shx rm -rf e2e/step_definitions/**/*.js e2e/reportOutput/**/*.html",
     "coveralls": "npm run cover && shx cat ./coverage/lcov.info | coveralls"
