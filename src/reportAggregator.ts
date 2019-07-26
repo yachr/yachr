@@ -63,7 +63,11 @@ export class ReportAggregator {
       summary.aggregateScenario(scenarioSummary);
     });
 
+    // Add metadata
     summary.featureName = feature.name;
+    summary.featureDescription = feature.description;
+    summary.featureKeyword = feature.keyword;
+
     return summary;
   }
 
@@ -81,7 +85,11 @@ export class ReportAggregator {
       }
     });
 
+    // Add metadata
     summary.scenarioName = scenario.name;
+    summary.scenarioDescription = scenario.description || '';
+    summary.scenarioKeyword = scenario.keyword;
+
     return summary;
   }
 

@@ -40,7 +40,7 @@ export class FeatureSuiteSummary {
 
   /** Updates the aggregated summary using information gathered in the Element Summary */
   public aggregateFeature(feature: FeatureSummary): void {
-    if (feature.isFailed) { this.failingFeatures.push(feature); }
+    if (feature.hasFailed) { this.failingFeatures.push(feature); }
     else if (feature.isPassed) { this.passingFeatures.push(feature); }
     else if (feature.isUndefined) { this.undefinedFeatures.push(feature); }
     else { this.partialFeatures.push(feature); }

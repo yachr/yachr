@@ -9,7 +9,9 @@ export interface IScenario {
   id: string;
   name: string;
   line: number;
-  description?: string; // TODO: TH where did this come from?
+
+  /** Description can be missing if no free text was entered in Gherkin */
+  description?: string;
   tags: ITag[];
 
   type: string;
