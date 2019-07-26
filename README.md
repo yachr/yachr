@@ -91,6 +91,22 @@ From the root:
 
 Should produced `dist/samples/report.html`
 
+## Testing out changes to the html template
+When making changes to the template its good to see those changes applied as you go.
+
+One option to do this if you're using the templating system, is to get the unit tests to run as you make changes.
+
+As a starting point, the 'should generate a report' test in the reporter.spec.ts will generate a basic looking report.
+
+This can be run on its own by updating the test's `it` to use the only function:
+
+```
+it.only('should generate a report', () => {
+```
+
+Don't commit this line though!
+
+One last step is to comment out the code that cleans up the test and removes the generated html. This should be the last line of the test, and has a helpful comment to point it out for you.
 # CI
 yachr is monitored by Travis-ci. when a change is detected Travis-ci will pull the repo and execute `npm run ci`. Travis will run `ci` before accepting a pull request.
 

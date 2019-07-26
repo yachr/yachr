@@ -9,6 +9,17 @@ Ability: View report summary
   ambiguous, failed, undefined, pending, passed
   Although a step can be skipped, a scneario cannot.
 
+  Ambiguous is the worst because it is similar to a compile erorr. There are
+  two or more implementations that match one step, and the test simply can't be run.
+
+  Failed is next because a step has been implemented, and failed, which is unexpected.
+
+  Undefined is then next, because no implementation has been put together.
+
+  Pending is where the implementation exists, but returns the string pending.
+
+  Finally, if all steps pass, then the scenario passes.
+
   Scenario: All passing
     Given a passing scenario
       | Feature     | Scenario     | Step   | Step Status |
