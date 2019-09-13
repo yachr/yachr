@@ -81,7 +81,7 @@ export class ReportAggregator {
     // Aggregate steps
     scenario.steps.forEach(s => {
       if (s.result) {
-        summary.aggregateStep(s.result);
+        summary.aggregateStep(s.result, s.hidden);
       }
     });
 

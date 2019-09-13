@@ -8,6 +8,8 @@ import * as skippedStep from './samples/skipped-step.json';
 import { ScenarioSummary } from './models/aggregator/scenarioSummary';
 import { SuiteSummary } from './models/aggregator/suiteSummary';
 import { FeatureSummary } from './models/aggregator/featureSummary';
+import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
+import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 
 describe('report-aggregator', () => {
   let aggregator: ReportAggregator;
@@ -18,96 +20,97 @@ describe('report-aggregator', () => {
     suite = { features: happyDayResult };
   });
 
-  it ('should aggregate a scenario', () => {
+  it('should aggregate a scenario', () => {
     const summary = aggregator.getSummaryForScenario(suite.features[0].elements[0]);
 
     const expectedOutput = {
       ambiguous: 0,
       failed: 0,
-      passed: 2,
+      passed: 3,
       pending: 0,
       scenarioDescription: '',
       scenarioKeyword: 'Scenario',
       scenarioName: 'Login via login page',
       skipped: 0,
       totalDuration: 2,
-      undefined: 3
+      undefined: 0
     } as ScenarioSummary;
 
-    // Had to do the JSON dance here to loose the _proto property
+    // Had to do the JSON dance here to lose the _proto property
     // from summary before doing the compare
     expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(expectedOutput);
   });
 
-  it ('should aggregate a feature', () => {
+  it('should aggregate a feature', () => {
     const summary = aggregator.getSummaryForFeature(suite.features[0]);
 
     const scenarioSummary = {
-      ambiguous: 0,
-      failed: 0,
-      passed: 2,
-      pending: 0,
-      scenarioDescription: '',
-      scenarioKeyword: 'Scenario',
-      scenarioName: 'Login via login page',
-      skipped: 0,
-      totalDuration: 2,
-      undefined: 3
+      ...new ScenarioSummary(), ...{
+        passed: 3,
+        scenarioKeyword: 'Scenario',
+        scenarioName: 'Login via login page',
+        totalDuration: 2,
+      }
     } as ScenarioSummary;
 
     const expectedOutput: FeatureSummary = {
-      ambiguousScenarios: [] as ScenarioSummary[],
-      failingScenarios: [] as ScenarioSummary[],
-      featureDescription: 'Sample Feature Description',
-      featureKeyword: 'Ability',
-      featureName: 'Login',
-      passingScenarios: [] as ScenarioSummary[] ,
-      pendingScenarios: [] as ScenarioSummary[],
-      undefinedScenarios: [scenarioSummary]
+      ...new FeatureSummary(), ...{
+        featureDescription: 'Sample Feature Description',
+        featureKeyword: 'Ability',
+        featureName: 'Login',
+        passingScenarios: [scenarioSummary]
+      }
     } as FeatureSummary;
 
     // Had to do the JSON dance here to loose the _proto property
     // from summary before doing the compare
-    expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(expectedOutput);
+    expect(JSON.parse(JSON.stringify(summary))).to.be.deep
+      .equal(JSON.parse(JSON.stringify(expectedOutput)));
   });
 
   it('should aggregate a feature suite', () => {
     const summary = aggregator.getSummaryForSuite(suite);
 
-    const scenarioSummary = {...new ScenarioSummary(),
+    const scenarioSummary = {
+      ...new ScenarioSummary(),
       ...{
-      passed: 2,
-      scenarioKeyword: 'Scenario',
-      scenarioName: 'Login via login page',
-      totalDuration: 2,
-      undefined: 3
-    }} as ScenarioSummary;
-
-    const featureSummary = {...new FeatureSummary(), ...{
-      featureDescription: 'Sample Feature Description',
-      featureKeyword: 'Ability',
-      featureName: 'Login',
-      undefinedScenarios: [scenarioSummary]
-    }} as FeatureSummary;
-
-    const expectedOutput = Object.assign(new SuiteSummary(), {
-      featureSummary: {
-        failingFeatures: [],
-        partialFeatures: [],
-        passingFeatures: [],
-        undefinedFeatures: [featureSummary]
-      },
-      scenarioSummary: {
-        failingScenarios: [],
-        partialScenarios: [],
-        passingScenarios: [],
-        undefinedScenarios: [scenarioSummary]
+        passed: 3,
+        scenarioKeyword: 'Scenario',
+        scenarioName: 'Login via login page',
+        totalDuration: 2,
       }
-    });
+    };
+
+    const featureSummary = {
+      ...new FeatureSummary(), ...{
+        featureDescription: 'Sample Feature Description',
+        featureKeyword: 'Ability',
+        featureName: 'Login',
+        passingScenarios: [scenarioSummary]
+      }
+    } as FeatureSummary;
+
+    const expectedOutput: SuiteSummary = {
+      ...new SuiteSummary(),
+      ...{
+        featureSummary: {
+          ...new FeatureSuiteSummary(),
+          ...{
+            passingFeatures: [featureSummary]
+          }
+        } as FeatureSuiteSummary,
+        scenarioSummary: {
+          ...new ScenarioSuiteSummary(), ...{
+            passingScenarios: [scenarioSummary]
+          }
+        } as ScenarioSuiteSummary
+      }
+    };
 
     // Had to do the JSON dance here to loose the _proto property
     // from summary before doing the compare
-    expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(JSON.parse(JSON.stringify(expectedOutput)));
+    expect(JSON.parse(JSON.stringify(summary))).to.be.deep
+      .equal(JSON.parse(JSON.stringify(expectedOutput)));
   });
 
   it('should aggregate skipped steps', () => {
@@ -117,7 +120,7 @@ describe('report-aggregator', () => {
     const expectedSuiteSummary = {
       ambiguous: 0,
       failed: 0,
-      passed: 1,
+      passed: 0, // This shouldn't be a pass, its a hidden step
       pending: 1,
       scenarioDescription: '',
       scenarioKeyword: 'Scenario',
@@ -127,6 +130,10 @@ describe('report-aggregator', () => {
       undefined: 0,
     };
 
-    expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(expectedSuiteSummary);
+    console.debug(summary.passed);
+    console.debug(expectedSuiteSummary.passed);
+
+    expect(JSON.parse(JSON.stringify(summary)))
+      .to.be.deep.equal(expectedSuiteSummary);
   });
 });

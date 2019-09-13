@@ -64,9 +64,13 @@ export class ScenarioSummary {
    * Performs the base level summarisation of the report at the lowest leaf
    * of the report tree (the Step)
    * @param result The Step result from the raw Cucumber report
+   * @param hidden Some steps are hidden eg BeforeAll steps. We don't count them in the totals, except for duration
    */
-  public aggregateStep(result: IResult): void {
+  public aggregateStep(result: IResult, hidden?: boolean): void {
     this.totalDuration += (isNaN(result.duration) ? 0 : result.duration);
+
+    // We don't count the hidden steps, but track their time above
+    if (hidden) return;
 
     // Switch case on status
     switch (result.status) {
