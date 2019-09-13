@@ -28,6 +28,8 @@ export class Reporter {
 
     const aggregator = new ReportAggregator();
 
+    console.debug(results);
+
     const data = <IHtmlModel> {
       cucumberReportSummary: aggregator.getSummaryForSuite(results),
       cucumberResult: results

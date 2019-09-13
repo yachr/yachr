@@ -52,7 +52,8 @@
           <td>Passed</td>
           <td>Failed</td>
           <td>Undefined</td>
-          <td>Partial</td>
+          <td>Ambiguous</td>
+          <td>Pending</td>
           <td>Total</td>
         </thead>
     </header>
@@ -63,7 +64,8 @@
       <td>{{ cucumberReportSummary.featureSummary.failed }}</td>
       {{! featureUndef helper is required becuase undefined is a reserved work in javascript and breaks the template. }}
       <td>{{ featureUndef cucumberReportSummary.featureSummary }} </td>
-      <td>{{ cucumberReportSummary.featureSummary.partial }}</td>
+      <td>{{ cucumberReportSummary.featureSummary.ambiguous }}</td>
+      <td>{{ cucumberReportSummary.featureSummary.pending }}</td>
       <td>{{ cucumberReportSummary.featureSummary.total }}</td>
     </tr>
 
@@ -73,7 +75,8 @@
       <td>{{ cucumberReportSummary.scenarioSummary.failed }}</td>
       {{! scenarioUndef helper is required becuase undefined is a reserved work in javascript and breaks the template. }}
       <td>{{ scenarioUndef cucumberReportSummary.scenarioSummary }} </td>
-      <td>{{ cucumberReportSummary.scenarioSummary.partial }}</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.ambiguous }}</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.pending }}</td>
       <td>{{ cucumberReportSummary.scenarioSummary.total }}</td>
     </tr>
 
@@ -105,9 +108,16 @@
       {{/each}}
     </ul>
 
-    <h3>Partial Features</h3>
+    <h3>Ambiguous Features</h3>
     <ul>
-      {{#each cucumberReportSummary.featureSummary.partialFeatures}}
+      {{#each cucumberReportSummary.featureSummary.ambiguousFeatures}}
+      <li>{{this.featureName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Pending Features</h3>
+    <ul>
+      {{#each cucumberReportSummary.featureSummary.pendingFeatures}}
       <li>{{this.featureName}}</li>
       {{/each}}
     </ul>
@@ -139,9 +149,16 @@
       {{/each}}
     </ul>
 
-    <h3>Partial Scenarios</h3>
+    <h3>Ambiguous Scenarios</h3>
     <ul>
-      {{#each cucumberReportSummary.scenarioSummary.partialScenarios}}
+      {{#each cucumberReportSummary.scenarioSummary.ambiguousScenarios}}
+      <li>{{this.scenarioName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Pending Scenarios</h3>
+    <ul>
+      {{#each cucumberReportSummary.scenarioSummary.pendingScenarios}}
       <li>{{this.scenarioName}}</li>
       {{/each}}
     </ul>

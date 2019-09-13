@@ -44,10 +44,15 @@ export class FeatureSummary {
   get hasFailed(): boolean { return this.failed > 0; }
 
   /** Whether the Feature has at least one undefined Scenario */
-  get isUndefined(): boolean { return this.undefined > 0; }
+  get hasUndefined(): boolean { return this.undefined > 0; }
 
   /** Whether the Feature has at least one pending Scenario */
-  get isPending(): boolean { return this.pending > 0; }
+  get hasPending(): boolean {
+    return this.pending > 0 ||
+    this.hasNoScenarios;
+  }
+
+  get hasNoScenarios(): boolean { return this.total == 0; }
 
   /** Whether the Feature has passed due to all Scenarios passing */
   get isPassed(): boolean { return this.passed === this.total; }
