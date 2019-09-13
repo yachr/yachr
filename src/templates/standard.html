@@ -239,6 +239,8 @@
     <tr class="summary-row">
       <th class="summary-cell" align="center">Features</th>
       <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.failed }}</td>
+      <td>{{ cucumberReportSummary.featureSummary.ambiguous }}</td>
+      <td>{{ cucumberReportSummary.featureSummary.pending }}</td>
 
       {{! featureUndef helper is required because undefined is a reserved work in javascript and breaks the template. }}
 
@@ -246,7 +248,8 @@
       <td class="summary-cell" align="center"> XXX </td>
       <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.passed }}</td>
       <td class="summary-cell" align="center"> XXX </td>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.total }}</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.ambiguous }}</td>
+      <td>{{ cucumberReportSummary.scenarioSummary.pending }}</td>
     </tr>
 
     <tr class="summary-row">
@@ -327,9 +330,16 @@
       {{/each}}
     </ul>
 
-    <h3>Partial Features</h3>
+    <h3>Ambiguous Features</h3>
     <ul>
-      {{#each cucumberReportSummary.featureSummary.partialFeatures}}
+      {{#each cucumberReportSummary.featureSummary.ambiguousFeatures}}
+      <li>{{this.featureName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Pending Features</h3>
+    <ul>
+      {{#each cucumberReportSummary.featureSummary.pendingFeatures}}
       <li>{{this.featureName}}</li>
       {{/each}}
     </ul>
@@ -361,9 +371,16 @@
       {{/each}}
     </ul>
 
-    <h3>Partial Scenarios</h3>
+    <h3>Ambiguous Scenarios</h3>
     <ul>
-      {{#each cucumberReportSummary.scenarioSummary.partialScenarios}}
+      {{#each cucumberReportSummary.scenarioSummary.ambiguousScenarios}}
+      <li>{{this.scenarioName}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Pending Scenarios</h3>
+    <ul>
+      {{#each cucumberReportSummary.scenarioSummary.pendingScenarios}}
       <li>{{this.scenarioName}}</li>
       {{/each}}
     </ul>

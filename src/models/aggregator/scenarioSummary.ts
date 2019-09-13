@@ -18,39 +18,46 @@ export class ScenarioSummary {
   /** The total number of steps that are not implemented (and thus marked as undefined) */
   public undefined: number = 0;
 
-  /** ??? */
+  /** The number of step that are not fully implemented and only return pending */
   public pending: number = 0;
 
-  /** ??? */
+  /** The nuber of steps that are ambiguous, preventing the Cucumber Test runner from running the step */
   public ambiguous: number = 0;
 
   /** The total number of steps that were skipped */
   public skipped: number = 0;
 
-  // Catch all for if we haven't mapped a cucumber report status
-  public unknown: number = 0;
   public totalDuration: number = 0;
 
-  public scenarioName: string;
-
-  constructor() {
-    this.scenarioName = '';
-  }
+  public scenarioName: string = '';
+  public scenarioDescription: string = '';
+  public scenarioKeyword: string = '';
 
   /** All steps in the scenario */
   get total(): number {
     return this.passed + this.failed + this.undefined +
-      this.pending + this.ambiguous + this.unknown;
+      this.pending + this.ambiguous + this.skipped;
   }
 
-  /** Whether the Scenario has failed due to a failed step */
-  get isFailed(): boolean { return this.failed > 0; }
+  /** Whether the Scenario has at least one ambiguously defined step definition */
+  get hasAmbiguous(): boolean { return this.ambiguous > 0; }
+
+  /** Whether the Scenario has at least one failed step */
+  get hasFailed(): boolean { return this.failed > 0; }
+
+  /** Whether the Scenario has at least one undefined step */
+  get hasUndefined(): boolean {
+    return this.undefined > 0 ||  // Undefined if we have an undefined step
+      this.hasNoSteps;            // Or if we have no steps at all
+    }
+
+  /** Whether the Scenario has at least one pending step */
+  get hasPending(): boolean { return this.pending > 0; }
 
   /** Whether the Scenario has passed due to all steps passing */
   get isPassed(): boolean { return this.passed === this.total; }
 
-  /** Whether the entire scenario is undefined */
-  get isUndefined(): boolean { return this.undefined === this.total; }
+  get hasNoSteps(): boolean { return this.total === 0; }
 
   /**
    * Updates the summary based on the raw cucumber report step status.
@@ -70,8 +77,8 @@ export class ScenarioSummary {
       case ResultStatus.ambiguous: this.ambiguous++; break;
       case ResultStatus.skipped: this.skipped++; break;
       default: {
-        this.unknown++;
-        console.warn(`Unmapped result status for ${result.status}`);
+        // tslint:disable-next-line: max-line-length
+        throw new Error(`Undefined result status for ${result.status}. Please raise a GitHub issue with the Yachr Team`);
       }
     }
   }
