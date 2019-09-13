@@ -33,7 +33,6 @@ export class ScenarioSummary {
   public scenarioDescription: string = '';
   public scenarioKeyword: string = '';
 
-
   /** All steps in the scenario */
   get total(): number {
     return this.passed + this.failed + this.undefined +
@@ -47,13 +46,18 @@ export class ScenarioSummary {
   get hasFailed(): boolean { return this.failed > 0; }
 
   /** Whether the Scenario has at least one undefined step */
-  get hasUndefined(): boolean { return this.undefined > 0; }
+  get hasUndefined(): boolean {
+    return this.undefined > 0 ||  // Undefined if we have an undefined step
+      this.hasNoSteps;            // Or if we have no steps at all
+    }
 
   /** Whether the Scenario has at least one pending step */
   get hasPending(): boolean { return this.pending > 0; }
 
   /** Whether the Scenario has passed due to all steps passing */
   get isPassed(): boolean { return this.passed === this.total; }
+
+  get hasNoSteps(): boolean { return this.total === 0; }
 
   /**
    * Updates the summary based on the raw cucumber report step status.
@@ -73,6 +77,7 @@ export class ScenarioSummary {
       case ResultStatus.ambiguous: this.ambiguous++; break;
       case ResultStatus.skipped: this.skipped++; break;
       default: {
+        // tslint:disable-next-line: max-line-length
         throw new Error(`Undefined result status for ${result.status}. Please raise a GitHub issue with the Yachr Team`);
       }
     }

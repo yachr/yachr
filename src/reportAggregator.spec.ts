@@ -5,6 +5,9 @@ import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
 import { ReportAggregator } from './reportAggregator';
 import * as happyDayResult from './samples/results.json';
 import * as skippedStep from './samples/skipped-step.json';
+import { ScenarioSummary } from './models/aggregator/scenarioSummary';
+import { SuiteSummary } from './models/aggregator/suiteSummary';
+import { FeatureSummary } from './models/aggregator/featureSummary';
 
 describe('report-aggregator', () => {
   let aggregator: ReportAggregator;
@@ -23,12 +26,13 @@ describe('report-aggregator', () => {
       failed: 0,
       passed: 2,
       pending: 0,
+      scenarioDescription: '',
+      scenarioKeyword: 'Scenario',
       scenarioName: 'Login via login page',
       skipped: 0,
       totalDuration: 2,
-      undefined: 3,
-      unknown: 0
-    };
+      undefined: 3
+    } as ScenarioSummary;
 
     // Had to do the JSON dance here to loose the _proto property
     // from summary before doing the compare
@@ -43,20 +47,24 @@ describe('report-aggregator', () => {
       failed: 0,
       passed: 2,
       pending: 0,
+      scenarioDescription: '',
+      scenarioKeyword: 'Scenario',
       scenarioName: 'Login via login page',
       skipped: 0,
       totalDuration: 2,
-      undefined: 3,
-      unknown: 0
-    };
+      undefined: 3
+    } as ScenarioSummary;
 
-    const expectedOutput = {
-      failingScenarios: [],
+    const expectedOutput: FeatureSummary = {
+      ambiguousScenarios: [] as ScenarioSummary[],
+      failingScenarios: [] as ScenarioSummary[],
+      featureDescription: 'Sample Feature Description',
+      featureKeyword: 'Ability',
       featureName: 'Login',
-      partialScenarios: [ scenarioSummary ],
-      passingScenarios: [],
-      undefinedScenarios: []
-    };
+      passingScenarios: [] as ScenarioSummary[] ,
+      pendingScenarios: [] as ScenarioSummary[],
+      undefinedScenarios: [scenarioSummary]
+    } as FeatureSummary;
 
     // Had to do the JSON dance here to loose the _proto property
     // from summary before doing the compare
@@ -66,44 +74,40 @@ describe('report-aggregator', () => {
   it('should aggregate a feature suite', () => {
     const summary = aggregator.getSummaryForSuite(suite);
 
-    const scenarioSummary = {
-      ambiguous: 0,
-      failed: 0,
+    const scenarioSummary = {...new ScenarioSummary(),
+      ...{
       passed: 2,
-      pending: 0,
+      scenarioKeyword: 'Scenario',
       scenarioName: 'Login via login page',
-      skipped: 0,
       totalDuration: 2,
-      undefined: 3,
-      unknown: 0
-    };
+      undefined: 3
+    }} as ScenarioSummary;
 
-    const featureSummary = {
-      failingScenarios: [],
+    const featureSummary = {...new FeatureSummary(), ...{
+      featureDescription: 'Sample Feature Description',
+      featureKeyword: 'Ability',
       featureName: 'Login',
-      partialScenarios: [ scenarioSummary ],
-      passingScenarios: [],
-      undefinedScenarios: []
-    };
+      undefinedScenarios: [scenarioSummary]
+    }} as FeatureSummary;
 
-    const expectedOutput = {
+    const expectedOutput = Object.assign(new SuiteSummary(), {
       featureSummary: {
         failingFeatures: [],
-        partialFeatures: [ featureSummary ],
+        partialFeatures: [],
         passingFeatures: [],
-        undefinedFeatures: []
+        undefinedFeatures: [featureSummary]
       },
       scenarioSummary: {
         failingScenarios: [],
-        partialScenarios: [ scenarioSummary ],
+        partialScenarios: [],
         passingScenarios: [],
-        undefinedScenarios: []
+        undefinedScenarios: [scenarioSummary]
       }
-    };
+    });
 
     // Had to do the JSON dance here to loose the _proto property
     // from summary before doing the compare
-    expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(expectedOutput);
+    expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(JSON.parse(JSON.stringify(expectedOutput)));
   });
 
   it('should aggregate skipped steps', () => {
@@ -115,11 +119,12 @@ describe('report-aggregator', () => {
       failed: 0,
       passed: 1,
       pending: 1,
+      scenarioDescription: '',
+      scenarioKeyword: 'Scenario',
       scenarioName: 'Login via login page',
       skipped: 1,
       totalDuration: 30,
       undefined: 0,
-      unknown: 0,
     };
 
     expect(JSON.parse(JSON.stringify(summary))).to.be.deep.equal(expectedSuiteSummary);

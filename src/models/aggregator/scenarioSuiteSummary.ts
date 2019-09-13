@@ -35,7 +35,6 @@ export class ScenarioSuiteSummary {
     this.passingScenarios = this.passingScenarios.concat(feature.passingScenarios);
     this.failingScenarios = this.failingScenarios.concat(feature.failingScenarios);
     this.undefinedScenarios = this.undefinedScenarios.concat(feature.undefinedScenarios);
-    this.partialScenarios = this.partialScenarios.concat(feature.partialScenarios);
   }
 
 }

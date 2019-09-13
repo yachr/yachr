@@ -37,7 +37,6 @@ export class FeatureSummary {
     return this.ambiguous + this.failed + this.undefined + this.pending + this.passed;
   }
 
-
   /** Whether the Feature has at least one ambiguous Scenario */
   get hasAmbiguous(): boolean { return this.ambiguous > 0; }
 
