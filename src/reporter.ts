@@ -7,8 +7,11 @@ import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 import { IHtmlModel } from './models/htmlModel';
 import { ICucumberFeature } from './models/reporter/cucumberFeature';
 import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
+import { IStep } from './models/reporter/step';
 import { IReportOptions } from './models/reportOptions';
+import { ScenarioSummary } from './models/aggregator/scenarioSummary';
 import { ReportAggregator } from './reportAggregator';
+import { ResultStatus } from './models/reporter/resultStatus';
 
 /**
  * The main YACHR Cucumber HTML Report generator.
@@ -42,9 +45,11 @@ export class Reporter {
 
     let reportTemplate: string;
     let featureTemplate: string;
+    let scenarioTemplate: string;
     try {
       reportTemplate = fs.readFileSync(options.htmlTemplate, 'utf8');
       featureTemplate = fs.readFileSync('src/templates/feature.html', 'utf8');
+      scenarioTemplate = fs.readFileSync('src/templates/scenario.html', 'utf8');
     } catch (err) {
       throw new Error(`Error reading htmlTemplate: ${err}`);
     }
@@ -61,11 +66,18 @@ export class Reporter {
       suiteSummary.undefined
     );
 
+    Handlebars.registerHelper('stepUndef', (scenarioSummary: ScenarioSummary): number =>
+      scenarioSummary.undefined
+    );
     // var featureObject = document.createElement('html');
     // featureObject.innerHTML = featureTemplate;
 
     Handlebars.registerPartial({
       feature: Handlebars.compile(featureTemplate),
+    });
+
+    Handlebars.registerPartial({
+      scenario: Handlebars.compile(scenarioTemplate),
     });
 
     Handlebars.registerHelper('getFeatureCss', (featureSummary: FeatureSummary) => {
@@ -88,6 +100,33 @@ export class Reporter {
 
       if (featureSummary.passed === featureSummary.total) {
         return 'passing-feature';
+      }
+    });
+
+    Handlebars.registerHelper('getStepCss', (step: IStep) => {
+
+      if (step.result.status === ResultStatus.failed) {
+        return 'failing-step';
+      }
+
+      if (step.result.status === ResultStatus.ambiguous) {
+        return 'ambiguous-step';
+      }
+
+      if (step.result.status === ResultStatus.undefined) {
+        return 'undefined-step';
+      }
+
+      if (step.result.status === ResultStatus.pending) {
+        return 'pending-step';
+      }
+
+      if (step.result.status === ResultStatus.skipped) {
+        return 'pending-step';
+      }
+
+      if (step.result.status === ResultStatus.passed) {
+        return 'passing-step';
       }
     });
 

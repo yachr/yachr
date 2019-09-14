@@ -20,21 +20,23 @@
     </span>
   </summary>
   <section>
-    <p class="feature-description">{{this.featureDescription}}</p>
+    <p class="feature-description">
+{{this.featureDescription}}</p>
 
+    {{#each this.failingScenarios}}
+      {{> scenario}}
+    {{/each}}
+    {{#each this.undefinedScenarios}}
+      {{> scenario}}
+    {{/each}}
+    {{#each this.ambiguousScenarios}}
+      {{> scenario}}
+    {{/each}}
+    {{#each this.pendingScenarios}}
+      {{> scenario}}
+    {{/each}}
     {{#each this.passingScenarios}}
-    <details>
-      <summary>
-        Scenario: {{this.scenarioName}} <span class="feature-rollup-summary">
-          <i class="material-icons">done</i>{{this.passed}}</span>
-      </summary>
-      test here
-      {{#each this.steps}}
-      <p title="Passing"><strong class="passing-step step">{{this.keyword}}</strong>
-        {{ this.name }}
-      </p>
-      {{/each}}
-    </details>
+      {{> scenario}}
     {{/each}}
   </section>
 </details>
