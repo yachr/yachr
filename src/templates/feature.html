@@ -1,26 +1,40 @@
 <details class="{{ getFeatureCss this}}">
-    <summary>
-      Ability: {{this.featureName}}
-      <span class="feature-rollup-summary">
-      <i class="material-icons">done</i>{{this.passingScenarios.length}}</span>
-    </summary>
-    <section>
-      <p class="feature-description"
-      >{{this.featureDescription}}</p>
+  <summary>
+    Ability: {{this.featureName}}
+    <span class="feature-rollup-summary">
+      {{#if this.failingScenarios.length}}
+      <i class="material-icons" title="Failing">clear</i>{{this.failingScenarios.length}}
+      {{/if}}
+      {{#if this.undefinedScenarios.length}}
+      <i class="material-icons" title="Undefined">visibility_off</i>{{this.undefinedScenarios.length}}
+      {{/if}}
+      {{#if this.ambiguousScenarios.length}}
+      <i class="material-icons" title="Ambiguous">warning</i>{{this.ambiguousScenarios.length}}
+      {{/if}}
+      {{#if this.pendingScenarios.length}}
+      <i class="material-icons" title="Pending">ac_unit</i>{{this.pendingScenarios.length}}
+      {{/if}}
+      {{#if this.passingScenarios.length}}
+      <i class="material-icons" title="Passing">done</i>{{this.passingScenarios.length}}
+      {{/if}}
+    </span>
+  </summary>
+  <section>
+    <p class="feature-description">{{this.featureDescription}}</p>
 
-      {{#each this.passingScenarios}}
-      <details>
-        <summary>
-          Scenario: {{this.scenarioName}} <span class="feature-rollup-summary">
-            <i class="material-icons">done</i>{{this.passed}}</span>
-        </summary>
-        test here
-        {{#each this.steps}}
-        <p title="Passing"><strong class="passing-step step">{{this.keyword}}</strong>
+    {{#each this.passingScenarios}}
+    <details>
+      <summary>
+        Scenario: {{this.scenarioName}} <span class="feature-rollup-summary">
+          <i class="material-icons">done</i>{{this.passed}}</span>
+      </summary>
+      test here
+      {{#each this.steps}}
+      <p title="Passing"><strong class="passing-step step">{{this.keyword}}</strong>
         {{ this.name }}
-        </p>
-        {{/each}}
-      </details>
+      </p>
       {{/each}}
-    </section>
+    </details>
+    {{/each}}
+  </section>
 </details>
