@@ -1,0 +1,26 @@
+<details class="{{ getFeatureCss this}}">
+    <summary>
+      Ability: {{this.featureName}}
+      <span class="feature-rollup-summary">
+      <i class="material-icons">done</i>{{this.passingScenarios.length}}</span>
+    </summary>
+    <section>
+      <p class="feature-description"
+      >{{this.featureDescription}}</p>
+
+      {{#each this.passingScenarios}}
+      <details>
+        <summary>
+          Scenario: {{this.scenarioName}} <span class="feature-rollup-summary">
+            <i class="material-icons">done</i>{{this.passed}}</span>
+        </summary>
+        test here
+        {{#each this.steps}}
+        <p title="Passing"><strong class="passing-step step">{{this.keyword}}</strong>
+        {{ this.name }}
+        </p>
+        {{/each}}
+      </details>
+      {{/each}}
+    </section>
+</details>

@@ -78,6 +78,8 @@ export class ReportAggregator {
   public getSummaryForScenario(scenario: IScenario): ScenarioSummary {
     const summary = new ScenarioSummary();
 
+    summary.steps = scenario.steps.filter(step => !step.hidden);
+
     // Aggregate steps
     scenario.steps.forEach(s => {
       if (s.result) {

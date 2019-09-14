@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
 
 import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
+import { FeatureSummary } from './models/aggregator/featureSummary';
 import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 import { IHtmlModel } from './models/htmlModel';
 import { ICucumberFeature } from './models/reporter/cucumberFeature';
@@ -40,8 +41,10 @@ export class Reporter {
     }
 
     let reportTemplate: string;
+    let featureTemplate: string;
     try {
       reportTemplate = fs.readFileSync(options.htmlTemplate, 'utf8');
+      featureTemplate = fs.readFileSync('src/templates/feature.html', 'utf8');
     } catch (err) {
       throw new Error(`Error reading htmlTemplate: ${err}`);
     }
@@ -57,6 +60,36 @@ export class Reporter {
     Handlebars.registerHelper('scenarioUndef', (suiteSummary: ScenarioSuiteSummary): number =>
       suiteSummary.undefined
     );
+
+    // var featureObject = document.createElement('html');
+    // featureObject.innerHTML = featureTemplate;
+
+    Handlebars.registerPartial({
+      feature: Handlebars.compile(featureTemplate),
+    });
+
+    Handlebars.registerHelper('getFeatureCss', (featureSummary: FeatureSummary) => {
+
+      if (featureSummary.failed > 0) {
+        return 'failing-feature';
+      }
+
+      if (featureSummary.ambiguous > 0) {
+        return 'ambiguous-feature';
+      }
+
+      if (featureSummary.undefined > 0) {
+        return 'undefined-feature';
+      }
+
+      if (featureSummary.pending > 0) {
+        return 'pending-feature';
+      }
+
+      if (featureSummary.passed === featureSummary.total) {
+        return 'passing-feature';
+      }
+    });
 
     const htmlReport = template(data);
 
@@ -102,6 +135,6 @@ export class Reporter {
       htmlTemplate: __dirname + '/templates/standard.html'
     };
 
-    return {...defaultOptions, ... options};
+    return { ...defaultOptions, ...options };
   }
 }

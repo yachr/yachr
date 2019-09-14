@@ -25,25 +25,4 @@
 //       `Error: test did not produce ${options.output}`
 //     ).to.be.equal(true);
 //   });
-
-//   it('should update options with required defaults if the user does not supply them', () => {
-//     const options = <IReportOptions> { };
-
-//     const actual = reporter.populateDefaultOptionsIfMissing(options);
-
-//     // tslint:disable-next-line:no-unused-expression - This is just how Chai works
-//     expect(actual.htmlTemplate).to.exist;
-//   });
-
-//   it('populateDefaultOptionsIfMissing should not overwrite existing values', () => {
-//     const options = <IReportOptions> {
-//       htmlTemplate: 'templatePath',
-//       jsonFile: 'somepath'
-//     };
-
-//     const actual = reporter.populateDefaultOptionsIfMissing(options);
-
-//     expect(actual.jsonFile, 'Error: Supplied value has been dropped').to.equal(options.jsonFile);
-//     expect(actual.htmlTemplate, 'Error: supplied value overwritten by default').to.equal(options.htmlTemplate);
-//   });
 // });

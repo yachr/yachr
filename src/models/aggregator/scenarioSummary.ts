@@ -1,5 +1,6 @@
 import { IResult } from '../reporter/result';
 import { ResultStatus } from '../reporter/resultStatus';
+import { IStep } from '../reporter/step';
 
 /**
  * A summary of all steps in a Gherkin Scenario as reported by the Cucumber Test Report.
@@ -26,6 +27,8 @@ export class ScenarioSummary {
 
   /** The total number of steps that were skipped */
   public skipped: number = 0;
+
+  public steps: IStep[] = [];
 
   public totalDuration: number = 0;
 

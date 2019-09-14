@@ -59,6 +59,10 @@
       border: 1px solid #ddd;
     }
 
+    details .feature-description {
+      white-space:pre-wrap;
+    }
+
     .scenario details p:hover {
       cursor: hand;
     }
@@ -87,9 +91,44 @@
       background-color: rgba(75, 192, 192, 0.2)
     }
 
+    .failing-feature {
+      border: 1px solid rgb(255, 99, 132, 1)
+    }
+
+    .failing-feature summary {
+      background-color: rgba(255, 99, 132, 0.2)
+    }
+
     .failing-step {
       border-color: rgba(255, 99, 132, 1);
       background-color: rgba(255, 99, 132, 0.2)
+    }
+
+    .ambiguous-feature {
+      border: 1px solid rgb(255, 140, 0, 1)
+    }
+
+    .ambiguous-feature summary {
+      background-color: rgba(255, 140, 0, 0.2)
+    }
+
+    .ambiguous-step {
+      border-color: rgba(255, 140, 0, 1);
+      background-color: rgba(255, 140, 0, 0.2)
+    }
+
+
+    .undefined-feature {
+      border: 1px solid rgb(54, 162, 235, 1)
+    }
+
+    .undefined-feature summary {
+      background-color: rgba(54, 162, 235, 0.2)
+    }
+
+    .undefined-step {
+      border-color: rgba(54, 162, 235, 1);
+      background-color: rgba(54, 162, 235, 0.2)
     }
 
     .pending-step {
@@ -123,9 +162,9 @@
           data: [
           {{ cucumberReportSummary.featureSummary.failed }},
           {{ featureUndef cucumberReportSummary.featureSummary }},
-          0,
+          {{ cucumberReportSummary.featureSummary.pending }},
           {{ cucumberReportSummary.featureSummary.passed }},
-          {{ cucumberReportSummary.featureSummary.ambiguos }},
+          {{ cucumberReportSummary.featureSummary.ambiguous }},
         ],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -151,7 +190,7 @@
         },
         title: {
           display: true,
-          text: "Feature Summary (14 Total)",
+          text: "Feature Summary ({{cucumberReportSummary.featureSummary.total}} Total)",
           fontSize: 24
         },
         scales: {
@@ -175,9 +214,9 @@
           data: [
             {{ cucumberReportSummary.scenarioSummary.failed }},
             {{ scenarioUndef cucumberReportSummary.scenarioSummary }},
-            0,
+            {{ cucumberReportSummary.scenarioSummary.pending }},
             {{ cucumberReportSummary.scenarioSummary.passed }},
-            0,
+            {{ cucumberReportSummary.scenarioSummary.ambiguous }},
           ],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -207,7 +246,7 @@
         },
         title: {
           display: true,
-          text: "Scenario Summary (44 Total)",
+          text: "Scenario Summary ({{cucumberReportSummary.scenarioSummary.total}} Total)",
           fontSize: 24
         },
         scales: {
@@ -239,26 +278,22 @@
     <tr class="summary-row">
       <th class="summary-cell" align="center">Features</th>
       <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.failed }}</td>
-      <td>{{ cucumberReportSummary.featureSummary.ambiguous }}</td>
-      <td>{{ cucumberReportSummary.featureSummary.pending }}</td>
 
       {{! featureUndef helper is required because undefined is a reserved work in javascript and breaks the template. }}
-
       <td class="summary-cell" align="center">{{ featureUndef cucumberReportSummary.featureSummary }}</td>
-      <td class="summary-cell" align="center"> XXX </td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.pending }}</td>
       <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.passed }}</td>
-      <td class="summary-cell" align="center"> XXX </td>
-      <td>{{ cucumberReportSummary.scenarioSummary.ambiguous }}</td>
-      <td>{{ cucumberReportSummary.scenarioSummary.pending }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.ambiguous }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.total }}</td>
     </tr>
 
     <tr class="summary-row">
       <th class="summary-cell" align="center">Scenarios</th>
       <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.failed }} </td>
       <td class="summary-cell" align="center">{{ scenarioUndef cucumberReportSummary.scenarioSummary }}</td>
-      <td class="summary-cell" align="center"> XXX </td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.pending }}</td>
       <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.passed }}</td>
-      <td class="summary-cell" align="center"> XXX </td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.ambiguous }}</td>
       <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.total }}</td>
     </tr>
   </table>
@@ -268,124 +303,58 @@
   <div>
     <h2>Feature Breakdown</h2>
 
-    {{#each cucumberReportSummary.featureSummary.passingFeatures}}
-    <details class="passing-feature">
+    {{#each cucumberReportSummary.featureSummary.failingFeatures}}
+    {{> feature}}
+    <!-- <details class="{{ getFeatureCss this}}">
         <summary>
           Ability: {{this.featureName}}
           <span class="feature-rollup-summary">
           <i class="material-icons">done</i>{{this.passingScenarios.length}}</span>
         </summary>
         <section>
-          <p>
-            Consequat incididunt occaecat nulla minim sit. In ea irure laborum velit sunt pariatur ea ad. Id sit pariatur
-            nisi
-            deserunt eiusmod voluptate dolore cillum. Incididunt nostrud proident duis occaecat eiusmod excepteur incididunt
-            minim velit ex culpa anim nulla. Lorem fugiat est labore pariatur ipsum irure non enim eu. </p>
-          <p>
-            Sint proident sit sit sint aliqua dolore irure pariatur reprehenderit Lorem ipsum ullamco veniam excepteur.
-            Nulla
-            elit laboris minim deserunt Lorem deserunt esse. Magna minim magna minim minim mollit. Incididunt deserunt irure
-            sint minim. Nostrud non ipsum proident amet adipisicing deserunt aliqua irure non et cillum fugiat aute.
-          </p>
+          <p class="feature-description"
+          >{{this.featureDescription}}</p>
 
           {{#each this.passingScenarios}}
           <details>
             <summary>
               Scenario: {{this.scenarioName}} <span class="feature-rollup-summary">
-              <i class="material-icons">done</i>{{this.passed}}</span>
+                <i class="material-icons">done</i>{{this.passed}}</span>
             </summary>
-            <p title="Passing"><strong class="passing-step step">Given</strong> Ophelia has a json
-              cucumber test result</p>
-            <p title="Passing"><strong class="passing-step step">When</strong> Yatchr is run against
-              it
+            test here
+            {{#each this.steps}}
+            <p title="Passing"><strong class="passing-step step">{{this.keyword}}</strong>
+            {{ this.name }}
             </p>
-            <p title="Passing"><strong class="passing-step step">Then</strong> A html representation
-              will be produced</p>
+            {{/each}}
           </details>
           {{/each}}
         </section>
-      </details>
-      {{/each}}
+    </details> -->
+    {{/each}}
 
+    {{#each cucumberReportSummary.featureSummary.ambiguousFeatures}}
+    {{> feature}}
+    {{/each}}
 
-    <!-- <h3>Failing Features</h3>
-    <ul>
-      {{#each cucumberReportSummary.featureSummary.failingFeatures}}
-      <li>{{this.featureName}}</li>
-      {{/each}}
-    </ul>
+    {{#each cucumberReportSummary.featureSummary.undefinedFeatures}}
+    {{> feature}}
+    {{/each}}
 
-    <h3>Passing Features</h3>
-    <ul>
-      {{#each cucumberReportSummary.featureSummary.passingFeatures}}
-      <li>{{this.featureName}}</li>
-      {{/each}}
-    </ul>
+    {{#each cucumberReportSummary.featureSummary.pendingFeatures}}
+    {{> feature}}
+    {{/each}}
 
-
-    <h3>Undefined Features</h3>
-    <ul>
-      {{#each cucumberReportSummary.featureSummary.undefinedFeatures}}
-      <li>{{this.featureName}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Ambiguous Features</h3>
-    <ul>
-      {{#each cucumberReportSummary.featureSummary.ambiguousFeatures}}
-      <li>{{this.featureName}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Pending Features</h3>
-    <ul>
-      {{#each cucumberReportSummary.featureSummary.pendingFeatures}}
-      <li>{{this.featureName}}</li>
-      {{/each}}
-    </ul>
-  </div>
-
-  <hr />
-
-  <div>
-    <h2>Scenario Summary Breakdown</h2>
-
-    <h3>Passing Scenarios</h3>
-    <ul>
-      {{#each cucumberReportSummary.scenarioSummary.passingScenarios}}
-      <li>{{this.scenarioName}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Failing Scenarios</h3>
-    <ul>
-      {{#each cucumberReportSummary.scenarioSummary.failingScenarios}}
-      <li>{{this.scenarioName}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Undefined Scenarios</h3>
-    <ul>
-      {{#each cucumberReportSummary.scenarioSummary.undefinedScenarios}}
-      <li>{{this.scenarioName}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Ambiguous Scenarios</h3>
-    <ul>
-      {{#each cucumberReportSummary.scenarioSummary.ambiguousScenarios}}
-      <li>{{this.scenarioName}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Pending Scenarios</h3>
-    <ul>
-      {{#each cucumberReportSummary.scenarioSummary.pendingScenarios}}
-      <li>{{this.scenarioName}}</li>
-      {{/each}}
-    </ul>
-  </div> -->
-
+    {{#each cucumberReportSummary.featureSummary.passingFeatures}}
+    {{> feature}}
+    {{/each}}
 </body>
 
 </html>
+
+<script id="foo-partial" type="text/x-handlebars-template">
+  <div class="foo">
+    <h2>{{foo}}</h2>
+    <div class="foo_bar">{{foo_bar}}</div>
+  </div>
+</script>
