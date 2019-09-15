@@ -103,6 +103,28 @@ export class Reporter {
       }
     });
 
+    Handlebars.registerHelper('getScenarioCss', (scenarioSummary: ScenarioSummary) => {
+      if (scenarioSummary.hasFailed) {
+        return 'failing-scenario';
+      }
+
+      if (scenarioSummary.hasAmbiguous) {
+        return 'ambiguous-scenario';
+      }
+
+      if (scenarioSummary.hasUndefined) {
+        return 'undefined-scenario';
+      }
+
+      if (scenarioSummary.hasPending) {
+        return 'pending-scenario';
+      }
+
+      if (scenarioSummary.isPassed) {
+        return 'passing-scenario';
+      }
+    });
+
     Handlebars.registerHelper('getStepCss', (step: IStep) => {
 
       if (step.result.status === ResultStatus.failed) {
