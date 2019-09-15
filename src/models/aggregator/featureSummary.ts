@@ -52,10 +52,10 @@ export class FeatureSummary {
     this.hasNoScenarios;
   }
 
-  get hasNoScenarios(): boolean { return this.total == 0; }
+  get hasNoScenarios(): boolean { return this.total === 0; }
 
   /** Whether the Feature has passed due to all Scenarios passing */
-  get isPassed(): boolean { return this.passed === this.total; }
+  get isPassed(): boolean { return this.passed > 0 && this.passed === this.total; }
 
   /** Updates the Feature summary using information gathered in the Scenario Summary */
   public aggregateScenario(scenario: ScenarioSummary): void {
