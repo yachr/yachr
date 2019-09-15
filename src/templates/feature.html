@@ -1,6 +1,6 @@
 <details class="{{ getFeatureCss this}}">
   <summary>
-    Ability: {{this.featureName}}
+    {{this.featureKeyword}}: {{this.featureName}}
     <span class="feature-rollup-summary">
       {{#if this.failingScenarios.length}}
       <i class="material-icons" title="Failing">clear</i>{{this.failingScenarios.length}}
@@ -20,9 +20,8 @@
     </span>
   </summary>
   <section>
-    <p class="feature-description">
+  <p class="feature-description">
 {{this.featureDescription}}</p>
-
     {{#each this.failingScenarios}}
       {{> scenario}}
     {{/each}}

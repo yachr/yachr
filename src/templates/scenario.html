@@ -21,6 +21,7 @@
       <i class="material-icons" title="Passing">done</i>{{this.passed}}
       {{/if}}
   </summary>
+  <p>{{this.scenarioDescription}}</p>
   {{#each this.steps}}
   <p title="{{this.result.status}}"><strong class="
     {{ getStepCss this}}
