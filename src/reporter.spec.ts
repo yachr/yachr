@@ -4,6 +4,8 @@ import { } from 'mocha';
 
 import { IReportOptions } from './models/reportOptions';
 import { Reporter } from './reporter';
+import { FeatureSummary } from './models/aggregator/featureSummary';
+import { ScenarioSummary } from './models/aggregator/scenarioSummary';
 
 describe('reporter', () => {
   let reporter: Reporter;
@@ -71,5 +73,78 @@ describe('reporter', () => {
 
     expect(actual.jsonFile, 'Error: Supplied value has been dropped').to.equal(options.jsonFile);
     expect(actual.htmlTemplate, 'Error: supplied value overwritten by default').to.equal(options.htmlTemplate);
+  });
+
+  it('generates css for feature block', () => {
+    let featureSummary = {
+      hasFailed: true
+    } as FeatureSummary;
+
+    expect(reporter.getFeatureCss(featureSummary)).to.equal('failing-feature');
+
+    featureSummary = {
+      hasAmbiguous: true
+    } as FeatureSummary;
+
+    expect(reporter.getFeatureCss(featureSummary)).to.equal('ambiguous-feature');
+
+    featureSummary = {
+      hasUndefined:true
+    } as FeatureSummary;
+
+    expect(reporter.getFeatureCss(featureSummary)).to.equal('undefined-feature');
+
+    featureSummary = {
+      hasPending: true
+    } as FeatureSummary;
+
+    expect(reporter.getFeatureCss(featureSummary)).to.equal('pending-feature');
+
+    featureSummary = {
+      isPassed: true
+    } as FeatureSummary;
+
+    expect(reporter.getFeatureCss(featureSummary)).to.equal('passing-feature');
+
+    featureSummary = {
+    } as FeatureSummary;
+
+    expect(reporter.getFeatureCss(featureSummary)).to.equal('');
+  });
+
+  it('generates css for Scenario block', () => {
+    let scenarioSummary: ScenarioSummary = {
+      hasFailed: true
+    } as ScenarioSummary;
+
+    expect(reporter.getScenarioCss(scenarioSummary)).to.equal('failing-scenario');
+
+    scenarioSummary = {
+      hasAmbiguous: true
+    } as ScenarioSummary;
+
+    expect(reporter.getScenarioCss(scenarioSummary)).to.equal('ambiguous-scenario');
+
+    scenarioSummary = {
+      hasUndefined: true
+    } as ScenarioSummary;
+
+    expect(reporter.getScenarioCss(scenarioSummary)).to.equal('undefined-scenario');
+
+    scenarioSummary = {
+      hasPending: true
+    } as ScenarioSummary;
+
+    expect(reporter.getScenarioCss(scenarioSummary)).to.equal('pending-scenario');
+
+    scenarioSummary = {
+      isPassed: true
+    } as ScenarioSummary;
+
+    expect(reporter.getScenarioCss(scenarioSummary)).to.equal('passing-scenario');
+
+    scenarioSummary = {} as ScenarioSummary;
+    expect(reporter.getScenarioCss(scenarioSummary)).to.equal('');
+
   });
 });

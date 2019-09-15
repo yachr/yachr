@@ -264,9 +264,6 @@ describe('report-aggregator', () => {
       undefined: 0,
     };
 
-    console.debug(summary.passed);
-    console.debug(expectedSuiteSummary.passed);
-
     expect(JSON.parse(JSON.stringify(summary)))
       .to.be.deep.equal(expectedSuiteSummary);
   });
