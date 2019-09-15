@@ -6,7 +6,7 @@ env:
 node_js:
   - '8.12'
 script:
-  - npm ci
+  - npm run ci
 
 after_success:
   - export GIT_TAG=build-$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
