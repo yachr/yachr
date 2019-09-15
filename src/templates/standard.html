@@ -1,151 +1,407 @@
-<html>
-<body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Failed', 'Undefined', 'Pending', 'Passed', 'Purple', 'Abmiguous'],
-            datasets: [{
-                label: '# of Votes',
-                data: [
-                  cucumberReportSummary.featureSummary.passed,
-                  , 0, 0, 0, 0, 0],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-    </script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    summary {
+      background-color: rgb(235, 231, 231);
+      padding: 10px
+    }
+
+    .chart {
+      margin-bottom: 25px;
+      width: 620px;
+      display: inline-block;
+    }
+
+    details {
+      display: inline-block;
+      width: 620px;
+      vertical-align: top;
+    }
+
+    details section {
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .summary-table {
+      display: table;
+      width: 80%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      overflow: auto;
+    }
+
+    .summary-hr-row {
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+    }
+
+    .summary-table th {
+      font-size: 14px;
+    }
+
+    .summary-row {
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+    }
+
+    .summary-cell {
+      padding: 6px 13px;
+      border: 1px solid #ddd;
+    }
+
+    details .feature-description {
+      white-space:pre-wrap;
+    }
+
+    .scenario details p:hover {
+      cursor: hand;
+    }
+
+    .feature-rollup-summary i {
+      vertical-align: bottom;
+    }
+
+    .passing-feature {
+      border: 1px solid rgba(75, 192, 192, 1)
+    }
+
+    .passing-feature > summary {
+      background-color: rgba(75, 192, 192, 0.2)
+    }
+
+    .passing-scenario {
+      border: 1px solid rgba(75, 192, 192, 1)
+    }
+
+    .passing-scenario > summary {
+      background-color: rgba(75, 192, 192, 0.2)
+    }
+
+    .step {
+      border-left: solid 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+      color: black;
+    }
+
+    .passing-step {
+      border-color: rgba(75, 192, 192, 1);
+      background-color: rgba(75, 192, 192, 0.2)
+    }
+
+    .failing-feature {
+      border: 1px solid rgb(255, 99, 132, 1)
+    }
+
+    .failing-feature > summary {
+      background-color: rgba(255, 99, 132, 0.2)
+    }
+
+    .failing-scenario {
+      border: 1px solid rgb(255, 99, 132, 1)
+    }
+
+    .failing-scenario > summary {
+      background-color: rgba(255, 99, 132, 0.2)
+    }
+
+    .failing-step {
+      border-color: rgba(255, 99, 132, 1);
+      background-color: rgba(255, 99, 132, 0.2)
+    }
+
+    .ambiguous-feature {
+      border: 1px solid rgb(255, 140, 0, 1)
+    }
+
+    .ambiguous-feature > summary {
+      background-color: rgba(255, 140, 0, 0.2)
+    }
+
+    .ambiguous-scenario {
+      border: 1px solid rgb(255, 140, 0, 1)
+    }
+
+    .ambiguous-scenario > summary {
+      background-color: rgba(255, 140, 0, 0.2)
+    }
+
+    .ambiguous-step {
+      border-color: rgba(255, 140, 0, 1);
+      background-color: rgba(255, 140, 0, 0.2)
+    }
+
+    .undefined-feature {
+      border: 1px solid rgb(54, 162, 235, 1)
+    }
+
+    .undefined-feature > summary {
+      background-color: rgba(54, 162, 235, 0.2)
+    }
+
+    .undefined-scenario {
+      border: 1px solid rgb(54, 162, 235, 1)
+    }
+
+    .undefined-scenario > summary {
+      background-color: rgba(54, 162, 235, 0.2)
+    }
+
+    .undefined-step {
+      border-color: rgba(54, 162, 235, 1);
+      background-color: rgba(54, 162, 235, 0.2)
+    }
+
+    .pending-feature {
+      border: 1px solid rgba(111, 109, 107, 1);
+    }
+
+    .pending-feature > summary {
+      background-color: rgba(111, 109, 107, 0.2);
+    }
+
+    .pending-scenario {
+      border: 1px solid rgba(111, 109, 107, 1);
+    }
+
+    .pending-scenario > summary {
+      background-color: rgba(111, 109, 107, 0.2);
+    }
+
+    .pending-step {
+      border-color: rgba(111, 109, 107, 1);
+      background-color: rgba(111, 109, 107, 0.2)
+    }
+  </style>
+</head>
+
+<body style="width: 1280px; margin: auto;">
   <h1>Specification Execution Results </h1>
 
-  <table border="1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+  <div class="chart">
+    <canvas id="myChart"></canvas>
+  </div>
+  <div class="chart">
+    <canvas id="myChart2"></canvas>
+  </div>
+  <script>
+    Chart.defaults.global.defaultFontFamily = 'Roboto';
+    Chart.defaults.global.defaultFontSize = 16;
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Failed', 'Undefined', 'Pending', 'Passed', 'Ambiguous'],
+        datasets: [{
+          data: [
+          {{ cucumberReportSummary.featureSummary.failed }},
+          {{ featureUndef cucumberReportSummary.featureSummary }},
+          {{ cucumberReportSummary.featureSummary.pending }},
+          {{ cucumberReportSummary.featureSummary.passed }},
+          {{ cucumberReportSummary.featureSummary.ambiguous }},
+        ],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(111, 109, 107, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(255, 140, 0, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(111, 109, 107, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(255, 140, 0, 1)',
+        ],
+        borderWidth: 1
+      }]
+    },
+      options: {
+        responsive: true,
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: "Feature Summary ({{cucumberReportSummary.featureSummary.total}} Total)",
+          fontSize: 24
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+
+    var ctx2 = document.getElementById('myChart2').getContext('2d');
+
+    var myChart2 = new Chart(ctx2, {
+      type: 'bar',
+      responsive: true,
+      data: {
+        labels: ['Failed', 'Undefined', 'Pending', 'Passed', 'Ambiguous'],
+        datasets: [{
+          data: [
+            {{ cucumberReportSummary.scenarioSummary.failed }},
+            {{ scenarioUndef cucumberReportSummary.scenarioSummary }},
+            {{ cucumberReportSummary.scenarioSummary.pending }},
+            {{ cucumberReportSummary.scenarioSummary.passed }},
+            {{ cucumberReportSummary.scenarioSummary.ambiguous }},
+          ],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(111, 109, 107, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(255, 140, 0, 0.2)',
+
+            // 'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(111, 109, 107, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 140, 0, 1)',
+            // 'rgba(153, 102, 255, 1)',
+            // 'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: "Scenario Summary ({{cucumberReportSummary.scenarioSummary.total}} Total)",
+          fontSize: 24
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  </script>
+
+  <table class="summary-table" style="margin: auto;">
     <header>
-        <thead>
-          <td></td>
-          <td>Passed</td>
-          <td>Failed</td>
-          <td>Undefined</td>
-          <td>Partial</td>
-          <td>Total</td>
-        </thead>
+      <thead>
+        <tr class="summary-hr-row">
+          <th class="summary-cell"></th>
+          <th class="summary-cell">Failed</th>
+          <th class="summary-cell">Undefined</th>
+          <th class="summary-cell">Pending</th>
+          <th class="summary-cell">Passed</th>
+          <th class="summary-cell">Ambiguous</th>
+          <th class="summary-cell">Total</th>
+        </tr>
+      </thead>
     </header>
 
-    <tr>
-      <td>Features</td>
-      <td>{{ cucumberReportSummary.featureSummary.passed }}</td>
-      <td>{{ cucumberReportSummary.featureSummary.failed }}</td>
-      {{! featureUndef helper is required becuase undefined is a reserved work in javascript and breaks the template. }}
-      <td>{{ featureUndef cucumberReportSummary.featureSummary }} </td>
-      <td>{{ cucumberReportSummary.featureSummary.partial }}</td>
-      <td>{{ cucumberReportSummary.featureSummary.total }}</td>
+    <tr class="summary-row">
+      <th class="summary-cell" align="center">Features</th>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.failed }}</td>
+
+      {{! featureUndef helper is required because undefined is a reserved work in javascript and breaks the template. }}
+      <td class="summary-cell" align="center">{{ featureUndef cucumberReportSummary.featureSummary }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.pending }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.passed }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.ambiguous }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.total }}</td>
     </tr>
 
-    <tr>
-      <td>Scenarios</td>
-      <td>{{ cucumberReportSummary.scenarioSummary.passed }}</td>
-      <td>{{ cucumberReportSummary.scenarioSummary.failed }}</td>
-      {{! scenarioUndef helper is required becuase undefined is a reserved work in javascript and breaks the template. }}
-      <td>{{ scenarioUndef cucumberReportSummary.scenarioSummary }} </td>
-      <td>{{ cucumberReportSummary.scenarioSummary.partial }}</td>
-      <td>{{ cucumberReportSummary.scenarioSummary.total }}</td>
+    <tr class="summary-row">
+      <th class="summary-cell" align="center">Scenarios</th>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.failed }} </td>
+      <td class="summary-cell" align="center">{{ scenarioUndef cucumberReportSummary.scenarioSummary }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.pending }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.passed }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.ambiguous }}</td>
+      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.total }}</td>
     </tr>
-
   </table>
 
   <hr />
 
   <div>
-    <h2>Feature Summary Breakdown</h2>
+    <h2>Feature Breakdown</h2>
 
-    <h3>Passing Features</h3>
-    <ul>
-      {{#each cucumberReportSummary.featureSummary.passingFeatures}}
-      <li>{{this.featureName}}</li>
-      {{/each}}
-    </ul>
+    {{#each cucumberReportSummary.featureSummary.failingFeatures}}
+    {{> feature}}
+    <!-- <details class="{{ getFeatureCss this}}">
+        <summary>
+          Ability: {{this.featureName}}
+          <span class="feature-rollup-summary">
+          <i class="material-icons">done</i>{{this.passingScenarios.length}}</span>
+        </summary>
+        <section>
+          <p class="feature-description"
+          >{{this.featureDescription}}</p>
 
-    <h3>Failing Features</h3>
-    <ul>
-      {{#each cucumberReportSummary.featureSummary.failingFeatures}}
-      <li>{{this.featureName}}</li>
-      {{/each}}
-    </ul>
+          {{#each this.passingScenarios}}
+          <details>
+            <summary>
+              Scenario: {{this.scenarioName}} <span class="feature-rollup-summary">
+                <i class="material-icons">done</i>{{this.passed}}</span>
+            </summary>
+            test here
+            {{#each this.steps}}
+            <p title="Passing"><strong class="passing-step step">{{this.keyword}}</strong>
+            {{ this.name }}
+            </p>
+            {{/each}}
+          </details>
+          {{/each}}
+        </section>
+    </details> -->
+    {{/each}}
 
-    <h3>Undefined Features</h3>
-    <ul>
-      {{#each cucumberReportSummary.featureSummary.undefinedFeatures}}
-      <li>{{this.featureName}}</li>
-      {{/each}}
-    </ul>
+    {{#each cucumberReportSummary.featureSummary.ambiguousFeatures}}
+    {{> feature}}
+    {{/each}}
 
-    <h3>Partial Features</h3>
-    <ul>
-      {{#each cucumberReportSummary.featureSummary.partialFeatures}}
-      <li>{{this.featureName}}</li>
-      {{/each}}
-    </ul>
-  </div>
+    {{#each cucumberReportSummary.featureSummary.undefinedFeatures}}
+    {{> feature}}
+    {{/each}}
 
-  <hr />
+    {{#each cucumberReportSummary.featureSummary.pendingFeatures}}
+    {{> feature}}
+    {{/each}}
 
-  <div>
-    <h2>Scenario Summary Breakdown</h2>
-
-    <h3>Passing Scenarios</h3>
-    <ul>
-      {{#each cucumberReportSummary.scenarioSummary.passingScenarios}}
-      <li>{{this.scenarioName}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Failing Scenarios</h3>
-    <ul>
-      {{#each cucumberReportSummary.scenarioSummary.failingScenarios}}
-      <li>{{this.scenarioName}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Undefined Scenarios</h3>
-    <ul>
-      {{#each cucumberReportSummary.scenarioSummary.undefinedScenarios}}
-      <li>{{this.scenarioName}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Partial Scenarios</h3>
-    <ul>
-      {{#each cucumberReportSummary.scenarioSummary.partialScenarios}}
-      <li>{{this.scenarioName}}</li>
-      {{/each}}
-    </ul>
-  </div>
-
+    {{#each cucumberReportSummary.featureSummary.passingFeatures}}
+    {{> feature}}
+    {{/each}}
 </body>
+
 </html>
+
+<script id="foo-partial" type="text/x-handlebars-template">
+  <div class="foo">
+    <h2>{{foo}}</h2>
+    <div class="foo_bar">{{foo_bar}}</div>
+  </div>
+</script>
