@@ -1,0 +1,72 @@
+[
+  {
+    "description": "Feature One",
+    "keyword": "Ability",
+    "name": "View report summary",
+    "id": "view-report-summary",
+    "tags": [],
+    "elements": [
+      {
+        "id": "view-report-summary;feature-summary",
+        "keyword": "Scenario",
+        "line": 7,
+        "name": "Feature summary",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then",
+            "result": {
+              "status": "ambigious",
+              "duration": 1000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "description": "Feature Two",
+    "keyword": "Ability",
+    "name": "View report summary",
+    "id": "view-report-summary",
+    "tags": [],
+    "elements": [
+      {
+        "id": "view-report-summary;feature-summary",
+        "keyword": "Scenario",
+        "line": 7,
+        "name": "Feature summary",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then",
+            "result": {
+              "status": "failed",
+              "duration": 1000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
