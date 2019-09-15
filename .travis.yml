@@ -8,6 +8,11 @@ node_js:
 script:
   - npm run ci
 
+branches:
+  except:
+    - /build-.*-.*/ # build-develop-23
+    - /v\d\.\d\.\d/ # v1.2.3
+
 after_success:
   - export GIT_TAG=build-$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
   - npm run coveralls
