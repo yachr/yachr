@@ -1,0 +1,41 @@
+<details class="{{ getFeatureCss this}}">
+  <summary>
+    {{this.featureKeyword}}: {{this.featureName}}
+    <span class="feature-rollup-summary">
+      {{#if this.failingScenarios.length}}
+      <i class="material-icons" title="Failing">clear</i>{{this.failingScenarios.length}}
+      {{/if}}
+      {{#if this.undefinedScenarios.length}}
+      <i class="material-icons" title="Undefined">visibility_off</i>{{this.undefinedScenarios.length}}
+      {{/if}}
+      {{#if this.ambiguousScenarios.length}}
+      <i class="material-icons" title="Ambiguous">warning</i>{{this.ambiguousScenarios.length}}
+      {{/if}}
+      {{#if this.pendingScenarios.length}}
+      <i class="material-icons" title="Pending">ac_unit</i>{{this.pendingScenarios.length}}
+      {{/if}}
+      {{#if this.passingScenarios.length}}
+      <i class="material-icons" title="Passing">done</i>{{this.passingScenarios.length}}
+      {{/if}}
+    </span>
+  </summary>
+  <section>
+  <p class="feature-description">
+{{this.featureDescription}}</p>
+    {{#each this.failingScenarios}}
+      {{> scenario}}
+    {{/each}}
+    {{#each this.undefinedScenarios}}
+      {{> scenario}}
+    {{/each}}
+    {{#each this.ambiguousScenarios}}
+      {{> scenario}}
+    {{/each}}
+    {{#each this.pendingScenarios}}
+      {{> scenario}}
+    {{/each}}
+    {{#each this.passingScenarios}}
+      {{> scenario}}
+    {{/each}}
+  </section>
+</details>

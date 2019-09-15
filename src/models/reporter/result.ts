@@ -4,6 +4,6 @@
  */
 export interface IResult {
   status: string;
-  duration: number;
-  error_message: string;
+  duration: number; // TODO: Review if duration is an optional field
+  error_message?: string;
 }

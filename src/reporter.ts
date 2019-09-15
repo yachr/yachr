@@ -2,12 +2,16 @@ import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
 
 import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
+import { FeatureSummary } from './models/aggregator/featureSummary';
 import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 import { IHtmlModel } from './models/htmlModel';
 import { ICucumberFeature } from './models/reporter/cucumberFeature';
 import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
+import { IStep } from './models/reporter/step';
 import { IReportOptions } from './models/reportOptions';
+import { ScenarioSummary } from './models/aggregator/scenarioSummary';
 import { ReportAggregator } from './reportAggregator';
+import { ResultStatus } from './models/reporter/resultStatus';
 
 /**
  * The main YACHR Cucumber HTML Report generator.
@@ -28,6 +32,8 @@ export class Reporter {
 
     const aggregator = new ReportAggregator();
 
+    console.debug(results);
+
     const data = <IHtmlModel> {
       cucumberReportSummary: aggregator.getSummaryForSuite(results),
       cucumberResult: results
@@ -38,8 +44,12 @@ export class Reporter {
     }
 
     let reportTemplate: string;
+    let featureTemplate: string;
+    let scenarioTemplate: string;
     try {
       reportTemplate = fs.readFileSync(options.htmlTemplate, 'utf8');
+      featureTemplate = fs.readFileSync('src/templates/feature.html', 'utf8');
+      scenarioTemplate = fs.readFileSync('src/templates/scenario.html', 'utf8');
     } catch (err) {
       throw new Error(`Error reading htmlTemplate: ${err}`);
     }
@@ -55,6 +65,92 @@ export class Reporter {
     Handlebars.registerHelper('scenarioUndef', (suiteSummary: ScenarioSuiteSummary): number =>
       suiteSummary.undefined
     );
+
+    Handlebars.registerHelper('stepUndef', (scenarioSummary: ScenarioSummary): number =>
+      scenarioSummary.undefined
+    );
+    // var featureObject = document.createElement('html');
+    // featureObject.innerHTML = featureTemplate;
+
+    Handlebars.registerPartial({
+      feature: Handlebars.compile(featureTemplate),
+    });
+
+    Handlebars.registerPartial({
+      scenario: Handlebars.compile(scenarioTemplate),
+    });
+
+    Handlebars.registerHelper('getFeatureCss', (featureSummary: FeatureSummary) => {
+
+      if (featureSummary.failed > 0) {
+        return 'failing-feature';
+      }
+
+      if (featureSummary.ambiguous > 0) {
+        return 'ambiguous-feature';
+      }
+
+      if (featureSummary.undefined > 0) {
+        return 'undefined-feature';
+      }
+
+      if (featureSummary.pending > 0) {
+        return 'pending-feature';
+      }
+
+      if (featureSummary.passed === featureSummary.total) {
+        return 'passing-feature';
+      }
+    });
+
+    Handlebars.registerHelper('getScenarioCss', (scenarioSummary: ScenarioSummary) => {
+      if (scenarioSummary.hasFailed) {
+        return 'failing-scenario';
+      }
+
+      if (scenarioSummary.hasAmbiguous) {
+        return 'ambiguous-scenario';
+      }
+
+      if (scenarioSummary.hasUndefined) {
+        return 'undefined-scenario';
+      }
+
+      if (scenarioSummary.hasPending) {
+        return 'pending-scenario';
+      }
+
+      if (scenarioSummary.isPassed) {
+        return 'passing-scenario';
+      }
+    });
+
+    Handlebars.registerHelper('getStepCss', (step: IStep) => {
+
+      if (step.result.status === ResultStatus.failed) {
+        return 'failing-step';
+      }
+
+      if (step.result.status === ResultStatus.ambiguous) {
+        return 'ambiguous-step';
+      }
+
+      if (step.result.status === ResultStatus.undefined) {
+        return 'undefined-step';
+      }
+
+      if (step.result.status === ResultStatus.pending) {
+        return 'pending-step';
+      }
+
+      if (step.result.status === ResultStatus.skipped) {
+        return 'pending-step';
+      }
+
+      if (step.result.status === ResultStatus.passed) {
+        return 'passing-step';
+      }
+    });
 
     const htmlReport = template(data);
 
@@ -100,6 +196,6 @@ export class Reporter {
       htmlTemplate: __dirname + '/templates/standard.html'
     };
 
-    return {...defaultOptions, ... options};
+    return { ...defaultOptions, ...options };
   }
 }

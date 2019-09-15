@@ -1,0 +1,98 @@
+[
+  {
+    "description": "  As a user\n  I would like to see the summary of features and scenarios in my project\n  So that I can gauge my project's health and progress.",
+    "keyword": "Ability",
+    "name": "View report summary",
+    "line": 1,
+    "id": "view-report-summary",
+    "tags": [],
+    "uri": "e2e\\features\\abilities\\user\\view-report-summary.feature",
+    "elements": [
+      {
+        "id": "view-report-summary;feature-summary",
+        "keyword": "Scenario",
+        "line": 7,
+        "name": "Feature summary",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "Feature",
+                      "Scenario",
+                      "Step",
+                      "Step Status"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature One",
+                      "Scenario One",
+                      "Step 1",
+                      "passed"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature One",
+                      "Scenario One",
+                      "Step 2",
+                      "passed"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature One",
+                      "Scenario One",
+                      "Step 3",
+                      "passed"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "a passing step",
+            "match": {
+              "location": "e2e\\step_definitions\\view-report-summary.steps.js:4"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 13,
+            "name": "I run yachr against it",
+            "match": {
+              "location": "e2e\\step_definitions\\view-report-summary.steps.js:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "a summary showing one passing feature and one passing scenario",
+            "match": {
+              "location": "e2e\\step_definitions\\view-report-summary.steps.js:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
