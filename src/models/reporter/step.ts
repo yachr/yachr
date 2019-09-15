@@ -6,8 +6,11 @@ import { IResult } from './result';
  */
 export interface IStep {
   keyword: string;
-  name: string;
-  line: number;
+  /** Hidden steps don't have a name */
+  name?: string;
+  /** Hidden steps don't have a line */
+  line?: number;
+  hidden?: boolean;
   match: {
     location: string;
   };
