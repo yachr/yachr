@@ -32,8 +32,6 @@ Then('a summary showing one passing feature and one passing scenario', async () 
   const $ = cherrio.load(fs.readFileSync(reportLocation, 'utf8'));
   const pageText = $('html').text();
 
-  console.debug(pageText);
-
   // ([.\n\s]*)1/ Match all spaces and new line chars
   const passedFeatures = /Ability: View report summary([.\n\s]*)done1/;
   expect(passedFeatures.test(pageText)).eql(true);
