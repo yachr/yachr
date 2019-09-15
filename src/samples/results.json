@@ -33,6 +33,7 @@
               "line": 12,
               "name": "Milton is not currently logged in",
               "result": {
+                "duration": 1,
                 "status": "passed"
               }
             },
@@ -42,6 +43,7 @@
               "line": 13,
               "name": "Milton navigates to the login page",
               "result": {
+                "duration": 1,
                 "status": "passed"
               }
             },
@@ -51,6 +53,7 @@
               "line": 14,
               "name": "Milton should be directed to the AD Login",
               "result": {
+                "duration": 1,
                 "status": "passed"
               }
             },

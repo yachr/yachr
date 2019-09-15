@@ -1,6 +1,6 @@
 # YACHR
 [![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=GH-18-Roll-up-steps-to-scenarios-to-features)](https://travis-ci.org/yachr/yachr/branches)
-[![Coverage Status](https://coveralls.io/repos/github/yachr/yachr/badge.svg?branch=GH-18-Structure-Change)](https://coveralls.io/github/yachr/yachr?branch=GH-18-Structure-Change)
+[![Coverage Status](https://coveralls.io/repos/github/yachr/yachr/badge.svg?branch=GH-18-Roll-up-steps-to-scenarios-to-features)](https://coveralls.io/github/yachr/yachr?branch=GH-18-Roll-up-steps-to-scenarios-to-features)
 
 Yet another cucumber html reporter is a simple html reporter that runs off the standard json file produced by cucumberjs.
 
