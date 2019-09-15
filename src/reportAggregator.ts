@@ -63,7 +63,11 @@ export class ReportAggregator {
       summary.aggregateScenario(scenarioSummary);
     });
 
+    // Add metadata
     summary.featureName = feature.name;
+    summary.featureDescription = feature.description;
+    summary.featureKeyword = feature.keyword;
+
     return summary;
   }
 
@@ -74,14 +78,20 @@ export class ReportAggregator {
   public getSummaryForScenario(scenario: IScenario): ScenarioSummary {
     const summary = new ScenarioSummary();
 
+    summary.steps = scenario.steps.filter(step => !step.hidden);
+
     // Aggregate steps
     scenario.steps.forEach(s => {
       if (s.result) {
-        summary.aggregateStep(s.result);
+        summary.aggregateStep(s.result, s.hidden);
       }
     });
 
+    // Add metadata
     summary.scenarioName = scenario.name;
+    summary.scenarioDescription = scenario.description || '';
+    summary.scenarioKeyword = scenario.keyword;
+
     return summary;
   }
 

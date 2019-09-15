@@ -48,6 +48,7 @@ describe('reporter', () => {
     expect(fs.existsSync(options.output), `Error: test did not produce ${options.output}`).to.be.true;
 
     // Clean up test
+    // Comment this out if you want to view the generated html
     fs.unlinkSync(options.output);
   });
 

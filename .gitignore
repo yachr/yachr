@@ -12,3 +12,7 @@ reports/**/*.html
 .nyc_output/
 .coveralls.yml
 *.tgz
+
+e2e/reportOutput
+# Transpiled E2E
+e2e/**/*.js
