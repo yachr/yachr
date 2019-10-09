@@ -230,26 +230,26 @@
         borderWidth: 1
       }]
     },
-      options: {
-        responsive: true,
-        legend: {
-          display: false
-        },
-        title: {
-          display: true,
-          text: "Feature Summary ({{cucumberReportSummary.featureSummary.total}} Total)",
-          fontSize: 24
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              precision: 0,
-              fixedStepSize: 1,
-              beginAtZero: true
-            }
-          }]
-        }
+    options: {
+      responsive: true,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: "Feature Summary ({{cucumberReportSummary.featureSummary.total}} Total)",
+        fontSize: 24
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            precision: 0,
+            beginAtZero: true,
+            suggestedMax: 5
+          }
+        }]
       }
+    }
     });
 
     var ctx2 = document.getElementById('myChart2').getContext('2d');
@@ -302,8 +302,8 @@
           yAxes: [{
             ticks: {
               precision: 0,
-              fixedStepSize: 1,
-              beginAtZero: true
+              beginAtZero: true,
+              suggestedMax: 5
             }
           }]
         }
