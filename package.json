@@ -20,6 +20,7 @@
       ".ts"
     ],
     "exclude": [
+      "e2e/*",
       "**/*.d.ts",
       "**/*.spec.ts",
       "dist/*",
