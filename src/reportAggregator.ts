@@ -35,6 +35,7 @@ export class ReportAggregator {
       // for this given feature
       const featureSummary = this.getSummaryForFeature(feature);
 
+      featureSummary.tags = feature.tags.map((tag => tag.name)).join(', ');
       featureSuiteSummary.aggregateFeature(featureSummary);
       scenarioSuiteSummary.aggregateFeature(featureSummary);
     });

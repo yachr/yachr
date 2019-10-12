@@ -23,5 +23,6 @@
   "cucumberautocomplete.stepsInvariants": true,
   "cucumberautocomplete.onTypeFormat": true,
   "cucumberautocomplete.gherkinDefinitionPart": "(Given|When|Then)\\(",
-  "peacock.color": "#38224c"
+  "peacock.color": "#38224c",
+  "git.enableCommitSigning": true
 }

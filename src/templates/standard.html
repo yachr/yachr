@@ -4,7 +4,7 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -13,6 +13,18 @@
     summary {
       background-color: rgb(235, 231, 231);
       padding: 10px
+    }
+
+    details>summary {
+      list-style: none;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details summary::-moz-list-bullet {
+      display: none;
     }
 
     .chart {
@@ -60,7 +72,7 @@
     }
 
     details .feature-description {
-      white-space:pre-wrap;
+      white-space: pre-wrap;
     }
 
     .scenario details p:hover {
@@ -75,7 +87,7 @@
       border: 1px solid rgba(75, 192, 192, 1)
     }
 
-    .passing-feature > summary {
+    .passing-feature>summary {
       background-color: rgba(75, 192, 192, 0.2)
     }
 
@@ -83,7 +95,7 @@
       border: 1px solid rgba(75, 192, 192, 1)
     }
 
-    .passing-scenario > summary {
+    .passing-scenario>summary {
       background-color: rgba(75, 192, 192, 0.2)
     }
 
@@ -103,7 +115,7 @@
       border: 1px solid rgb(255, 99, 132, 1)
     }
 
-    .failing-feature > summary {
+    .failing-feature>summary {
       background-color: rgba(255, 99, 132, 0.2)
     }
 
@@ -111,7 +123,7 @@
       border: 1px solid rgb(255, 99, 132, 1)
     }
 
-    .failing-scenario > summary {
+    .failing-scenario>summary {
       background-color: rgba(255, 99, 132, 0.2)
     }
 
@@ -124,7 +136,7 @@
       border: 1px solid rgb(255, 140, 0, 1)
     }
 
-    .ambiguous-feature > summary {
+    .ambiguous-feature>summary {
       background-color: rgba(255, 140, 0, 0.2)
     }
 
@@ -132,7 +144,7 @@
       border: 1px solid rgb(255, 140, 0, 1)
     }
 
-    .ambiguous-scenario > summary {
+    .ambiguous-scenario>summary {
       background-color: rgba(255, 140, 0, 0.2)
     }
 
@@ -145,7 +157,7 @@
       border: 1px solid rgb(54, 162, 235, 1)
     }
 
-    .undefined-feature > summary {
+    .undefined-feature>summary {
       background-color: rgba(54, 162, 235, 0.2)
     }
 
@@ -153,7 +165,7 @@
       border: 1px solid rgb(54, 162, 235, 1)
     }
 
-    .undefined-scenario > summary {
+    .undefined-scenario>summary {
       background-color: rgba(54, 162, 235, 0.2)
     }
 
@@ -166,7 +178,7 @@
       border: 1px solid rgba(111, 109, 107, 1);
     }
 
-    .pending-feature > summary {
+    .pending-feature>summary {
       background-color: rgba(111, 109, 107, 0.2);
     }
 
@@ -174,7 +186,7 @@
       border: 1px solid rgba(111, 109, 107, 1);
     }
 
-    .pending-scenario > summary {
+    .pending-scenario>summary {
       background-color: rgba(111, 109, 107, 0.2);
     }
 
@@ -187,7 +199,8 @@
 
 <body style="width: 1280px; margin: auto;">
   <h1>Specification Execution Results</h1>
-  <span style="position: absolute;right: 40px;top: 15px; font-size: 12px; color: lightgray;">Generated at: {{ generateTime }}</span>
+  <span style="position: absolute;right: 40px;top: 15px; font-size: 12px; color: lightgray;">Generated at:
+    {{ generateTime }}</span>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
   <div class="chart">
@@ -207,49 +220,49 @@
         labels: ['Failed', 'Undefined', 'Pending', 'Passed', 'Ambiguous'],
         datasets: [{
           data: [
-          {{ cucumberReportSummary.featureSummary.failed }},
-          {{ featureUndef cucumberReportSummary.featureSummary }},
+            {{ cucumberReportSummary.featureSummary.failed }},
+        {{ featureUndef cucumberReportSummary.featureSummary }},
           {{ cucumberReportSummary.featureSummary.pending }},
-          {{ cucumberReportSummary.featureSummary.passed }},
-          {{ cucumberReportSummary.featureSummary.ambiguous }},
+    { { cucumberReportSummary.featureSummary.passed } },
+    { { cucumberReportSummary.featureSummary.ambiguous } },
         ],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(111, 109, 107, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(255, 140, 0, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(111, 109, 107, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(255, 140, 0, 1)',
-        ],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(111, 109, 107, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(255, 140, 0, 0.2)',
+    ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(111, 109, 107, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(255, 140, 0, 1)',
+      ],
         borderWidth: 1
       }]
     },
-      options: {
-        responsive: true,
+    options: {
+      responsive: true,
         legend: {
-          display: false
-        },
-        title: {
-          display: true,
+        display: false
+      },
+      title: {
+        display: true,
           text: "Feature Summary ({{cucumberReportSummary.featureSummary.total}} Total)",
-          fontSize: 24
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              precision: 0,
-              fixedStepSize: 1,
-              beginAtZero: true
-            }
-          }]
-        }
+            fontSize: 24
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            precision: 0,
+            fixedStepSize: 1,
+            beginAtZero: true
+          }
+        }]
       }
+    }
     });
 
     var ctx2 = document.getElementById('myChart2').getContext('2d');
@@ -262,52 +275,52 @@
         datasets: [{
           data: [
             {{ cucumberReportSummary.scenarioSummary.failed }},
-            {{ scenarioUndef cucumberReportSummary.scenarioSummary }},
+        {{ scenarioUndef cucumberReportSummary.scenarioSummary }},
             {{ cucumberReportSummary.scenarioSummary.pending }},
-            {{ cucumberReportSummary.scenarioSummary.passed }},
-            {{ cucumberReportSummary.scenarioSummary.ambiguous }},
+    { { cucumberReportSummary.scenarioSummary.passed } },
+    { { cucumberReportSummary.scenarioSummary.ambiguous } },
           ],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(111, 109, 107, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(255, 140, 0, 0.2)',
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(111, 109, 107, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(255, 140, 0, 0.2)',
 
-            // 'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(111, 109, 107, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(255, 140, 0, 1)',
-            // 'rgba(153, 102, 255, 1)',
-            // 'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+      // 'rgba(255, 159, 64, 0.2)'
+    ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(111, 109, 107, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(255, 140, 0, 1)',
+        // 'rgba(153, 102, 255, 1)',
+        // 'rgba(255, 159, 64, 1)'
+      ],
+        borderWidth: 1
         }]
       },
-      options: {
-        responsive: true,
+    options: {
+      responsive: true,
         legend: {
-          display: false
-        },
-        title: {
-          display: true,
+        display: false
+      },
+      title: {
+        display: true,
           text: "Scenario Summary ({{cucumberReportSummary.scenarioSummary.total}} Total)",
-          fontSize: 24
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              precision: 0,
-              fixedStepSize: 1,
-              beginAtZero: true
-            }
-          }]
-        }
+            fontSize: 24
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            precision: 0,
+            fixedStepSize: 1,
+            beginAtZero: true
+          }
+        }]
       }
+    }
     });
   </script>
 
@@ -353,36 +366,6 @@
 
   <div>
     <h2>Feature Breakdown</h2>
-
-    {{#each cucumberReportSummary.featureSummary.failingFeatures}}
-    {{> feature}}
-    <!-- <details class="{{ getFeatureCss this}}">
-        <summary>
-          Ability: {{this.featureName}}
-          <span class="feature-rollup-summary">
-          <i class="material-icons">done</i>{{this.passingScenarios.length}}</span>
-        </summary>
-        <section>
-          <p class="feature-description"
-          >{{this.featureDescription}}</p>
-
-          {{#each this.passingScenarios}}
-          <details>
-            <summary>
-              Scenario: {{this.scenarioName}} <span class="feature-rollup-summary">
-                <i class="material-icons">done</i>{{this.passed}}</span>
-            </summary>
-            test here
-            {{#each this.steps}}
-            <p title="Passing"><strong class="passing-step step">{{this.keyword}}</strong>
-            {{ this.name }}
-            </p>
-            {{/each}}
-          </details>
-          {{/each}}
-        </section>
-    </details> -->
-    {{/each}}
 
     {{#each cucumberReportSummary.featureSummary.ambiguousFeatures}}
     {{> feature}}
