@@ -44,6 +44,10 @@
       overflow: hidden;
     }
 
+    table i {
+      vertical-align: middle;
+    }
+
     .summary-table {
       display: table;
       width: 80%;
@@ -328,7 +332,7 @@
     <header>
       <thead>
         <tr class="summary-hr-row">
-          <th class="summary-cell"></th>
+          <th class="summary-cell"><i class="material-icons" title="The status of a scenario or feature is based on the worst status of its steps, in order: ambiguous -> failed -> undefined -> pending -> passed">info</i></th>
           <th class="summary-cell">Failed</th>
           <th class="summary-cell">Undefined</th>
           <th class="summary-cell">Pending</th>
