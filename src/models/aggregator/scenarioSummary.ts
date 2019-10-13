@@ -36,6 +36,9 @@ export class ScenarioSummary {
   public scenarioDescription: string = '';
   public scenarioKeyword: string = '';
 
+  /** All tags on the scenario as a comma separated list */
+  public tags: string = '';
+
   /** All steps in the scenario */
   get total(): number {
     return this.passed + this.failed + this.undefined +

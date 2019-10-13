@@ -5,7 +5,7 @@
 // import { IReportOptions } from './models/reportOptions';
 // import { Reporter } from './reporter';
 
-// describe('reporter manual', () => {
+// describe.only('reporter manual', () => {
 //   let reporter: Reporter;
 //   beforeEach(() => {
 //     reporter = new Reporter();

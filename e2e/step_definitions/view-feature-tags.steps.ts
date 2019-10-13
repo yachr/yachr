@@ -30,6 +30,6 @@ Then(`Ira will see the tag '@GH-30' in the tile bar of the 'View Feature tag' fe
   const pageText = $('html').text();
 
   // ([.\n\s]*)1/ Match all spaces and new line chars
-  const passedFeatures = /@GH-30/;
+  const passedFeatures = /@GH-30([.\n\s]*)Ability: View tags in report/;
   expect(passedFeatures.test(pageText)).eql(true);
 });

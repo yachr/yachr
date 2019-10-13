@@ -1,6 +1,9 @@
 <details class="{{getScenarioCss this}}">
   <summary>
-    Scenario: {{this.scenarioName}}
+    {{#if this.tags }}
+    <div><strong><small>{{ this.tags }}</small></strong></div>
+    {{/if}}
+    {{this.scenarioKeyword}}: {{this.scenarioName}}
     <span class="feature-rollup-summary">
       {{#if this.failed}}
       <i class="material-icons" title="Failing">clear</i>{{this.failed}}
