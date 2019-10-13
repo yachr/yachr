@@ -92,8 +92,8 @@ export class ReportAggregator {
     summary.scenarioName = scenario.name;
     summary.scenarioDescription = scenario.description || '';
     summary.scenarioKeyword = scenario.keyword;
+    summary.tags = scenario.tags.map((tag => tag.name)).join(', ');
 
     return summary;
   }
-
 }
