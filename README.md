@@ -1,7 +1,13 @@
 # YACHR
-[![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=GH-18-Roll-up-steps-to-scenarios-to-features)](https://travis-ci.org/yachr/yachr/branches)
-[![Coverage Status](https://coveralls.io/repos/github/yachr/yachr/badge.svg?branch=GH-18-Roll-up-steps-to-scenarios-to-features)](https://coveralls.io/github/yachr/yachr?branch=GH-18-Roll-up-steps-to-scenarios-to-features)
+[![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=GH-27)](https://travis-ci.org/yachr/yachr/branches)
+[![Coverage Status](https://coveralls.io/repos/github/yachr/yachr/badge.svg?branch=develop)](https://coveralls.io/github/yachr/yachr?branch=develop)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+---
+Note: This library is under development, there are several features outstanding.
 
+Feel free to use it or trial it, pull requests and issues are welcome, and will be addressed as time allows.
+
+---
 Yet another cucumber html reporter is a simple html reporter that runs off the standard json file produced by cucumberjs.
 
 This reporter targets cucumberjs 3.
@@ -63,6 +69,10 @@ exports.config = {
   ...
 }
 ```
+
+# Sample Output
+![Sample Image of Report](https://i.imgur.com/cDJ5VYk.png)
+
 # Custom Templates
 yachr makes use of [handlebarsjs](https://handlebarsjs.com/) for its templating. If there is a particular look you are going for, you can include a custom html file in your repo, and pass it in as a parameter.
 

@@ -9,13 +9,16 @@ export class FeatureSummary {
 
   public featureName: string = '';
   public featureDescription: string = '';
-  public featureKeyword: string = ''; // Ability / Feature
+  public featureKeyword: string = ''; // Ability | Feature
 
   public passingScenarios: ScenarioSummary[] = [];
   public failingScenarios: ScenarioSummary[] = [];
   public ambiguousScenarios: ScenarioSummary[] = [];
   public pendingScenarios: ScenarioSummary[] = [];
   public undefinedScenarios: ScenarioSummary[] = [];
+
+  /** Comma separated string of all tags on the feature */
+  public tags: string = '';
 
   /** The total number of Scenarios that are ambiguously defined for the Feature */
   public get ambiguous(): number { return this.ambiguousScenarios.length; }
@@ -52,10 +55,10 @@ export class FeatureSummary {
     this.hasNoScenarios;
   }
 
-  get hasNoScenarios(): boolean { return this.total == 0; }
+  get hasNoScenarios(): boolean { return this.total === 0; }
 
   /** Whether the Feature has passed due to all Scenarios passing */
-  get isPassed(): boolean { return this.passed === this.total; }
+  get isPassed(): boolean { return this.passed > 0 && this.passed === this.total; }
 
   /** Updates the Feature summary using information gathered in the Scenario Summary */
   public aggregateScenario(scenario: ScenarioSummary): void {

@@ -4,14 +4,14 @@ import * as Handlebars from 'handlebars';
 import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
 import { FeatureSummary } from './models/aggregator/featureSummary';
 import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
+import { ScenarioSummary } from './models/aggregator/scenarioSummary';
 import { IHtmlModel } from './models/htmlModel';
 import { ICucumberFeature } from './models/reporter/cucumberFeature';
 import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
+import { ResultStatus } from './models/reporter/resultStatus';
 import { IStep } from './models/reporter/step';
 import { IReportOptions } from './models/reportOptions';
-import { ScenarioSummary } from './models/aggregator/scenarioSummary';
 import { ReportAggregator } from './reportAggregator';
-import { ResultStatus } from './models/reporter/resultStatus';
 
 /**
  * The main YACHR Cucumber HTML Report generator.
@@ -32,24 +32,32 @@ export class Reporter {
 
     const aggregator = new ReportAggregator();
 
-    console.debug(results);
-
-    const data = <IHtmlModel> {
+    const data = <IHtmlModel>{
       cucumberReportSummary: aggregator.getSummaryForSuite(results),
-      cucumberResult: results
+      cucumberResult: results,
+      generateTime: (new Date()).toLocaleString()
     };
 
     if (!options.htmlTemplate) {
       throw new Error('htmlTemplate not supplied in ReportOptions');
     }
 
+    if (!options.featureTemplate) {
+      throw new Error('featureTemplate not supplied in ReportOptions');
+    }
+
+    if (!options.scenarioTemplate) {
+      throw new Error('scenarioTemplate not supplied in ReportOptions');
+    }
+
     let reportTemplate: string;
     let featureTemplate: string;
     let scenarioTemplate: string;
+
     try {
       reportTemplate = fs.readFileSync(options.htmlTemplate, 'utf8');
-      featureTemplate = fs.readFileSync('src/templates/feature.html', 'utf8');
-      scenarioTemplate = fs.readFileSync('src/templates/scenario.html', 'utf8');
+      featureTemplate = fs.readFileSync(options.featureTemplate, 'utf8');
+      scenarioTemplate = fs.readFileSync(options.scenarioTemplate, 'utf8');
     } catch (err) {
       throw new Error(`Error reading htmlTemplate: ${err}`);
     }
@@ -69,8 +77,6 @@ export class Reporter {
     Handlebars.registerHelper('stepUndef', (scenarioSummary: ScenarioSummary): number =>
       scenarioSummary.undefined
     );
-    // var featureObject = document.createElement('html');
-    // featureObject.innerHTML = featureTemplate;
 
     Handlebars.registerPartial({
       feature: Handlebars.compile(featureTemplate),
@@ -80,75 +86,30 @@ export class Reporter {
       scenario: Handlebars.compile(scenarioTemplate),
     });
 
-    Handlebars.registerHelper('getFeatureCss', (featureSummary: FeatureSummary) => {
+    Handlebars.registerHelper('getFeatureCss', (featureSummary: FeatureSummary) =>
+      this.getFeatureCss(featureSummary)
+    );
 
-      if (featureSummary.failed > 0) {
-        return 'failing-feature';
-      }
-
-      if (featureSummary.ambiguous > 0) {
-        return 'ambiguous-feature';
-      }
-
-      if (featureSummary.undefined > 0) {
-        return 'undefined-feature';
-      }
-
-      if (featureSummary.pending > 0) {
-        return 'pending-feature';
-      }
-
-      if (featureSummary.passed === featureSummary.total) {
-        return 'passing-feature';
-      }
-    });
-
-    Handlebars.registerHelper('getScenarioCss', (scenarioSummary: ScenarioSummary) => {
-      if (scenarioSummary.hasFailed) {
-        return 'failing-scenario';
-      }
-
-      if (scenarioSummary.hasAmbiguous) {
-        return 'ambiguous-scenario';
-      }
-
-      if (scenarioSummary.hasUndefined) {
-        return 'undefined-scenario';
-      }
-
-      if (scenarioSummary.hasPending) {
-        return 'pending-scenario';
-      }
-
-      if (scenarioSummary.isPassed) {
-        return 'passing-scenario';
-      }
-    });
+    Handlebars.registerHelper('getScenarioCss', (scenarioSummary: ScenarioSummary) =>
+      this.getScenarioCss(scenarioSummary));
 
     Handlebars.registerHelper('getStepCss', (step: IStep) => {
 
-      if (step.result.status === ResultStatus.failed) {
-        return 'failing-step';
-      }
-
-      if (step.result.status === ResultStatus.ambiguous) {
-        return 'ambiguous-step';
-      }
-
-      if (step.result.status === ResultStatus.undefined) {
-        return 'undefined-step';
-      }
-
-      if (step.result.status === ResultStatus.pending) {
-        return 'pending-step';
-      }
-
-      if (step.result.status === ResultStatus.skipped) {
-        return 'pending-step';
-      }
-
-      if (step.result.status === ResultStatus.passed) {
-        return 'passing-step';
+      switch (step.result.status) {
+        case ResultStatus.failed:
+          return 'failing-step';
+        case ResultStatus.ambiguous:
+          return 'ambiguous-step';
+        case ResultStatus.undefined:
+          return 'undefined-step';
+        // Both pending and skipped will be styled the same
+        case ResultStatus.pending:
+        case ResultStatus.skipped:
+          return 'pending-step';
+        case ResultStatus.passed:
+          return 'passing-step';
+        default:
+          return '';
       }
     });
 
@@ -183,7 +144,7 @@ export class Reporter {
    * @param results An array of Cucumber Features from the Test Report
    */
   public parseJsonString(results: string): ICucumberFeatureSuite {
-    const features: ICucumberFeature[] = <ICucumberFeature[]> JSON.parse(results);
+    const features: ICucumberFeature[] = <ICucumberFeature[]>JSON.parse(results);
     return { features };
   }
 
@@ -192,10 +153,66 @@ export class Reporter {
    * @param options The options as passed in by the user
    */
   public populateDefaultOptionsIfMissing(options: IReportOptions): IReportOptions {
-    const defaultOptions = <IReportOptions> {
-      htmlTemplate: __dirname + '/templates/standard.html'
+    const defaultOptions = <IReportOptions>{
+      featureTemplate: __dirname + '/templates/feature.html',
+      htmlTemplate: __dirname + '/templates/standard.html',
+      scenarioTemplate: __dirname + '/templates/scenario.html'
     };
 
     return { ...defaultOptions, ...options };
+  }
+
+  /**
+   * Generates the cess for the feature block of html
+   */
+  public getFeatureCss(featureSummary: FeatureSummary): string {
+    if (featureSummary.hasFailed) {
+      return 'failing-feature';
+    }
+
+    if (featureSummary.hasAmbiguous) {
+      return 'ambiguous-feature';
+    }
+
+    if (featureSummary.hasUndefined) {
+      return 'undefined-feature';
+    }
+
+    if (featureSummary.hasPending) {
+      return 'pending-feature';
+    }
+
+    if (featureSummary.isPassed) {
+      return 'passing-feature';
+    }
+
+    return '';
+  }
+
+  /**
+   * Returns the css for the scenario block
+   */
+  public getScenarioCss(scenarioSummary: ScenarioSummary): string {
+    if (scenarioSummary.hasFailed) {
+      return 'failing-scenario';
+    }
+
+    if (scenarioSummary.hasAmbiguous) {
+      return 'ambiguous-scenario';
+    }
+
+    if (scenarioSummary.hasUndefined) {
+      return 'undefined-scenario';
+    }
+
+    if (scenarioSummary.hasPending) {
+      return 'pending-scenario';
+    }
+
+    if (scenarioSummary.isPassed) {
+      return 'passing-scenario';
+    }
+
+    return '';
   }
 }

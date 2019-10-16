@@ -68,6 +68,7 @@ describe('report-aggregator', () => {
       scenarioName: 'Login via login page',
       skipped: 0,
       steps,
+      tags: '',
       totalDuration: 5,
       undefined: 0
     } as ScenarioSummary;
@@ -260,12 +261,10 @@ describe('report-aggregator', () => {
       scenarioName: 'Login via login page',
       skipped: 1,
       steps,
+      tags: '',
       totalDuration: 40,
       undefined: 0,
     };
-
-    console.debug(summary.passed);
-    console.debug(expectedSuiteSummary.passed);
 
     expect(JSON.parse(JSON.stringify(summary)))
       .to.be.deep.equal(expectedSuiteSummary);

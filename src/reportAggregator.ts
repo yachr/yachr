@@ -35,6 +35,7 @@ export class ReportAggregator {
       // for this given feature
       const featureSummary = this.getSummaryForFeature(feature);
 
+      featureSummary.tags = feature.tags.map((tag => tag.name)).join(', ');
       featureSuiteSummary.aggregateFeature(featureSummary);
       scenarioSuiteSummary.aggregateFeature(featureSummary);
     });
@@ -91,8 +92,8 @@ export class ReportAggregator {
     summary.scenarioName = scenario.name;
     summary.scenarioDescription = scenario.description || '';
     summary.scenarioKeyword = scenario.keyword;
+    summary.tags = scenario.tags.map((tag => tag.name)).join(', ');
 
     return summary;
   }
-
 }
