@@ -1,6 +1,9 @@
 <details class="{{ getFeatureCss this}}">
   <summary>
-    {{this.featureKeyword}}: {{this.featureName}}
+    {{#if this.tags }}
+    <div><strong><small>{{ this.tags }}</small></strong></div>
+    {{/if}}
+    <span>{{this.featureKeyword}}: {{this.featureName}}</span>
     <span class="feature-rollup-summary">
       {{#if this.failingScenarios.length}}
       <i class="material-icons" title="Failing">clear</i>{{this.failingScenarios.length}}
@@ -20,22 +23,22 @@
     </span>
   </summary>
   <section>
-  <p class="feature-description">
-{{this.featureDescription}}</p>
+    <p class="feature-description">
+      {{this.featureDescription}}</p>
     {{#each this.failingScenarios}}
-      {{> scenario}}
+    {{> scenario}}
     {{/each}}
     {{#each this.undefinedScenarios}}
-      {{> scenario}}
+    {{> scenario}}
     {{/each}}
     {{#each this.ambiguousScenarios}}
-      {{> scenario}}
+    {{> scenario}}
     {{/each}}
     {{#each this.pendingScenarios}}
-      {{> scenario}}
+    {{> scenario}}
     {{/each}}
     {{#each this.passingScenarios}}
-      {{> scenario}}
+    {{> scenario}}
     {{/each}}
   </section>
 </details>

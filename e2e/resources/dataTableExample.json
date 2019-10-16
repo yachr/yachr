@@ -1,0 +1,69 @@
+[
+  {
+    "description": "  Starting point",
+    "keyword": "Ability",
+    "name": "View data tables in report",
+    "line": 1,
+    "id": "view-data-tables-in-report",
+    "tags": [],
+    "uri": "e2e\\features\\abilities\\user\\view-data-tables.feature",
+    "elements": [
+      {
+        "id": "view-data-tables-in-report;view-data-table",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "View data table",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "A heading"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "a row"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "or two"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "Virginia has a step has a data table like the following:",
+            "match": {
+              "location": "e2e\\step_definitions\\view-data-tables.steps.js:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000,
+              "error_message": "function has 0 arguments, should have 1 (if synchronous or returning a promise) or 2 (if accepting a callback)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 8,
+            "name": "the report Virginia generates report should display the data table",
+            "match": {
+              "location": "e2e\\step_definitions\\view-data-tables.steps.js:17"
+            },
+            "result": {
+              "status": "passed"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
