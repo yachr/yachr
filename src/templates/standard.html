@@ -110,6 +110,21 @@
       color: black;
     }
 
+    /* Adds a gray border around the steps data table */
+    .scenario td {
+      border: 1px solid gray;
+    }
+
+    /* Removes the cell spacing so the border above looks clean */
+    .scenario table {
+      border-collapse: collapse;
+    }
+
+    /* Shade the header row of the table */
+    .scenario table tr:first-child td {
+      background-color: #d3d3d385;
+    }
+
     .passing-step {
       border-color: rgba(75, 192, 192, 1);
       background-color: rgba(75, 192, 192, 0.2)

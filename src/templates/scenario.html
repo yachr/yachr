@@ -1,4 +1,4 @@
-<details class="{{getScenarioCss this}}">
+<details class="scenario {{getScenarioCss this}}">
   <summary>
     {{#if this.tags }}
     <div><strong><small>{{ this.tags }}</small></strong></div>
@@ -31,5 +31,20 @@
     step">{{this.keyword}}</strong>
     {{ this.name }}
   </p>
+  {{#if this.arguments.length }}
+  <p>
+    {{#each this.arguments }}
+      <table>
+      {{#each this.rows}}
+        <tr>
+        {{#each this.cells}}
+          <td>{{this}}</td>
+        {{/each}}
+        </tr>
+      {{/each}}
+      </table>
+    {{/each}}
+  </p>
+  {{/if}}
   {{/each}}
 </details>
