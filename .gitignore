@@ -16,3 +16,4 @@ reports/**/*.html
 e2e/reportOutput
 # Transpiled E2E
 e2e/**/*.js
+src/samples/sample-manual.html

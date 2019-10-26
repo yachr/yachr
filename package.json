@@ -1,6 +1,6 @@
 {
   "name": "yachr",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Yet another cucumber html reporter",
   "scripts": {
     "prebuild": "shx rm -rf dist",

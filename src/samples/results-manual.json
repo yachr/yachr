@@ -1,0 +1,508 @@
+[
+  {
+    "description": "  As a report reader\n  I wan't to understand how a scenario or feature gets assigned its status\n  So I can better understand the stats on the report",
+    "keyword": "Ability",
+    "name": "Understand how features and scenarios are given a status",
+    "line": 1,
+    "id": "understand-how-features-and-scenarios-are-given-a-status",
+    "tags": [],
+    "uri": "e2e\\features\\abilities\\report-consumer\\understand-rankings.feature",
+    "elements": [
+      {
+        "id": "understand-how-features-and-scenarios-are-given-a-status;view-description-of-statuses",
+        "keyword": "Scenario",
+        "line": 7,
+        "name": "View description of statuses",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "Lina is viewing a cucumber report",
+            "match": {
+              "location": "e2e\\step_definitions\\understand-rankings.steps.js:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 46000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 9,
+            "name": "Lina should be able to see a legend explaining the status",
+            "match": {
+              "location": "e2e\\step_definitions\\understand-rankings.steps.js:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Ability",
+    "name": "View data tables in report",
+    "line": 1,
+    "id": "view-data-tables-in-report",
+    "tags": [],
+    "uri": "e2e\\features\\abilities\\user\\view-data-tables.feature",
+    "elements": [
+      {
+        "id": "view-data-tables-in-report;view-data-table",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "View data table",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "A heading"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "a row"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "or two"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "Virginia has a step has a data table like the following:",
+            "match": {
+              "location": "e2e\\step_definitions\\view-data-tables.steps.js:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 46000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 8,
+            "name": "the report Virginia generates report should display the data table",
+            "match": {
+              "location": "e2e\\step_definitions\\view-data-tables.steps.js:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "description": "  As a user who makes use of tags\n  I want to see any tags defined in the gherkin present in the report",
+    "keyword": "Ability",
+    "name": "View tags in report",
+    "line": 2,
+    "id": "view-tags-in-report",
+    "tags": [
+      {
+        "name": "@GH-30",
+        "line": 1
+      }
+    ],
+    "uri": "e2e\\features\\abilities\\user\\view-feature-tags.feature",
+    "elements": [
+      {
+        "id": "view-tags-in-report;view-feature-tag",
+        "keyword": "Scenario",
+        "line": 7,
+        "name": "View Feature tag",
+        "tags": [
+          {
+            "name": "@GH-30",
+            "line": 1
+          },
+          {
+            "name": "@GH-30",
+            "line": 6
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "Ira has results from a cucumber test containing the tag '@GH-30' against the feature 'View Feature tag'",
+            "match": {
+              "location": "e2e\\step_definitions\\view-feature-tags.steps.js:14"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 9,
+            "name": "Ira runs yachr against the result",
+            "match": {
+              "location": "e2e\\step_definitions\\view-feature-tags.steps.js:20"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 27000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 10,
+            "name": "Ira will see the tag '@GH-30' in the tile bar of the 'View Feature tag' feature",
+            "match": {
+              "location": "e2e\\step_definitions\\view-feature-tags.steps.js:24"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 58000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "description": "  As a user\n  I would like to see the summary of features and scenarios in my project\n  So that I can gauge my project's health and progress.\n\n  The status of a Scenario behaves like a hierarchy that rolls up.\n  The scenario status will be the 'worst' status of its child steps as follows:\n  ambiguous, failed, undefined, pending, passed\n  Although a step can be skipped, a scneario cannot.\n\n  Ambiguous is the worst because it is similar to a compile erorr. There are\n  two or more implementations that match one step, and the test simply can't be run.\n\n  Failed is next because a step has been implemented, and failed, which is unexpected.\n\n  Undefined is then next, because no implementation has been put together.\n\n  Pending is where the implementation exists, but returns the string pending.\n\n  Finally, if all steps pass, then the scenario passes.",
+    "keyword": "Ability",
+    "name": "View report summary",
+    "line": 1,
+    "id": "view-report-summary",
+    "tags": [],
+    "uri": "e2e\\features\\abilities\\user\\view-report-summary.feature",
+    "elements": [
+      {
+        "id": "view-report-summary;all-passing",
+        "keyword": "Scenario",
+        "line": 23,
+        "name": "All passing",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "Feature",
+                      "Scenario",
+                      "Step",
+                      "Step Status"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature One",
+                      "Scenario One",
+                      "Step 1",
+                      "passed"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature One",
+                      "Scenario One",
+                      "Step 2",
+                      "passed"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature One",
+                      "Scenario One",
+                      "Step 3",
+                      "passed"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "Given ",
+            "line": 24,
+            "name": "a passing scenario",
+            "match": {
+              "location": "e2e\\step_definitions\\view-report-summary.steps.js:48"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 29,
+            "name": "I run yachr against it",
+            "match": {
+              "location": "e2e\\step_definitions\\view-report-summary.steps.js:57"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 30,
+            "name": "a summary showing one passing feature and one passing scenario",
+            "match": {
+              "location": "e2e\\step_definitions\\view-report-summary.steps.js:61"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 25000000
+            }
+          }
+        ]
+      },
+      {
+        "id": "view-report-summary;handle-mixed-states",
+        "keyword": "Scenario",
+        "line": 32,
+        "name": "Handle mixed states",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "Feature",
+                      "Scenario",
+                      "Step",
+                      "Step Status"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature One",
+                      "Scenario One",
+                      "Step 1",
+                      "passed"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature One",
+                      "Scenario One",
+                      "Step 2",
+                      "ambiguous"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature Two",
+                      "Scenario One",
+                      "Step 1",
+                      "passed"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature Two",
+                      "Scenario One",
+                      "Step 2",
+                      "failed"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature Three",
+                      "Scenario One",
+                      "Step 1",
+                      "passed"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature Three",
+                      "Scenario One",
+                      "Step 2",
+                      "pending"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature Four",
+                      "Scenario One",
+                      "Step 1",
+                      "undefined"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "Given ",
+            "line": 33,
+            "name": "the following scenarios",
+            "match": {
+              "location": "e2e\\step_definitions\\view-report-summary.steps.js:54"
+            },
+            "result": {
+              "status": "pending",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 46,
+            "name": "I run yachr against it",
+            "match": {
+              "location": "e2e\\step_definitions\\view-report-summary.steps.js:57"
+            },
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "Feature",
+                      "Status"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature One",
+                      "ambiguous"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature Two",
+                      "failed"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature three",
+                      "pending"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "Feature four",
+                      "undefined"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "Then ",
+            "line": 47,
+            "name": "I will see the following in the summary",
+            "match": {
+              "location": "e2e\\step_definitions\\view-report-summary.steps.js:71"
+            },
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "description": "  As a user who makes use of tags\n  I want to see any tags defined in the gherkin present in the report",
+    "keyword": "Ability",
+    "name": "View tags in report",
+    "line": 2,
+    "id": "view-tags-in-report",
+    "tags": [
+      {
+        "name": "@GH-30",
+        "line": 1
+      }
+    ],
+    "uri": "e2e\\features\\abilities\\user\\view-summary-tags.feature",
+    "elements": [
+      {
+        "id": "view-tags-in-report;view-scenario-tag",
+        "keyword": "Scenario",
+        "line": 7,
+        "name": "View Scenario tag",
+        "tags": [
+          {
+            "name": "@GH-30",
+            "line": 1
+          },
+          {
+            "name": "@GH-30",
+            "line": 6
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "Jon has results from a cucumber test containing the tag '@GH-30' against the scenario 'View scenario tag'",
+            "match": {
+              "location": "e2e\\step_definitions\\view-summary-tags.steps.js:14"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 9,
+            "name": "Jon runs yachr against the result",
+            "match": {
+              "location": "e2e\\step_definitions\\view-summary-tags.steps.js:20"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 19000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 10,
+            "name": "Jon will see the tag '@GH-30' in the title bar of the scenario 'View Scenario tag' in the generated report",
+            "match": {
+              "location": "e2e\\step_definitions\\view-summary-tags.steps.js:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 33000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
