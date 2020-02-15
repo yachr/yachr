@@ -1,5 +1,5 @@
 # YACHR
-[![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=master)](https://travis-ci.org/yachr/yachr/branches)
+[![Build Status](https://travis-ci.org/yachr/yachr.svg?branch=develop)](https://travis-ci.org/yachr/yachr/branches)
 [![Coverage Status](https://coveralls.io/repos/github/yachr/yachr/badge.svg?branch=develop)](https://coveralls.io/github/yachr/yachr?branch=develop)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 ---
