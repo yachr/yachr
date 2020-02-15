@@ -11,7 +11,7 @@
     "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
     "cover": "NODE_ENV=test nyc --report lcovonly _mocha --config .mocharc.json src/**/*.spec.ts",
     "e2eWithBuild": "npm run build && npm run e2e",
-    "e2e": "tsc -p e2e/tsconfig.json && cucumber-js ./e2e/features --no-strict && node ./runReport.js",
+    "e2e": "tsc -p e2e/tsconfig.json && cucumber-js ./e2e/features --no-strict",
     "poste2e": "shx rm -rf e2e/step_definitions/**/*.js e2e/reportOutput/**/*.html",
     "coveralls": "npm run cover && shx cat ./coverage/lcov.info | coveralls"
   },
