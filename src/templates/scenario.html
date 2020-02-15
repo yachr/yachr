@@ -8,8 +8,8 @@
       {{#if this.failed}}
       <i class="material-icons" title="Failing">clear</i>{{this.failed}}
       {{/if}}
-      {{#if (stepUndef this)}}
-      <i class="material-icons" title="Undefined">visibility_off</i>{{stepUndef this}}
+      {{#if (countOf this 'undefined')}}
+      <i class="material-icons" title="Undefined">visibility_off</i>{{countOf this 'undefined'}}
       {{/if}}
       {{#if this.ambiguous}}
       <i class="material-icons" title="Ambiguous">warning</i>{{this.ambiguous}}

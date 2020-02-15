@@ -1,0 +1,33 @@
+[
+    {
+      "description": "Sample Feature Description",
+      "keyword": "Ability",
+      "name": "Login",
+      "line": 1,
+      "id": "login",
+      "tags": [],
+      "uri": "e2e\\src\\features\\abilities\\user\\login.feature",
+      "elements": [
+        {
+          "id": "login;login-via-login-page",
+          "keyword": "Scenario",
+          "line": 11,
+          "name": "Login via login page",
+          "tags": [],
+          "type": "scenario",
+          "steps": [
+            {
+              "arguments": [],
+              "keyword": "Given ",
+              "line": 12,
+              "name": "Milton is not currently logged in",
+              "result": {
+                "duration": 1,
+                "status": "failed"
+              }
+            }
+          ]
+        }
+      ]
+    }
+]

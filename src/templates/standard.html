@@ -239,11 +239,11 @@
         labels: ['Failed', 'Undefined', 'Pending', 'Passed', 'Ambiguous'],
         datasets: [{
           data: [
-            {{ cucumberReportSummary.featureSummary.failed }},
-        {{ featureUndef cucumberReportSummary.featureSummary }},
-          {{ cucumberReportSummary.featureSummary.pending }},
-    {{ cucumberReportSummary.featureSummary.passed }},
-    {{ cucumberReportSummary.featureSummary.ambiguous }},
+            {{ countOf cucumberReportSummary.featureSummary 'failed' }},
+            {{ countOf cucumberReportSummary.featureSummary 'undefined' }},
+            {{ countOf cucumberReportSummary.featureSummary 'pending' }},
+            {{ countOf cucumberReportSummary.featureSummary 'passed' }},
+            {{ countOf cucumberReportSummary.featureSummary 'ambiguous' }},
         ],
     backgroundColor: [
       'rgba(255, 99, 132, 0.2)',
@@ -269,7 +269,7 @@
       },
       title: {
         display: true,
-        text: "Feature Summary ({{cucumberReportSummary.featureSummary.total}} Total)",
+        text: "Feature Summary ({{ countOf cucumberReportSummary.featureSummary 'total'}} Total)",
         fontSize: 24
       },
       scales: {
@@ -293,11 +293,11 @@
         labels: ['Failed', 'Undefined', 'Pending', 'Passed', 'Ambiguous'],
         datasets: [{
           data: [
-            {{ cucumberReportSummary.scenarioSummary.failed }},
-        {{ scenarioUndef cucumberReportSummary.scenarioSummary }},
-            {{ cucumberReportSummary.scenarioSummary.pending }},
-    {{ cucumberReportSummary.scenarioSummary.passed }},
-    {{ cucumberReportSummary.scenarioSummary.ambiguous }},
+          {{ countOf cucumberReportSummary.scenarioSummary 'failed' }},
+          {{ countOf cucumberReportSummary.scenarioSummary 'undefined' }},
+          {{ countOf cucumberReportSummary.scenarioSummary 'pending' }},
+          {{ countOf cucumberReportSummary.scenarioSummary 'passed' }},
+          {{ countOf cucumberReportSummary.scenarioSummary 'ambiguous' }},
           ],
     backgroundColor: [
       'rgba(255, 99, 132, 0.2)',
@@ -327,8 +327,8 @@
       },
       title: {
         display: true,
-          text: "Scenario Summary ({{cucumberReportSummary.scenarioSummary.total}} Total)",
-            fontSize: 24
+          text: "Scenario Summary ({{countOf cucumberReportSummary.featureSummary 'total'}} Total)",
+          fontSize: 24
       },
       scales: {
         yAxes: [{
@@ -360,24 +360,22 @@
 
     <tr class="summary-row">
       <th class="summary-cell" align="center">Features</th>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.failed }}</td>
-
-      {{! featureUndef helper is required because undefined is a reserved work in javascript and breaks the template. }}
-      <td class="summary-cell" align="center">{{ featureUndef cucumberReportSummary.featureSummary }}</td>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.pending }}</td>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.passed }}</td>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.ambiguous }}</td>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.featureSummary.total }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.featureSummary 'failed' }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.featureSummary 'undefined'}}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.featureSummary 'pending' }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.featureSummary 'passed' }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.featureSummary 'ambiguous' }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.featureSummary 'total' }}</td>
     </tr>
 
     <tr class="summary-row">
       <th class="summary-cell" align="center">Scenarios</th>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.failed }} </td>
-      <td class="summary-cell" align="center">{{ scenarioUndef cucumberReportSummary.scenarioSummary }}</td>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.pending }}</td>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.passed }}</td>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.ambiguous }}</td>
-      <td class="summary-cell" align="center">{{ cucumberReportSummary.scenarioSummary.total }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.scenarioSummary 'failed' }} </td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.scenarioSummary 'undefined' }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.scenarioSummary 'pending' }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.scenarioSummary 'passed' }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.scenarioSummary 'ambiguous' }}</td>
+      <td class="summary-cell" align="center">{{ countOf cucumberReportSummary.scenarioSummary 'total' }}</td>
     </tr>
   </table>
 
@@ -385,6 +383,9 @@
 
   <div>
     <h2>Feature Breakdown</h2>
+    {{#each cucumberReportSummary.featureSummary.failingFeatures}}
+      {{> feature}}
+    {{/each}}
 
     {{#each cucumberReportSummary.featureSummary.ambiguousFeatures}}
     {{> feature}}

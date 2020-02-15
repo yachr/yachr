@@ -55,7 +55,7 @@ describe('reporter', () => {
   });
 
   it('should update options with required defaults if the user does not supply them', () => {
-    const options = <IReportOptions> { };
+    const options = <IReportOptions>{};
 
     const actual = reporter.populateDefaultOptionsIfMissing(options);
 
@@ -64,7 +64,7 @@ describe('reporter', () => {
   });
 
   it('populateDefaultOptionsIfMissing should not overwrite existing values', () => {
-    const options = <IReportOptions> {
+    const options = <IReportOptions>{
       htmlTemplate: 'templatePath',
       jsonFile: 'somepath'
     };
@@ -89,7 +89,7 @@ describe('reporter', () => {
     expect(reporter.getFeatureCss(featureSummary)).to.equal('ambiguous-feature');
 
     featureSummary = {
-      hasUndefined:true
+      hasUndefined: true
     } as FeatureSummary;
 
     expect(reporter.getFeatureCss(featureSummary)).to.equal('undefined-feature');
@@ -146,5 +146,31 @@ describe('reporter', () => {
     scenarioSummary = {} as ScenarioSummary;
     expect(reporter.getScenarioCss(scenarioSummary)).to.equal('');
 
+  });
+
+  it('displays failed scenarios', () => {
+    const options: IReportOptions = {
+      jsonFile: './src/samples/failed-scenario.json',
+      output: './src/samples/sample.html'
+    };
+
+    // File should not be there before the test is run
+    // tslint:disable-next-line:no-unused-expression - This is just how Chai works
+    expect(fs.existsSync(options.output), `Error: '${options.output}' existed before test ran`).to.be.false;
+
+    reporter.generate(options);
+
+    // Confirm the report has been created
+    // tslint:disable-next-line:no-unused-expression - This is just how Chai works
+    expect(fs.existsSync(options.output), `Error: test did not produce ${options.output}`).to.be.true;
+    const html = fs.readFileSync(options.output, 'utf8');
+
+    // tslint:disable-next-line: max-line-length
+    const expectedText = /<span>Ability: Login<\/span>([.\n\s]*)<span class="feature-rollup-summary">([.\n\s]*)<i class="material-icons" title="Failing">clear<\/i>1/;
+
+    expect(html.search(expectedText)).to.greaterThan(0);
+    // Clean up test
+    // Comment this out if you want to view the generated html
+    fs.unlinkSync(options.output);
   });
 });

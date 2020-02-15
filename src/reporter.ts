@@ -66,16 +66,8 @@ export class Reporter {
 
     // Gross work around because the template engine seems to reject
     // the work undefined as a property.
-    Handlebars.registerHelper('featureUndef', (featureSummary: FeatureSuiteSummary): number =>
-      featureSummary.undefined
-    );
-
-    Handlebars.registerHelper('scenarioUndef', (suiteSummary: ScenarioSuiteSummary): number =>
-      suiteSummary.undefined
-    );
-
-    Handlebars.registerHelper('stepUndef', (scenarioSummary: ScenarioSummary): number =>
-      scenarioSummary.undefined
+    Handlebars.registerHelper('countOf', (obj, property: 'string'): number =>
+      (<any>obj)[property] as number
     );
 
     Handlebars.registerPartial({
