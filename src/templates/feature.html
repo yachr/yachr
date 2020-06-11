@@ -1,4 +1,4 @@
-<details class="{{ getFeatureCss this}}">
+<details class="{{ getFeatureCss this}} feature">
   <summary>
     {{#if this.tags }}
     <div><strong><small>{{ this.tags }}</small></strong></div>
@@ -23,9 +23,7 @@
     </span>
   </summary>
   <section>
-    <p class="feature-description">
-      {{this.featureDescription}}
-    </p>
+    {{{ markdown2Html this.featureDescription}}}
     {{#each this.failingScenarios}}
     {{> scenario}}
     {{/each}}

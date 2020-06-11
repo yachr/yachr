@@ -24,7 +24,8 @@
       <span class="summary-counts-passing"><i class="material-icons" title="Passing">done</i>{{this.passed}}</span>
       {{/if}}
   </summary>
-  <p>{{this.scenarioDescription}}</p>
+  <section>
+  {{{ markdown2Html this.scenarioDescription}}}
   {{#each this.steps}}
   <p title="{{this.result.status}}"><strong class="
     {{ getStepCss this}}
@@ -46,5 +47,17 @@
     {{/each}}
   </p>
   {{/if}}
+  {{#if this.embeddings.length }}
+  <p>
+    {{#each this.embeddings }}
+      <img class="screenshot-thumbnail" onclick="document.getElementById('myModal').style.display = 'block';
+      document.getElementById('modal-image').src='data:{{this.mime_type}};base64,{{this.data}}'
+      return false;" style="height:10%;width:10%;" src="data:{{this.mime_type}};base64,{{this.data}}"></img>
+    {{/each}}
+  </p>
+  {{/if}}
   {{/each}}
+</section>
 </details>
+
+
