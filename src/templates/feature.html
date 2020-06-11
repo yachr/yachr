@@ -6,19 +6,19 @@
     <span>{{this.featureKeyword}}: {{this.featureName}}</span>
     <span class="feature-rollup-summary">
       {{#if this.failingScenarios.length}}
-      <i class="material-icons" title="Failing">clear</i>{{this.failingScenarios.length}}
+      <span class="summary-counts-failing"><i class="material-icons" title="Failing">clear</i>{{this.failingScenarios.length}}</span>
       {{/if}}
       {{#if this.undefinedScenarios.length}}
-      <i class="material-icons" title="Undefined">visibility_off</i>{{this.undefinedScenarios.length}}
+      <span class="summary-counts-undefined"><i class="material-icons" title="Undefined">visibility_off</i>{{this.undefinedScenarios.length}}</span>
       {{/if}}
       {{#if this.ambiguousScenarios.length}}
-      <i class="material-icons" title="Ambiguous">warning</i>{{this.ambiguousScenarios.length}}
+      <span class="summary-counts-ambiguous"><i class="material-icons" title="Ambiguous">warning</i>{{this.ambiguousScenarios.length}}</span>
       {{/if}}
       {{#if this.pendingScenarios.length}}
-      <i class="material-icons" title="Pending">ac_unit</i>{{this.pendingScenarios.length}}
+      <span><i class="material-icons" title="Pending">ac_unit</i>{{this.pendingScenarios.length}}</span>
       {{/if}}
       {{#if this.passingScenarios.length}}
-      <i class="material-icons" title="Passing">done</i>{{this.passingScenarios.length}}
+      <span class="summary-counts-passing"><i class="material-icons" title="Passing">done</i>{{this.passingScenarios.length}}</span>
       {{/if}}
     </span>
   </summary>

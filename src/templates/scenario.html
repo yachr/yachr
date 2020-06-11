@@ -6,22 +6,22 @@
     {{this.scenarioKeyword}}: {{this.scenarioName}}
     <span class="feature-rollup-summary">
       {{#if this.failed}}
-      <i class="material-icons" title="Failing">clear</i>{{this.failed}}
+      <span class="summary-counts-failing"><i class="material-icons" title="Failing">clear</i>{{this.failed}}</span>
       {{/if}}
       {{#if (countOf this 'undefined')}}
-      <i class="material-icons" title="Undefined">visibility_off</i>{{countOf this 'undefined'}}
+      <span class="summary-counts-undefined"><i class="material-icons" title="Undefined">visibility_off</i>{{countOf this 'undefined'}}</span>
       {{/if}}
       {{#if this.ambiguous}}
-      <i class="material-icons" title="Ambiguous">warning</i>{{this.ambiguous}}
+      <span class="summary-counts-ambiguous"><i class="material-icons" title="Ambiguous">warning</i>{{this.ambiguous}}</span>
       {{/if}}
       {{#if this.pending}}
-      <i class="material-icons" title="Pending">ac_unit</i>{{this.pending}}
+      <span><i class="material-icons" title="Pending">ac_unit</i>{{this.pending}}</span>
       {{/if}}
       {{#if this.skipped}}
-      <i class="material-icons" title="Skipped">update</i>{{this.skipped}}
+      <span><i class="material-icons" title="Skipped">update</i>{{this.skipped}}</span>
       {{/if}}
       {{#if this.passed}}
-      <i class="material-icons" title="Passing">done</i>{{this.passed}}
+      <span class="summary-counts-passing"><i class="material-icons" title="Passing">done</i>{{this.passed}}</span>
       {{/if}}
   </summary>
   <p>{{this.scenarioDescription}}</p>
