@@ -41,6 +41,7 @@
 
     details section {
       padding: 10px;
+      padding-bottom: 0px;
       overflow: hidden;
     }
 
@@ -75,8 +76,16 @@
       border: 1px solid #ddd;
     }
 
-    details .feature-description {
-      white-space: pre-wrap;
+    .scenario section {
+      padding-left: 10px;
+    }
+
+    .scenario {
+      margin-bottom: 5px;
+    }
+
+    .feature {
+      margin-bottom: 5px;
     }
 
     .scenario details p:hover {
@@ -213,6 +222,61 @@
       border-color: rgba(111, 109, 107, 1);
       background-color: rgba(111, 109, 107, 0.2)
     }
+
+    .summary-counts-failing {
+      color:  rgba(255, 99, 132, 1);
+    }
+
+    .summary-counts-undefined {
+      color: rgb(54, 162, 235, 1)
+    }
+
+    .summary-counts-ambiguous {
+      color: rgba(255, 140, 0, 1);
+    }
+
+    .summary-counts-passing {
+      color: rgba(75, 192, 192, 1);
+    }
+
+    /* Thanks to:  https://www.w3schools.com/howto/howto_css_modals.asp  */
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -221,7 +285,15 @@
   <span style="position: absolute;right: 40px;top: 15px; font-size: 12px; color: lightgray;">Generated at:
     {{ generateTime }}</span>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-
+  <script>
+    // if the user is looking at the modal, and clicks the background close the modal.
+    window.onclick = (event) => {
+      // Don't close if they are trying to open the modal
+      if (!event.target.classList.contains('screenshot-thumbnail')) {
+        document.getElementById('myModal').style.display = 'none';
+      }
+    }
+  </script>
   <div class="chart">
     <canvas id="myChart"></canvas>
   </div>
@@ -403,6 +475,14 @@
     {{> feature}}
     {{/each}}
 </body>
+
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span onclick="document.getElementById('myModal').style.display = 'none';" class="close">&times;</span>
+    <img id="modal-image"></img>
+  </div>
+</div>
 
 </html>
 
