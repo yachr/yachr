@@ -1,9 +1,8 @@
 import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
+import * as marked from 'marked';
 
-import { FeatureSuiteSummary } from './models/aggregator/featureSuiteSummary';
 import { FeatureSummary } from './models/aggregator/featureSummary';
-import { ScenarioSuiteSummary } from './models/aggregator/scenarioSuiteSummary';
 import { ScenarioSummary } from './models/aggregator/scenarioSummary';
 import { IHtmlModel } from './models/htmlModel';
 import { ICucumberFeature } from './models/reporter/cucumberFeature';
@@ -28,11 +27,14 @@ export class Reporter {
   public generate(options: IReportOptions): void {
     options = this.populateDefaultOptionsIfMissing(options);
 
-    const results = this.parseJsonFile(options.jsonFile);
+    const rawResults = this.parseJsonFile(options.jsonFile);
+
+    // if a filter has been passed in, filter out the results
+    const results = this.filterResults(rawResults, options);
 
     const aggregator = new ReportAggregator();
 
-    const data = <IHtmlModel>{
+    const data = <IHtmlModel> {
       cucumberReportSummary: aggregator.getSummaryForSuite(results),
       cucumberResult: results,
       generateTime: (new Date()).toLocaleString()
@@ -67,7 +69,7 @@ export class Reporter {
     // Gross work around because the template engine seems to reject
     // the work undefined as a property.
     Handlebars.registerHelper('countOf', (obj, property: 'string'): number =>
-      (<any>obj)[property] as number
+      (obj)[property] as number
     );
 
     Handlebars.registerPartial({
@@ -84,6 +86,10 @@ export class Reporter {
 
     Handlebars.registerHelper('getScenarioCss', (scenarioSummary: ScenarioSummary) =>
       this.getScenarioCss(scenarioSummary));
+
+    Handlebars.registerHelper('markdown2Html', (markdown: string) =>
+      marked(markdown && markdown.trim() || '')
+    );
 
     Handlebars.registerHelper('getStepCss', (step: IStep) => {
 
@@ -131,12 +137,44 @@ export class Reporter {
   }
 
   /**
+   * Filters the features and scenario's based on tags
+   */
+  public filterResults(featureSuiteOrig: ICucumberFeatureSuite, options: IReportOptions): ICucumberFeatureSuite {
+    // Don't modify the original suite
+    const featureSuite = JSON.parse(JSON.stringify(featureSuiteOrig)) as ICucumberFeatureSuite;
+
+    if (options.tags && options.tags.length) {
+      const tags: string[] = (options.tags || '').split(',').map(t => t.trim());
+      const includeTags = tags.filter(t => t.startsWith('@'));
+      const excludeTags = tags.filter(t => t.startsWith('~')).map(t => t.substring(1)); // Drop the tilde
+
+      let filteredFeatures = featureSuite.features.filter(f => {
+        const x = (!includeTags.length || f.tags.some(t => includeTags.includes(t.name))) ;
+        const y = (!excludeTags.length || !f.tags.some(t => excludeTags.includes(t.name)));
+        return x && y;
+      });
+
+      filteredFeatures.forEach(f => f.elements = f.elements.filter(el => {
+        const x = (!includeTags.length || el.tags.some(t => includeTags.includes(t.name)));
+        const y = (!excludeTags.length || !el.tags.some(t => excludeTags.includes(t.name)));
+        return x && y;
+      }));
+
+      filteredFeatures = filteredFeatures.filter(f => f.elements.length);
+
+      return { features: filteredFeatures };
+    }
+
+    return featureSuite;
+  }
+
+  /**
    * Parses a JSON String and returns a strongly typed data model
    * reflecting the Cucumber Test Report data structure
    * @param results An array of Cucumber Features from the Test Report
    */
   public parseJsonString(results: string): ICucumberFeatureSuite {
-    const features: ICucumberFeature[] = <ICucumberFeature[]>JSON.parse(results);
+    const features: ICucumberFeature[] = <ICucumberFeature[]> JSON.parse(results);
     return { features };
   }
 
@@ -145,7 +183,7 @@ export class Reporter {
    * @param options The options as passed in by the user
    */
   public populateDefaultOptionsIfMissing(options: IReportOptions): IReportOptions {
-    const defaultOptions = <IReportOptions>{
+    const defaultOptions = <IReportOptions> {
       featureTemplate: __dirname + '/templates/feature.html',
       htmlTemplate: __dirname + '/templates/standard.html',
       scenarioTemplate: __dirname + '/templates/scenario.html'

@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import * as fs from 'fs';
-import { } from 'mocha';
 
-import { IReportOptions } from './models/reportOptions';
-import { Reporter } from './reporter';
 import { FeatureSummary } from './models/aggregator/featureSummary';
 import { ScenarioSummary } from './models/aggregator/scenarioSummary';
+import { ICucumberFeatureSuite } from './models/reporter/cucumberFeatureSuite';
+import { IReportOptions } from './models/reportOptions';
+import { Reporter } from './reporter';
 
 describe('reporter', () => {
   let reporter: Reporter;
@@ -55,7 +55,7 @@ describe('reporter', () => {
   });
 
   it('should update options with required defaults if the user does not supply them', () => {
-    const options = <IReportOptions>{};
+    const options = <IReportOptions> {};
 
     const actual = reporter.populateDefaultOptionsIfMissing(options);
 
@@ -64,7 +64,7 @@ describe('reporter', () => {
   });
 
   it('populateDefaultOptionsIfMissing should not overwrite existing values', () => {
-    const options = <IReportOptions>{
+    const options = <IReportOptions> {
       htmlTemplate: 'templatePath',
       jsonFile: 'somepath'
     };
@@ -166,11 +166,134 @@ describe('reporter', () => {
     const html = fs.readFileSync(options.output, 'utf8');
 
     // tslint:disable-next-line: max-line-length
-    const expectedText = /<span>Ability: Login<\/span>([.\n\s]*)<span class="feature-rollup-summary">([.\n\s]*)<i class="material-icons" title="Failing">clear<\/i>1/;
+    const expectedText = /<span>Ability: Login<\/span>([.\n\s]*)<span class="feature-rollup-summary">([.\n\s]*)<span class="summary-counts-failing"><i class="material-icons" title="Failing">clear<\/i>1/;
 
     expect(html.search(expectedText)).to.greaterThan(0);
     // Clean up test
     // Comment this out if you want to view the generated html
     fs.unlinkSync(options.output);
+  });
+
+  it('should filter to includedTags', () => {
+    const rawFeatureSuite: ICucumberFeatureSuite = {
+      features: [
+        {
+          description: 'Sample Feature Description',
+          keyword: 'Ability',
+          name: 'Login',
+          line: 1,
+          id: 'login',
+          tags: [{
+            line: 1,
+            name: '@includeMe',
+          }],
+          uri: 'e2e\\src\\features\\abilities\\user\\login.feature',
+          elements: [
+            {
+              id: 'login;login-via-login-page',
+              keyword: 'Scenario',
+              line: 11,
+              name: 'Login via login page',
+              tags: [{
+                line: 1,
+                name: '@includeMe',
+              }],
+              type: 'scenario',
+              steps: [
+                {
+                  keyword: 'Before',
+                  hidden: true,
+                  match: {
+                    location: 'e2e\\src\\steps\\searchForUser.steps.ts:10'
+                  },
+                  result: {
+                    status: 'passed',
+                    duration: 1
+                  }
+                }
+              ]
+            },
+            {
+              id: 'login;login-via-login-page',
+              keyword: 'Scenario',
+              line: 11,
+              name: 'Login via login page',
+              tags: [{
+                line: 1,
+                name: '@dontIncludeMe',
+              }],
+              type: 'scenario',
+              steps: [
+                {
+                  keyword: 'Before',
+                  hidden: true,
+                  match: {
+                    location: 'e2e\\src\\steps\\searchForUser.steps.ts:10'
+                  },
+                  result: {
+                    status: 'passed',
+                    duration: 1
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          description: 'Sample Not going to be included',
+          keyword: 'Ability',
+          name: 'Login',
+          line: 1,
+          id: 'login',
+          tags: [
+            {
+              line: 1,
+              name: '@dontIncludeMe',
+            }
+          ],
+          uri: 'e2e\\src\\features\\abilities\\user\\login.feature',
+          elements: [
+            {
+              id: 'login;login-via-login-page',
+              keyword: 'Scenario',
+              line: 11,
+              name: 'Login via login page',
+              tags: [],
+              type: 'scenario',
+              steps: [
+                {
+                  keyword: 'Before',
+                  hidden: true,
+                  match: {
+                    location: 'e2e\\src\\steps\\searchForUser.steps.ts:10'
+                  },
+                  result: {
+                    status: 'passed',
+                    duration: 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    // Should filter to supplied tags
+    let filteredResults = reporter.filterResults(rawFeatureSuite, { tags: '@includeMe' } as IReportOptions);
+    expect(filteredResults.features.length).to.eq(1, 'Should only include features with matching tag');
+
+    // Should allow only ecluded tags to be supplied
+    filteredResults = reporter.filterResults(rawFeatureSuite, { tags: '~@whatever' } as IReportOptions);
+    expect(filteredResults.features.length).to.eq(2, 'Accept tags that only include exclusions');
+
+    // Should not filter if no tags supplied
+    filteredResults = reporter.filterResults(rawFeatureSuite, {  } as IReportOptions);
+    expect(filteredResults.features.length).to.eq(2, 'Should include all features');
+
+    // Should strip out scenarios with excluded tags
+    filteredResults = reporter.filterResults(rawFeatureSuite, { tags: '~@dontIncludeMe' } as IReportOptions);
+    expect(rawFeatureSuite.features[0].elements.length).to.eq(2, 'Should start with two scenarios');
+    expect(filteredResults.features[0].elements.length).to.eq(1, 'Should strip out scenarios with excluded tags');
   });
 });
