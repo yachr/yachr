@@ -27,7 +27,10 @@ export class Reporter {
   public generate(options: IReportOptions): void {
     options = this.populateDefaultOptionsIfMissing(options);
 
-    const results = this.parseJsonFile(options.jsonFile);
+    const rawResults = this.parseJsonFile(options.jsonFile);
+
+    // if a filter has been passed in, filter out the results
+    const results = this.filterResults(rawResults, options);
 
     const aggregator = new ReportAggregator();
 
@@ -85,7 +88,7 @@ export class Reporter {
       this.getScenarioCss(scenarioSummary));
 
     Handlebars.registerHelper('markdown2Html', (markdown: string) =>
-       marked(markdown || '')
+      marked(markdown && markdown.trim() || '')
     );
 
     Handlebars.registerHelper('getStepCss', (step: IStep) => {
@@ -131,6 +134,38 @@ export class Reporter {
       console.error('Error reading file: ' + resultsFile);
       throw (err);
     }
+  }
+
+  /**
+   * Filters the features and scenario's based on tags
+   */
+  public filterResults(featureSuiteOrig: ICucumberFeatureSuite, options: IReportOptions): ICucumberFeatureSuite {
+    // Don't modify the original suite
+    const featureSuite = JSON.parse(JSON.stringify(featureSuiteOrig)) as ICucumberFeatureSuite;
+
+    if (options.tags && options.tags.length) {
+      const tags: string[] = (options.tags || '').split(',').map(t => t.trim());
+      const includeTags = tags.filter(t => t.startsWith('@'));
+      const excludeTags = tags.filter(t => t.startsWith('~')).map(t => t.substring(1)); // Drop the tilde
+
+      let filteredFeatures = featureSuite.features.filter(f => {
+        const x = (!includeTags.length || f.tags.some(t => includeTags.includes(t.name))) ;
+        const y = (!excludeTags.length || !f.tags.some(t => excludeTags.includes(t.name)));
+        return x && y;
+      });
+
+      filteredFeatures.forEach(f => f.elements = f.elements.filter(el => {
+        const x = (!includeTags.length || el.tags.some(t => includeTags.includes(t.name)));
+        const y = (!excludeTags.length || !el.tags.some(t => excludeTags.includes(t.name)));
+        return x && y;
+      }));
+
+      filteredFeatures = filteredFeatures.filter(f => f.elements.length);
+
+      return { features: filteredFeatures };
+    }
+
+    return featureSuite;
   }
 
   /**
