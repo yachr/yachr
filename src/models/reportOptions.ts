@@ -14,6 +14,13 @@ export interface IReportOptions {
   jsonFile: string;
 
   /**
+   * Comma separated tags
+   * @example
+   * tags: '@includeThis, @includeThis, ~@ignoreThis'
+   */
+  tags?: string;
+
+  /**
    * Path to the custom template to use
    * @description A custom html template can be supplied. Templates use https://handlebarsjs.com/
    */

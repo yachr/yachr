@@ -1,6 +1,7 @@
 {
     "workbench.colorCustomizations": {
       "activityBar.background": "#52326f",
+      "activityBar.activeBackground": "#52326f",
       "activityBar.activeBorder": "#000000",
       "activityBar.foreground": "#e7e7e7",
       "activityBar.inactiveForeground": "#e7e7e799",
@@ -12,7 +13,9 @@
       "titleBar.inactiveForeground": "#e7e7e799",
       "statusBar.background": "#38224c",
       "statusBarItem.hoverBackground": "#52326f",
-      "statusBar.foreground": "#e7e7e7"
+      "statusBar.foreground": "#e7e7e7",
+      "statusBar.border": "#38224c",
+      "titleBar.border": "#38224c"
     },
     "python.linting.pylintEnabled": true,
     "cucumberautocomplete.steps": [
