@@ -7,7 +7,7 @@
     "build": "tsc --declaration ",
     "postbuild": "shx mkdir dist/src/templates && shx cp -rf src/templates/*.html dist/src/templates",
     "test": "mocha --config .mocharc.json src/**/*.spec.ts",
-    "ci": "npm run test && npm run build && npm run e2e && npm pack",
+    "ci": "npm run lint && npm run test && npm run build && npm run e2e && npm pack",
     "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
     "cover": "NODE_ENV=test nyc --report lcovonly _mocha --config .mocharc.json src/**/*.spec.ts",
     "e2eWithBuild": "npm run build && npm run e2e",
@@ -57,7 +57,7 @@
     "@types/cucumber": "^4.0.5",
     "@types/handlebars": "^4.1.0",
     "@types/mocha": "^5.2.6",
-    "@types/node": "^11.11.3",
+    "@types/node": "^20.17.9",
     "chai": "^4.2.0",
     "cheerio": "^1.0.0-rc.3",
     "copyfiles": "^2.1.0",
@@ -70,7 +70,7 @@
     "source-map-support": "^0.5.11",
     "ts-node": "^8.0.3",
     "tslint": "^5.14.0",
-    "typescript": "^3.3.3333",
+    "typescript": "^5.7.2",
     "yachr": "^0.1.10"
   },
   "dependencies": {
