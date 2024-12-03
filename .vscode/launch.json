@@ -17,6 +17,52 @@
       ],
       "internalConsoleOptions": "openOnSessionStart"
     },
-
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Mocha Current File",
+      "cwd": "${workspaceRoot}",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/mocha",
+      "args": [
+        "--config",
+        "${workspaceFolder}/.mocharc.json",
+        "--timeout",
+        "999999",
+        "--colors",
+        "--recursive",
+        "${file}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "protocol": "inspector"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Cucumber Test All",
+      "program": "${workspaceFolder}/node_modules/cucumber/bin/cucumber-js",
+      "args": [
+        "-p",
+        "default"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "protocol": "inspector"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Cucumber Test Tags Only",
+      "program": "${workspaceFolder}/node_modules/cucumber/bin/cucumber-js",
+      "args": [
+        "-p",
+        "default",
+        "--tags",
+        "@ONLY_RUN"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "protocol": "inspector"
+    }
   ]
 }
