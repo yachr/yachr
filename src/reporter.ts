@@ -88,7 +88,7 @@ export class Reporter {
       this.getScenarioCss(scenarioSummary));
 
     Handlebars.registerHelper('markdown2Html', (markdown: string) =>
-      marked(markdown && markdown.trim() || '')
+      marked.parse(markdown && markdown.trim() || '')
     );
 
     Handlebars.registerHelper('getStepCss', (step: IStep) => {
