@@ -13,7 +13,11 @@
       "titleBar.inactiveForeground": "#e7e7e799",
       "statusBar.background": "#38224c",
       "statusBarItem.hoverBackground": "#52326f",
-      "statusBar.foreground": "#e7e7e7"
+      "statusBar.foreground": "#e7e7e7",
+      "commandCenter.border": "#e7e7e799",
+      "sash.hoverBorder": "#52326f",
+      "statusBarItem.remoteBackground": "#38224c",
+      "statusBarItem.remoteForeground": "#e7e7e7"
     },
     "python.linting.pylintEnabled": true,
     "cucumberautocomplete.steps": [
