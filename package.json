@@ -7,34 +7,16 @@
     "build": "tsc --declaration ",
     "postbuild": "shx mkdir dist/src/templates && shx cp -rf src/templates/*.html dist/src/templates",
     "test": "mocha --config .mocharc.json src/**/*.spec.ts",
-    "ci": "npm run lint && npm run test && npm run build && npm run e2e && npm pack",
+    "ci": "npm run lint && npm run audit-report && npm run prod-audit && npm run license-checker && npm run cover && npm run e2e && npm run build",
     "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
-    "cover": "NODE_ENV=test nyc --report lcovonly _mocha --config .mocharc.json src/**/*.spec.ts",
+    "cover": "cross-env NODE_ENV=test nyc --report lcovonly _mocha --config .mocharc.json 'src/**/*.spec.ts'",
     "e2eWithBuild": "npm run build && npm run e2e",
     "e2e": "tsc -p e2e/tsconfig.json && cucumber-js -p default && node ./runReport.js",
     "poste2e": "shx rm -rf e2e/step_definitions/**/*.js e2e/reportOutput/**/*.html",
-    "coveralls": "npm run cover && shx cat ./coverage/lcov.info | coveralls",
     "audit-fix": "npm audit fix",
     "audit-report": "npm audit",
-    "prod-audit": "npm audit --audit-level=high --omit=dev"
-  },
-  "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "e2e/*",
-      "**/*.d.ts",
-      "**/*.spec.ts",
-      "dist/*",
-      "coverage/*",
-      "playground/*"
-    ],
-    "reporter": [
-      "html",
-      "lcov"
-    ],
-    "all": true
+    "prod-audit": "npm audit --audit-level=high --omit=dev",
+    "license-checker": "license-checker --summary --production --onlyAllow \"Apache-2.0;MIT;ISC;BSD;BSD-2-Clause;BSD-3-Clause;MIT*;CC0-1.0;CC-BY-3.0;CC-BY-4.0;BSD*;0BSD;Public Domain;AFLv2.1;\" --excludePackages yachr"
   },
   "main": "./dist/src/index.js",
   "repository": {
@@ -61,8 +43,9 @@
     "chai": "^4.2.0",
     "cheerio": "^1.0.0-rc.3",
     "copyfiles": "^2.1.0",
-    "coveralls": "^3.1.1",
+    "cross-env": "^7.0.3",
     "cucumber": "^5.1.0",
+    "license-checker": "^25.0.1",
     "mocha": "^10.2.0",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.0.0",
