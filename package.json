@@ -1,6 +1,6 @@
 {
   "name": "yachr",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "Yet another cucumber html reporter",
   "scripts": {
     "prebuild": "shx rm -rf dist",
@@ -10,6 +10,7 @@
     "ci": "npm run audit-report && npm run prod-audit && npm run license-checker && npm run cover && npm run e2eWithBuild && npm run build",
     "lint": "tslint -c tslint.json -p tsconfig.json 'src/**/*.ts'",
     "cover": "cross-env NODE_ENV=test nyc --report lcovonly _mocha --config .mocharc.json 'src/**/*.spec.ts'",
+    "prepare": "npm run build",
     "e2eWithBuild": "npm run build && npm run e2e",
     "e2e": "tsc -p e2e/tsconfig.json && cucumber-js -p default && node ./runReport.js",
     "poste2e": "shx rm -rf e2e/step_definitions/**/*.js e2e/reportOutput/**/*.html",
